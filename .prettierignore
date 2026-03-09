@@ -1,0 +1,4 @@
+prettierignorenode_modules
+package-lock.json
+*.html
+*.md
