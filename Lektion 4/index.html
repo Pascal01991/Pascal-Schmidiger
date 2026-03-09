@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
+
   <script type="module">
+
     import { Car } from "./car.js";
     window.playWithJson = () => {
       const v = new Car();
@@ -14,7 +16,9 @@
       const V2 = JSON.parse(text);
       console.log(V2);
     };
+    
   </script>
+
   <body>
     <button onclick="playWithJson()">JSON</button>
   </body>
