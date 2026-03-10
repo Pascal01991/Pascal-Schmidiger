@@ -1,0 +1,16 @@
+{
+  "addresses": [
+    { "id": "1", "name": "Maria" },
+    { "id": "2", "name": "Johann" },
+    { "id": "3", "name": "Sophie" },
+    { "id": "4", "name": "Lukas" },
+    { "id": "5", "name": "Anna" },
+    { "id": "6", "name": "Max" },
+    { "id": "7", "name": "Laura" },
+    { "id": "8", "name": "Felix" },
+    { "id": "9", "name": "Julia" },
+    { "id": "10", "name": "David" },
+    { "id": "11", "name": "Lisa" },
+    { "id": "12", "name": "Paul" }
+  ]
+}
