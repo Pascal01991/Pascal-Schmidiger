@@ -9,7 +9,8 @@ export class Person {
 
   fullName() {
     //return `${this.firstName} ${this.lastName}`;
-    return `${this.firstName} ${this.middleName ?? ""} ${this.lastName}`.trim();
+    return [this.firstName, this.middleName, this.lastName].filter(Boolean).join(" ");
+    // `${this.firstName} ${this.middleName ?? ""} ${this.lastName}`.trim();
   }
 
   toString() {
@@ -25,8 +26,14 @@ export class Person {
 export class Teacher extends Person {
   constructor(firstName, middleName, lastName, birthDate, schoolName) {
     super(firstName, middleName, lastName, birthDate, schoolName);
-  }
 
+    if (!this.schoolName && typeof birthDate === "string") {
+      this.schoolName = birthDate;
+    }
+    if (!this.schoolName) {
+      this.schoolName = "HFU";
+    }
+  }
   fullName() {
     return `${super.fullName()} @ ${this.schoolName}`;
   }
@@ -50,7 +57,7 @@ export function getCapitalized(test) {
 
 export function getOddCapitalized(test) {
   return test.map((t, i) => {
-    return t.toUpperCase();
+    return i % 2 !== 0 ? t.toUpperCase() : t.toLowerCase();
   });
 }
 
