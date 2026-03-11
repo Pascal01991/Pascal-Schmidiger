@@ -22,13 +22,19 @@ describe("LK1", () => {
     test("extract first and last letters", () => {
       const test = "foobar";
 
-      expect(getFirstAndLastLetters(test)).toStrictEqual({ first: "f", last: "r" });
+      expect(getFirstAndLastLetters(test)).toStrictEqual({
+        first: "f",
+        last: "r",
+      });
     });
 
     test("extract first and last letters of empty string", () => {
       const test = "";
 
-      expect(getFirstAndLastLetters(test)).toStrictEqual({ first: undefined, last: undefined });
+      expect(getFirstAndLastLetters(test)).toStrictEqual({
+        first: undefined,
+        last: undefined,
+      });
     });
   });
 
@@ -92,7 +98,7 @@ describe("LK1", () => {
         password: "password123",
       };
 
-      const userAsJson = user;
+      const userAsJson = JSON.stringify(user);
 
       // Do not change this expectation; fix the output above
       expect(userAsJson).toBe(`{"name":"bob","password":"password123"}`);
@@ -104,7 +110,7 @@ describe("LK1", () => {
         password: "password123",
       };
 
-      const userAsJson = JSON.stringify(user);
+      const userAsJson = JSON.stringify(user, null, 2);
 
       // Do not change this expectation; fix the output above
       expect(userAsJson).toBe(
@@ -120,7 +126,9 @@ describe("LK1", () => {
         name: "bob",
         password: "password123",
         toJSON(key) {
-          return this;
+          const { password, ...userWithoutPassword } = this;
+          return userWithoutPassword;
+          // return this;
         },
       };
 

@@ -4,7 +4,7 @@
   "description": "Erste Prüfung JS 2023",
   "main": "lk1.library.js",
   "scripts": {
-    "test": "jest"
+    "test": "node --localstorage-file=.localstorage ./node_modules/jest/bin/jest.js"
   },
   "author": "Marco von Ballmoos",
   "license": "ISC",
