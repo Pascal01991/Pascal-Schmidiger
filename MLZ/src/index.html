@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zeiterfassung</title>
+</head>
+<body>
+  <main>
+    <h1>Zeiterfassung</h1>
+    <p id="app">App startet...</p>
+
+    <section>
+      <h2>Zeit buchen</h2>
+      <p>Projekt auswaehlen und Stunden erfassen.</p>
+      <form id="time-entry-form">
+        <label for="project-select">Projekt auswaehlen:</label>
+        <select id="project-select" required>
+          <option value="">-- Bitte waehlen --</option>
+        </select>
+
+        <label for="hours">Stunden:</label>
+        <input type="number" id="hours" step="0.5" required>
+
+        <button type="submit">Zeit buchen</button>
+      </form>
+    </section>
+
+    <section>
+      <h2>Neues Projekt anlegen</h2>
+      <form id="project-form" onsubmit="saveProject(event)">
+        <label for="project-name">Projektname:</label>
+        <input type="text" id="project-name" required minlength="3">
+        <label for="project-client-select">Kunde auswaehlen:</label>
+        <select id="project-client-select" required>
+          <option value="">-- Bitte waehlen --</option>
+        </select>
+        <button type="submit">Projekt speichern</button>
+      </form>
+
+      <div id="projectsList" class="scrollable-list">
+        <input type="text" id="searchProject" placeholder="Projekte suchen">
+        <!-- Projektliste in einem scrollbaren Container -->
+         <!-- TODO: CSS Klasse -->
+     
+      </div>
+    </section>
+
+    <section>
+      <h2>Neuer Kunde anlegen</h2>
+      <form id="client-form" onsubmit="saveClient(event)">
+        <label for="client-name">Kundenname:</label>
+        <input type="text" id="client-name" required minlength="3">
+        <label for="client-address">Kundenadresse:</label>
+        <input type="text" id="client-address" required>
+        <button type="submit">Kunde speichern</button>
+      </form>
+    </section>
+
+    
+
+    <section>
+        <p id="message-box" style="display:none;"></p>
+    </section>
+  </main>
+
+  <script type="module" src="./ui/main.js"></script>
+</body>
+</html>

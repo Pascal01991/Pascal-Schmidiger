@@ -1,0 +1,42 @@
+{
+  "projects": [
+    {
+      "name": "Projekt 1",
+      "clientId": "4",
+      "id": 1
+    },
+    {
+      "name": "Projekt 2",
+      "clientId": "5",
+      "id": 2
+    }
+  ],
+  "clients": [
+    {
+      "name": "asdfasdf",
+      "address": "sadfasdf",
+      "id": 1
+    },
+    {
+      "name": "asdfasdf",
+      "address": "asdfasdf",
+      "id": 2
+    },
+    {
+      "name": "234r23ew",
+      "address": "asdf2",
+      "id": 3
+    },
+    {
+      "name": "Kunde1",
+      "address": "Adresse 1",
+      "id": 4
+    },
+    {
+      "name": "Kunde 2",
+      "address": "Adresse 2",
+      "id": 5
+    }
+  ],
+  "entries": []
+}

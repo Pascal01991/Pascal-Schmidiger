@@ -1,0 +1,21 @@
+{
+  "name": "mlz-zeiterfassung",
+  "version": "1.0.0",
+  "description": "Meine erlernten JavaScript-Kenntnisse an einem Praxisbeispiel angewendet.",
+  "license": "ISC",
+  "author": "Pascal Schmidiger",
+  "scripts": {
+    "test": "jest",
+    "server": "json-server --watch db.json --port 3000",
+    "start": "http-server ./src"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.16.0",
+    "@babel/preset-env": "^7.23.6",
+    "babel-jest": "^27.3.1",
+    "jest": "^27.4.0",
+    "jest-environment-jsdom": "^27.4.0",
+    "json-server": "^0.17.4",
+    "http-server": "^14.0.0"
+  }
+}
