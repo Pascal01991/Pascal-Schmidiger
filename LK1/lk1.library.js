@@ -1,15 +1,13 @@
 export class Person {
-  constructor(firstName, middleName, lastName, birthDate, schoolName) {
+  constructor(firstName, middleName, lastName, birthDate) {
     this.firstName = firstName ?? "John";
     this.middleName = middleName;
     this.lastName = lastName ?? "Doe";
     this.birthDate = birthDate;
-    this.schoolName = schoolName;
   }
 
   fullName() {
-    //return `${this.firstName} ${this.lastName}`;
-    return `${this.firstName} ${this.middleName ?? ""} ${this.lastName}`.trim();
+    return `${this.firstName} ${this.middleName} ${this.lastName}`;
   }
 
   toString() {
@@ -24,7 +22,8 @@ export class Person {
 
 export class Teacher extends Person {
   constructor(firstName, middleName, lastName, birthDate, schoolName) {
-    super(firstName, middleName, lastName, birthDate, schoolName);
+    super(firstName, middleName, lastName, birthDate);
+    this.schoolName = schoolName;
   }
 
   fullName() {
@@ -34,7 +33,6 @@ export class Teacher extends Person {
 
 export function getFirstAndLastLetters(test) {
   return {
-    //first: test.at(1),
     first: test.at(0),
     last: test.at(-1),
   };
@@ -50,7 +48,7 @@ export function getCapitalized(test) {
 
 export function getOddCapitalized(test) {
   return test.map((t, i) => {
-    return t.toUpperCase();
+    return i % 2 == 1 ? t.toUpperCase() : t;
   });
 }
 
@@ -81,12 +79,6 @@ export function getCopyOfArray(a) {
 
 export function getJsonWithNiceFormattingAndNoNumbers(obj) {
   return JSON.stringify(obj, (k, v) => (typeof v === "number" ? undefined : v), 2);
-
-  //   {
-  //   return typeof v === 0 ? undefined : v;
-  // },
-  //    2,
-  // );
 }
 
 export function getPropertyNames(obj) {

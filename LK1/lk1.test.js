@@ -274,7 +274,7 @@ describe("LK1", () => {
       const birthDate = new Date(2000, 7, 1);
       const schoolName = "HFU";
 
-      const teacher = new Person(firstName, middleName, lastName, birthDate, schoolName);
+      const teacher = new Teacher(firstName, middleName, lastName, birthDate, schoolName);
 
       expect(teacher.firstName).toBe(firstName);
       expect(teacher.middleName).toBe(middleName);
@@ -290,7 +290,7 @@ describe("LK1", () => {
       const birthDate = new Date(2000, 7, 1);
       const schoolName = "HFU";
 
-      const teacher = new Teacher(firstName, middleName, lastName, birthDate);
+      const teacher = new Teacher(firstName, middleName, lastName, birthDate, schoolName);
 
       expect(teacher.firstName).toBe(firstName);
       expect(teacher.middleName).toBe(middleName);
