@@ -147,6 +147,7 @@ export function getObjectWithAOnly(obj) {
 
 export function getObjectWithAllButA(obj) {
   //  const { a, rest } = obj;
+  // eslint-disable-next-line no-unused-vars
   const { a, ...rest } = obj;
   return rest;
 }
