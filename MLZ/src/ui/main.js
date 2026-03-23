@@ -148,7 +148,8 @@ async function onProjectFormSubmit(event) {
   }
 }
 
-window.saveProject = onProjectFormSubmit;
+projectForm.addEventListener("submit", onProjectFormSubmit);
+
 // #endregion
 
 // #region Kundenverwaltung
@@ -206,7 +207,7 @@ async function onClientFormSubmit(event) {
   }
 }
 
-window.saveClient = onClientFormSubmit;
+clientForm.addEventListener("submit", onClientFormSubmit);
 
 // #endregion
 

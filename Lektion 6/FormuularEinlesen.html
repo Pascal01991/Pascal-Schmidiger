@@ -1,0 +1,49 @@
+<!-- Übungen
+Wert einer Eingabe zuweisen und wieder auslesen
+datalist mit einer Eingabe verbinden -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="Pascal">
+        <br>
+        <label for="age">Alter:</label>
+        <input type="number" id="age" name="age" value="30">
+        <br>
+        <input type="submit" value="Absenden">
+        <label for="city">Stadt:</label>
+    <input list="cities" id="city" name="city">
+    <datalist id="cities">
+        <option value="Zürich">
+        <option value="Luzern">
+        <option value="Bern">
+        <option value="Basel">
+    </datalist>
+    </form>
+
+    
+</body>
+<script>
+    const nameInput = document.getElementById('name');
+    const ageInput = document.getElementById('age');
+    const form = document.querySelector('form');
+
+    form.addEventListener('submit', (event) => {
+        event.preventDefault(); // Verhindert das Absenden des Formulars
+
+        console.log('Name:', nameInput.value);
+        console.log('Alter:', ageInput.value);
+        console.log('Stadt:', cityInput.value);
+    });
+
+    const cityInput = document.getElementById('city');
+
+</script>
+</html>
