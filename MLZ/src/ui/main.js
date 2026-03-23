@@ -62,9 +62,8 @@ function renderProjectOptionsInDropDown(projects) {
     projectSelect.appendChild(option);
   }
 }
-
 function renderProjectList(projects, clients) {
-  const projectsList = document.getElementById("projectsList");
+  const projectsList = document.getElementById("project-items");
   const clientLookup = {};
 
   for (const client of clients) {
@@ -87,35 +86,28 @@ function renderProjectList(projects, clients) {
       `;
     })
     .join("");
-
-  document.querySelectorAll(".delete-project-btn").forEach((btn) => {
-    btn.addEventListener("click", async () => {
-      const projectId = btn.getAttribute("data-project-id");
-
-      try {
-        await api.deleteProject(projectId);
-        await loadProjects();
-        showMessageBox("Projekt wurde geloescht!", "green");
-      } catch (error) {
-        showMessageBox("Fehler: " + error.message, "crimson");
-      }
-    });
-  });
 }
+document.getElementById("project-items").addEventListener("click", async (event) => {
+  const editButton = event.target.closest(".edit-project-btn");
+  const deleteButton = event.target.closest(".delete-project-btn");
 
-// Event-Listener für "Löschen"
-document.querySelectorAll(".delete-project-btn").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    const projectId = btn.getAttribute("data-project-id");
-    const projectName = btn.getAttribute("data-project-name");
+  if (editButton) {
+    const projectId = editButton.getAttribute("data-project-id");
+    console.log("Projekt bearbeiten:", projectId);
+    return;
+  }
+
+  if (deleteButton) {
+    const projectId = deleteButton.getAttribute("data-project-id");
+
     try {
-      api.deleteProject(projectId);
-      loadProjects();
-      showMessageBox("Projekt '" + projectName + "' wurde gelöscht!", "green");
+      await api.deleteProject(projectId);
+      await loadProjects();
+      showMessageBox("Projekt wurde gelöscht!", "green");
     } catch (error) {
       showMessageBox("Fehler: " + error.message, "crimson");
     }
-  });
+  }
 });
 
 /**
