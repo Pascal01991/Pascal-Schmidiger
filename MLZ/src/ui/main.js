@@ -116,7 +116,7 @@ function showProjectForm(isEditMode = false) {
   BtnSaveProject.textContent = isEditMode ? "Änderung speichern" : "Projekt anlegen";
 }
 
-BtnCreateProject.addEventListener("click", showProjectForm);
+BtnCreateProject.addEventListener("click", () => showProjectForm());
 
 function hideProjectForm() {
   projectForm.style.display = "none";
