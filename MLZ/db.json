@@ -14,6 +14,16 @@
       "name": "asdfasdf",
       "clientId": "4",
       "id": 3
+    },
+    {
+      "name": "Projekt 99",
+      "clientId": "6",
+      "id": 4
+    },
+    {
+      "name": "Projekt 88",
+      "clientId": "1",
+      "id": 5
     }
   ],
   "clients": [
@@ -86,6 +96,11 @@
       "name": "asdfasdf",
       "address": "asdf",
       "id": 14
+    },
+    {
+      "name": "Kunde 88",
+      "address": "asdfasdf",
+      "id": 15
     }
   ],
   "entries": []

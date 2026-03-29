@@ -24,8 +24,21 @@ function showMessageBox(text, color) {
 
 // #region Time in Project
 
-// #endregion
 const projectSelect = document.getElementById("project-select");
+
+/**
+ * @param {Project[]} projects
+ */
+function renderProjectOptionsForTimeForm(projects) {
+  projectSelect.innerHTML = '<option value="">-- Bitte waehlen --</option>';
+
+  for (const project of projects) {
+    const option = document.createElement("option");
+    option.value = project.id;
+    option.textContent = project.name;
+    projectSelect.appendChild(option);
+  }
+}
 
 // #endregion
 
@@ -39,7 +52,7 @@ async function loadProjects() {
   const projects = await api.getProjects();
   const clients = await api.getClients();
 
-  renderProjectOptionsInDropDown(projects);
+  renderProjectOptionsForTimeForm(projects);
   renderProjectList(projects, clients);
 
   if (projects.length === 0) {
@@ -49,19 +62,6 @@ async function loadProjects() {
   setAppStatus("Alle Daten vom Server geladen.");
 }
 
-/**
- * @param {Project[]} projects
- */
-function renderProjectOptionsInDropDown(projects) {
-  projectSelect.innerHTML = '<option value="">-- Bitte waehlen --</option>';
-
-  for (const project of projects) {
-    const option = document.createElement("option");
-    option.value = project.id;
-    option.textContent = project.name;
-    projectSelect.appendChild(option);
-  }
-}
 function renderProjectList(projects, clients) {
   const projectsList = document.getElementById("project-items");
   const clientLookup = {};
@@ -86,6 +86,17 @@ function renderProjectList(projects, clients) {
       `;
     })
     .join("");
+}
+
+function renderClientOptionsForProjectForm(clients) {
+  projectClientSelect.innerHTML = '<option value="">-- Bitte waehlen --</option>';
+
+  for (const client of clients) {
+    const option = document.createElement("option");
+    option.value = client.id;
+    option.textContent = client.name;
+    projectClientSelect.appendChild(option);
+  }
 }
 
 document.getElementById("project-items").addEventListener("click", async (event) => {
@@ -150,21 +161,10 @@ const clientForm = document.getElementById("client-form");
 const clientNameInput = document.getElementById("client-name");
 const clientAddressInput = document.getElementById("client-address");
 
-function renderClientOptions(clients) {
-  projectClientSelect.innerHTML = '<option value="">-- Bitte waehlen --</option>';
-
-  for (const client of clients) {
-    const option = document.createElement("option");
-    option.value = client.id;
-    option.textContent = client.name;
-    projectClientSelect.appendChild(option);
-  }
-}
-
 async function loadClients() {
   const clients = await api.getClients();
 
-  renderClientOptions(clients);
+  renderClientOptionsForProjectForm(clients);
 
   if (clients.length === 0) {
     setAppStatus("Keine Kunden geladen.");
