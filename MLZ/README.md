@@ -21,6 +21,28 @@ JSDoc beschreibt Typen zusätzlich:
 - Autovervollständigung verbessern
 - Hinweise geben
 
+## main.js
+- `main.js` ist die zentrale Steuerdatei der Benutzeroberfläche.
+- Hier werden Daten geladen, ins HTML eingesetzt und Klicks oder Formularaktionen verarbeitet.
+
+### renderProjectList()
+- `renderProjectList(projects, clients)` zeigt alle Projekte in der Liste an.
+- Zuerst wird mit `clientLookup` die passende `clientId` einem Kundennamen zugeordnet.
+- Danach wird mit `.map()` fuer jedes Projekt ein einfacher HTML-Block erstellt.
+- Am Schluss werden alle Eintraege mit `.join("")` als Liste in `#project-items` eingesetzt.
+
+#### Delegierter Event-Listener
+- Die `edit`- und `delete`-Buttons entstehen erst später durch `renderProjectList()`.
+- Darum ist ein normaler Listener direkt auf dem Button unpraktisch.
+- Stattdessen hört ein Listener auf dem Container `#project-items` auf alle Klicks.
+- Mit `event.target.closest()` wird geprueft, ob ein `edit`- oder `delete`-Button geklickt wurde.
+
+##### Vorteil dieser Loesung
+- Nur ein Listener statt viele einzelne.
+- Funktioniert auch nach einem neuen Rendern der Liste.
+- Weniger doppelter Code.
+- Die Render-Funktion bleibt für die Anzeige zustaendig, der Listener fuer die Aktion.
+
 ## Learnings
 - `event.preventDefault()` 
 	- **Verhindert das Neuladen der Seite** nach dem Klick auf onsubmit im Formular.

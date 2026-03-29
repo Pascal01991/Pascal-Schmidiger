@@ -87,6 +87,7 @@ function renderProjectList(projects, clients) {
     })
     .join("");
 }
+
 document.getElementById("project-items").addEventListener("click", async (event) => {
   const editButton = event.target.closest(".edit-project-btn");
   const deleteButton = event.target.closest(".delete-project-btn");
