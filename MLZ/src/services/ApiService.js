@@ -30,6 +30,16 @@ export class ApiService {
     });
   }
 
+  async editProject(projectId, projectData) {
+    return this.request(`/projects/${projectId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(projectData),
+    });
+  }
+
   async deleteProject(projectId) {
     return this.request(`/projects/${projectId}`, {
       method: "DELETE",

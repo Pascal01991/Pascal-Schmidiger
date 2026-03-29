@@ -1,29 +1,24 @@
 {
   "projects": [
     {
-      "name": "asdfasdf",
-      "clientId": "2",
-      "id": 1
-    },
-    {
-      "name": "asdfasdf",
-      "clientId": "4",
-      "id": 2
-    },
-    {
-      "name": "asdfasdf",
-      "clientId": "4",
+      "name": "edit5",
+      "clientId": "3",
       "id": 3
-    },
-    {
-      "name": "Projekt 99",
-      "clientId": "6",
-      "id": 4
     },
     {
       "name": "Projekt 88",
       "clientId": "1",
       "id": 5
+    },
+    {
+      "name": "create1",
+      "clientId": "4",
+      "id": 6
+    },
+    {
+      "name": "asdf",
+      "clientId": "2",
+      "id": 7
     }
   ],
   "clients": [

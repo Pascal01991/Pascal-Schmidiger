@@ -47,10 +47,16 @@ const projectClientSelect = document.getElementById("project-client-select");
 const projectForm = document.getElementById("project-form");
 const projectNameInput = document.getElementById("project-name");
 const projectClientIdInput = document.getElementById("project-client-select");
+const BtnCreateProject = document.getElementById("BtnCreateProject");
+const BtnSaveProject = document.getElementById("BtnSaveProject");
+let editMode = false;
+let currentProjectId = null;
+let currentProjects = [];
 
 async function loadProjects() {
   const projects = await api.getProjects();
   const clients = await api.getClients();
+  currentProjects = projects;
 
   renderProjectOptionsForTimeForm(projects);
   renderProjectList(projects, clients);
@@ -99,28 +105,28 @@ function renderClientOptionsForProjectForm(clients) {
   }
 }
 
-document.getElementById("project-items").addEventListener("click", async (event) => {
-  const editButton = event.target.closest(".edit-project-btn");
-  const deleteButton = event.target.closest(".delete-project-btn");
+function fillProjectForm(project) {
+  projectNameInput.value = project.name;
+  projectClientIdInput.value = project.clientId;
+}
 
-  if (editButton) {
-    const projectId = editButton.getAttribute("data-project-id");
-    console.log("Projekt bearbeiten:", projectId);
-    return;
-  }
+function showProjectForm(isEditMode = false) {
+  projectForm.style.display = "block";
+  BtnCreateProject.style.display = "none";
+  BtnSaveProject.textContent = isEditMode ? "Änderung speichern" : "Projekt anlegen";
+}
 
-  if (deleteButton) {
-    const projectId = deleteButton.getAttribute("data-project-id");
+BtnCreateProject.addEventListener("click", showProjectForm);
 
-    try {
-      await api.deleteProject(projectId);
-      await loadProjects();
-      showMessageBox("Projekt wurde gelöscht!", "green");
-    } catch (error) {
-      showMessageBox("Fehler: " + error.message, "crimson");
-    }
-  }
-});
+function hideProjectForm() {
+  projectForm.style.display = "none";
+  editMode = false;
+  currentProjectId = null;
+  projectForm.reset();
+  BtnCreateProject.style.display = "block";
+}
+
+document.getElementById("BtnCloseProjectForm").addEventListener("click", hideProjectForm);
 
 /**
  * @returns {{ name: string, clientId: number }}
@@ -140,19 +146,59 @@ async function onProjectFormSubmit(event) {
     return;
   }
 
-  const newProject = getProjectFormData();
+  const projectData = getProjectFormData();
+  const isEditMode = editMode;
 
   try {
-    await api.createProject(newProject);
+    if (isEditMode) {
+      await api.editProject(currentProjectId, projectData);
+    } else {
+      await api.createProject(projectData);
+    }
+
+    const successMessage = isEditMode ? "Änderung gespeichert!" : "Projekt '" + projectData.name + "' wurde erstellt!";
+
     projectForm.reset();
+    editMode = false;
+    currentProjectId = null;
+    hideProjectForm();
     await loadProjects();
-    showMessageBox("Projekt '" + newProject.name + "' wurde gespeichert!", "green");
+    showMessageBox(successMessage, "green");
   } catch (error) {
     showMessageBox("Fehler: " + error.message, "crimson");
   }
 }
 
 projectForm.addEventListener("submit", onProjectFormSubmit);
+
+document.getElementById("project-items").addEventListener("click", async (event) => {
+  const editButton = event.target.closest(".edit-project-btn");
+  const deleteButton = event.target.closest(".delete-project-btn");
+
+  if (editButton) {
+    const projectId = editButton.getAttribute("data-project-id");
+    const project = currentProjects.find((item) => String(item.id) === projectId);
+
+    if (project) {
+      currentProjectId = project.id;
+      editMode = true;
+      fillProjectForm(project);
+      showProjectForm(true);
+    }
+  }
+
+  if (deleteButton) {
+    const projectId = deleteButton.getAttribute("data-project-id");
+
+    try {
+      await api.deleteProject(projectId);
+      await loadProjects();
+      showMessageBox("Projekt wurde gelöscht!", "green");
+    } catch (error) {
+      showMessageBox("Fehler: " + error.message, "crimson");
+    }
+  }
+});
 
 // #endregion
 
@@ -204,6 +250,12 @@ clientForm.addEventListener("submit", onClientFormSubmit);
 
 // #endregion
 
+// #region Data-Management
+
+//#endregion
+
+// #region App-Start
+
 function startApp() {
   try {
     setAppStatus("Lade Projekte...");
@@ -216,3 +268,5 @@ function startApp() {
 }
 
 startApp();
+
+// #endregion

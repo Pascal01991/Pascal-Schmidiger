@@ -28,14 +28,16 @@
 
     <section>
       <h2>Neues Projekt anlegen</h2>
-      <form id="project-form">
+      <button id="BtnCreateProject">Neues Projekt anlegen</button>
+      <form id="project-form" style="display:none;">
         <label for="project-name">Projektname:</label>
         <input type="text" id="project-name" required minlength="3">
         <label for="project-client-select">Kunde auswaehlen:</label>
         <select id="project-client-select" required>
           <option value="">-- Bitte waehlen --</option>
         </select>
-        <button type="submit">Projekt speichern</button>
+        <button id = "BtnSaveProject" type="submit"></button>
+        <button id ="BtnCloseProjectForm" type="button">Abbrechen</button>
       </form>
 
       <div id="projectsList" class="scrollable-list">
@@ -58,7 +60,11 @@
       </form>
     </section>
 
-    
+    <section>
+      <h2>Daten-Management</h2>
+      <button id="deleteDatabase">Datenbank löschen</button>
+      <button id="createTestData">Testdaten erstellen</button>
+    </section>
 
     <section>
         <p id="message-box" style="display:none;"></p>

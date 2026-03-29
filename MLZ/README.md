@@ -25,6 +25,14 @@ JSDoc beschreibt Typen zusätzlich:
 - `main.js` ist die zentrale Steuerdatei der Benutzeroberfläche.
 - Hier werden Daten geladen, ins HTML eingesetzt und Klicks oder Formularaktionen verarbeitet.
 
+### Projektformular
+- Klick auf `Edit` speichert nicht direkt, sondern lädt das gewählte Projekt zuerst ins Formular.
+- Beim Submit entscheidet `editMode`, ob `createProject()` oder `editProject()` ausgeführt wird.
+- `currentProjects` ist die aktuell geladene Projektliste, wir holen daraus  per `id` die Daten für die wir ans Formular übergeben. Dank `currentProjects` ist nicht eine erneute Anfrage an den server notwendig.
+- `const isEditMode = editMode` ist ein kurzer Schnappschuss vom Zustand beim Klick auf Speichern.
+- So bleiben API-Aufruf und Erfolgsmeldung korrekt, auch wenn `editMode` später wieder auf `false` gesetzt wird.
+- `Abbrechen` hat `type="button"`, damit das Formular nicht aus Versehen abgeschickt wird.
+
 ### renderProjectList()
 - `renderProjectList(projects, clients)` zeigt alle Projekte in der Liste an.
 - Zuerst wird mit `clientLookup` die passende `clientId` einem Kundennamen zugeordnet.

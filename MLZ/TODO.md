@@ -2,35 +2,7 @@
 
 - [ ] Auto ID Vergabe bei Create Funktionen
 - [ ] JSDoc Dokumentation (Lektion 4)
-
-- [ ] renderProjectList
-
-
-function renderProjectList(projects) {
-  const projectsList = document.getElementById("projectsList");
-  // HTML-Output
-  projectsList.innerHTML = projects
-    .map(
-      (project) => `
-            <div class="project-card">
-                <span class="project-info">${project.name}</span>
-                <span class="project-info">${project.client}</span>
-                <div class="project-actions">
-                    <button data-project-id="${project.id}" class="action-btn edit-project-btn" title="Bearbeiten">✏️</button>
-                    <button data-project-id="${project.id}" class="action-btn delete-project-btn" title="Löschen">🗑️</button>
-                </div>
-            </div>
-        `,
-    )
-    .join("");
-
-  // Event-Listener für "Bearbeiten"
-  document.querySelectorAll(".edit-project-btn").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const projectId = btn.getAttribute("data-project-id");
-      editProject(projectId);
-    });
-  });
+- [ ] editProject muss erst die Daten 
 
 
 
