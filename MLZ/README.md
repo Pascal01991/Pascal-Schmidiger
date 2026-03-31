@@ -16,10 +16,10 @@
 
 ## JSDoc
 JSDoc beschreibt Typen zusätzlich:
-- dokumentieren, was reingeht und rauskommt
+- dokumentieren, was reingeht und rauskommt (Übersicht / Wartbarkeit)
 - Typinformationen für den Editor liefern
 - Autovervollständigung verbessern
-- Hinweise geben
+- Hinweise geben (Bsp. Refactoring wenn eine Property umbenennt wird findet die IDE alle Vorkommen zuverlässig.)
 
 ## main.js
 - `main.js` ist die zentrale Steuerdatei der Benutzeroberfläche.

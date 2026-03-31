@@ -1,4 +1,6 @@
+/** // @ts-check **/
 import { ApiService } from "../services/ApiService.js";
+/** @typedef {import("../models/ProjectModel.js").Project} Project */
 
 // #region Globels
 const api = new ApiService();
