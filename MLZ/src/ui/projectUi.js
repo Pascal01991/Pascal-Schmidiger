@@ -1,3 +1,9 @@
+import { ApiService } from "../services/ApiService.js";
+
+import { setAppStatus } from "./main.js";
+import { renderProjectOptionsForTimeForm } from "./main.js";
+import { showMessageBox } from "./main.js";
+
 const projectClientSelect = document.getElementById("project-client-select");
 const projectForm = document.getElementById("project-form");
 const projectNameInput = document.getElementById("project-name");
@@ -7,6 +13,10 @@ const BtnSaveProject = document.getElementById("BtnSaveProject");
 let editMode = false;
 let currentProjectId = null;
 let currentProjects = [];
+
+// #region Globels
+const api = new ApiService();
+// #endregion Globels
 
 export async function loadProjects() {
   const projects = await api.getProjects();
@@ -49,7 +59,7 @@ function renderProjectList(projects, clients) {
     .join("");
 }
 
-function renderClientOptionsForProjectForm(clients) {
+export function renderClientOptionsForProjectForm(clients) {
   projectClientSelect.innerHTML = '<option value="">-- Bitte waehlen --</option>';
 
   for (const client of clients) {

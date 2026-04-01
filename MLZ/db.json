@@ -1,16 +1,6 @@
 {
   "projects": [
     {
-      "name": "edit5",
-      "clientId": "3",
-      "id": 3
-    },
-    {
-      "name": "create1",
-      "clientId": "4",
-      "id": 6
-    },
-    {
       "name": "asdf",
       "clientId": "2",
       "id": 7
@@ -21,7 +11,7 @@
       "id": 8
     },
     {
-      "name": "asdfasf",
+      "name": "Spesen-App",
       "clientId": "2",
       "id": 9
     }
@@ -101,6 +91,16 @@
       "name": "Kunde 88",
       "address": "asdfasdf",
       "id": 15
+    },
+    {
+      "name": "asd",
+      "address": "df",
+      "id": 16
+    },
+    {
+      "name": "assdfd",
+      "address": "dsf",
+      "id": 17
     }
   ],
   "entries": []

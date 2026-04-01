@@ -1,10 +1,10 @@
 // #region Imports
+import { ApiService } from "../services/ApiService.js";
 import { loadProjects } from "./projectUi.js";
 // #endregion Imports
 
 // #region JS-Doc
 /** // @ts-check **/
-import { ApiService } from "../services/ApiService.js";
 /** @typedef {import("../models/ProjectModel.js").Project} Project */
 //#endregion JS-Doc
 
@@ -12,7 +12,7 @@ import { ApiService } from "../services/ApiService.js";
 const api = new ApiService();
 const appStatus = document.getElementById("app");
 
-function setAppStatus(text) {
+export function setAppStatus(text) {
   appStatus.textContent = text;
 }
 // #endregion Globels
@@ -20,7 +20,7 @@ function setAppStatus(text) {
 // #region Helper
 const message = document.getElementById("message-box");
 
-function showMessageBox(text, color) {
+export function showMessageBox(text, color) {
   message.textContent = text;
   message.style.backgroundColor = color;
   message.style.display = "block";
@@ -37,7 +37,7 @@ const projectSelect = document.getElementById("project-select");
 /**
  * @param {Project[]} projects
  */
-function renderProjectOptionsForTimeForm(projects) {
+export function renderProjectOptionsForTimeForm(projects) {
   projectSelect.innerHTML = '<option value="">-- Bitte waehlen --</option>';
 
   for (const project of projects) {
@@ -55,6 +55,7 @@ const clientForm = document.getElementById("client-form");
 const clientNameInput = document.getElementById("client-name");
 const clientAddressInput = document.getElementById("client-address");
 
+import { renderClientOptionsForProjectForm } from "./projectUi.js";
 async function loadClients() {
   const clients = await api.getClients();
 
