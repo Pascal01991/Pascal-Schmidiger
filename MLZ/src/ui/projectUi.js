@@ -1,8 +1,12 @@
 import { ApiService } from "../services/ApiService.js";
 
 import { setAppStatus } from "./main.js";
-import { renderProjectOptionsForTimeForm } from "./main.js";
 import { showMessageBox } from "./main.js";
+import { renderProjectOptionsForTimeForm } from "./time.js";
+
+// #region Globels
+const api = new ApiService();
+// #endregion Globels
 
 const projectClientSelect = document.getElementById("project-client-select");
 const projectForm = document.getElementById("project-form");
@@ -13,10 +17,6 @@ const BtnSaveProject = document.getElementById("BtnSaveProject");
 let editMode = false;
 let currentProjectId = null;
 let currentProjects = [];
-
-// #region Globels
-const api = new ApiService();
-// #endregion Globels
 
 export async function loadProjects() {
   const projects = await api.getProjects();
@@ -161,6 +161,7 @@ document.getElementById("project-items").addEventListener("click", async (event)
       showMessageBox("Projekt wurde gelöscht!", "green");
     } catch (error) {
       showMessageBox("Fehler: " + error.message, "crimson");
+      console.error(error);
     }
   }
 });

@@ -1,15 +1,13 @@
 // #region Imports
-import { ApiService } from "../services/ApiService.js";
 import { loadProjects } from "./projectUi.js";
-// #endregion Imports
+import { loadClients } from "./clientUI.js";
 
-// #region JS-Doc
 /** // @ts-check **/
 /** @typedef {import("../models/ProjectModel.js").Project} Project */
-//#endregion JS-Doc
+//#endregion Imports
 
 // #region Globels
-const api = new ApiService();
+
 const appStatus = document.getElementById("app");
 
 export function setAppStatus(text) {
@@ -30,81 +28,7 @@ export function showMessageBox(text, color) {
 }
 // #endregion Helper
 
-// #region Time in Project
-
-const projectSelect = document.getElementById("project-select");
-
-/**
- * @param {Project[]} projects
- */
-export function renderProjectOptionsForTimeForm(projects) {
-  projectSelect.innerHTML = '<option value="">-- Bitte waehlen --</option>';
-
-  for (const project of projects) {
-    const option = document.createElement("option");
-    option.value = project.id;
-    option.textContent = project.name;
-    projectSelect.appendChild(option);
-  }
-}
-
-// #endregion Time in Project
-
-// #region Kundenverwaltung
-const clientForm = document.getElementById("client-form");
-const clientNameInput = document.getElementById("client-name");
-const clientAddressInput = document.getElementById("client-address");
-
-import { renderClientOptionsForProjectForm } from "./projectUi.js";
-async function loadClients() {
-  const clients = await api.getClients();
-
-  renderClientOptionsForProjectForm(clients);
-
-  if (clients.length === 0) {
-    setAppStatus("Keine Kunden geladen.");
-    return;
-  }
-  setAppStatus("Alle Daten vom Server geladen.");
-}
-
-function getClientFormData() {
-  return {
-    name: clientNameInput.value.trim(),
-    address: clientAddressInput.value.trim(),
-  };
-}
-
-async function onClientFormSubmit(event) {
-  event.preventDefault();
-
-  if (!clientForm.checkValidity()) {
-    clientForm.reportValidity();
-    return;
-  }
-
-  const newClient = getClientFormData();
-
-  try {
-    await api.createClient(newClient);
-    clientForm.reset();
-    await loadClients();
-    showMessageBox("Kunde '" + newClient.name + "' wurde gespeichert!", "green");
-  } catch (error) {
-    showMessageBox("Fehler: " + error.message, "crimson");
-  }
-}
-
-clientForm.addEventListener("submit", onClientFormSubmit);
-
-// #endregion Kundenverwaltung
-
-// #region Data-Management
-
-//#endregion Data-Management
-
 // #region App-Start
-
 function startApp() {
   try {
     setAppStatus("Lade Projekte...");
@@ -113,9 +37,9 @@ function startApp() {
   } catch (error) {
     setAppStatus("Fehler beim Laden der Daten.");
     showMessageBox("Fehler: " + error.message, "crimson");
+    console.error(error);
   }
 }
 
 startApp();
-
 // #endregion App-Start

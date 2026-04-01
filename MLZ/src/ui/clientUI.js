@@ -1,3 +1,13 @@
+import { ApiService } from "../services/ApiService.js";
+
+import { setAppStatus } from "./main.js";
+import { showMessageBox } from "./main.js";
+import { renderClientOptionsForProjectForm } from "./projectUi.js";
+
+// #region Globels
+const api = new ApiService();
+// #endregion Globels
+
 const clientForm = document.getElementById("client-form");
 const clientNameInput = document.getElementById("client-name");
 const clientAddressInput = document.getElementById("client-address");
@@ -38,6 +48,7 @@ async function onClientFormSubmit(event) {
     showMessageBox("Kunde '" + newClient.name + "' wurde gespeichert!", "green");
   } catch (error) {
     showMessageBox("Fehler: " + error.message, "crimson");
+    console.error(error);
   }
 }
 
