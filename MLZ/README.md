@@ -51,6 +51,20 @@ JSDoc beschreibt Typen zusätzlich:
 - Weniger doppelter Code.
 - Die Render-Funktion bleibt für die Anzeige zustaendig, der Listener fuer die Aktion.
 
+### Validierung
+- Formular-Validierung mit JavaScript umgesetzt.
+- Die Prüfung läuft in einer Funktion wie `validateProjectForm()`.
+- Geprüft werden Pflichtfelder und einfache Regeln, z. B. Mindestlänge beim Projektnamen und ob ein Kunde gewählt ist.
+- Fehler werden direkt im DOM unter dem betroffenen Feld angezeigt.
+- Ungültige Felder erhalten eine sichtbare Markierung mit CSS.
+
+#### Benutzerfreundliche Validierung
+- Die Validierung soll nicht nur technisch korrekt sein, sondern auch benutzerfreundlich.
+- Darum zeigen wir Fehler erst nach dem ersten fehlerhaften Submit-Versuch an. (Überprüfung via `validateProjectFormIfNeeded`.)
+- Danach wird bei jeder weiteren Eingabe direkt nachvalidiert.
+- So ist das Formular am Anfang ruhig und gibt erst dann gezielt Feedback, wenn es nötig ist.
+
+
 ## Learnings
 - `event.preventDefault()` 
 	- **Verhindert das Neuladen der Seite** nach dem Klick auf onsubmit im Formular.

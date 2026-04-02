@@ -51,10 +51,10 @@ function renderProjectList(projects, clients) {
       return `
         <div class="list-row">
           <span class="list-field">
-          ${project.name}
+          <div>${project.id} - ${project.name}</div>
           </span>
           <span class="list-field">
-          <div>${clientName}</div>
+            <div>${project.clientId} - ${clientName}</div>
           <div>${project.completed ? "✅ Abgeschlossen" : "⏳ Offen"}</div>
           </span>
           <div class="list-field-actions">
