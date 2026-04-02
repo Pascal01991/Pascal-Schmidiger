@@ -11,8 +11,10 @@ const api = new ApiService();
 const projectClientSelect = document.getElementById("project-client-select");
 const projectForm = document.getElementById("project-form");
 const projectNameInput = document.getElementById("project-name");
+const projectNameError = document.getElementById("project-name-error");
 const projectCompletedInput = document.getElementById("project-completed");
 const projectClientIdInput = document.getElementById("project-client-select");
+const projectClientError = document.getElementById("project-client-error");
 const BtnCreateProject = document.getElementById("BtnCreateProject");
 const BtnSaveProject = document.getElementById("BtnSaveProject");
 let editMode = false;
@@ -80,6 +82,7 @@ function fillProjectForm(project) {
   projectNameInput.value = project.name;
   projectClientIdInput.value = project.clientId;
   projectCompletedInput.checked = project.completed;
+  clearProjectFormErrors();
 }
 
 function showProjectForm(isEditMode = false) {
@@ -95,6 +98,7 @@ function hideProjectForm() {
   editMode = false;
   currentProjectId = null;
   projectForm.reset();
+  clearProjectFormErrors();
   BtnCreateProject.style.display = "block";
 }
 
@@ -111,8 +115,43 @@ function getProjectFormData() {
   };
 }
 
+function validateProjectForm() {
+  let isValid = true;
+
+  clearProjectFormErrors();
+
+  if (projectNameInput.value.trim() === "") {
+    projectNameError.textContent = "Projektname ist ein Pflichtfeld.";
+    projectNameInput.classList.add("input-error");
+    isValid = false;
+  } else if (projectNameInput.value.trim().length < 3) {
+    projectNameError.textContent = "Projektname muss mindestens 3 Zeichen haben.";
+    projectNameInput.classList.add("input-error");
+    isValid = false;
+  }
+
+  if (projectClientIdInput.value === "") {
+    projectClientError.textContent = "Ein Kunde muss ausgewaehlt sein.";
+    projectClientIdInput.classList.add("input-error");
+    isValid = false;
+  }
+
+  return isValid;
+}
+
+function clearProjectFormErrors() {
+  projectNameError.textContent = "";
+  projectClientError.textContent = "";
+  projectNameInput.classList.remove("input-error");
+  projectClientIdInput.classList.remove("input-error");
+}
+
 async function onProjectFormSubmit(event) {
   event.preventDefault();
+
+  if (!validateProjectForm()) {
+    return;
+  }
 
   const projectData = getProjectFormData();
   const isEditMode = editMode;
@@ -138,6 +177,8 @@ async function onProjectFormSubmit(event) {
 }
 
 projectForm.addEventListener("submit", onProjectFormSubmit);
+projectNameInput.addEventListener("input", validateProjectForm);
+projectClientIdInput.addEventListener("change", validateProjectForm);
 
 document.getElementById("project-items").addEventListener("click", async (event) => {
   const editButton = event.target.closest(".edit-project-btn");

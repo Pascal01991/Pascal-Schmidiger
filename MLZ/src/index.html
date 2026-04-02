@@ -33,10 +33,12 @@
       <form id="project-form" style="display:none;">
         <label for="project-name">Projektname:</label>
         <input type="text" id="project-name" required minlength="3">
+        <p id="project-name-error" class="field-error"></p>
         <label for="project-client-select">Kunde auswaehlen:</label>
         <select id="project-client-select" required>
           <option value="">-- Bitte waehlen --</option>
         </select>
+        <p id="project-client-error" class="field-error"></p>
         <input type="checkbox" id="project-completed">
         <label for="project-completed">Abgeschlossen</label>
         <button id = "BtnSaveProject" type="submit"></button>
