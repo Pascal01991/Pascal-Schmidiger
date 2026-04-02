@@ -139,15 +139,27 @@ function validateProjectForm() {
   return isValid;
 }
 
+let hasTriedToSubmitProjectForm = false;
+
+function validateProjectFormIfNeeded() {
+  if (!hasTriedToSubmitProjectForm) {
+    return;
+  }
+
+  validateProjectForm();
+}
+
 function clearProjectFormErrors() {
   projectNameError.textContent = "";
   projectClientError.textContent = "";
   projectNameInput.classList.remove("input-error");
   projectClientIdInput.classList.remove("input-error");
+  hasTriedToSubmitProjectForm = false;
 }
 
 async function onProjectFormSubmit(event) {
   event.preventDefault();
+  hasTriedToSubmitProjectForm = true;
 
   if (!validateProjectForm()) {
     return;
@@ -177,8 +189,8 @@ async function onProjectFormSubmit(event) {
 }
 
 projectForm.addEventListener("submit", onProjectFormSubmit);
-projectNameInput.addEventListener("input", validateProjectForm);
-projectClientIdInput.addEventListener("change", validateProjectForm);
+projectNameInput.addEventListener("input", validateProjectFormIfNeeded);
+projectClientIdInput.addEventListener("change", validateProjectFormIfNeeded);
 
 document.getElementById("project-items").addEventListener("click", async (event) => {
   const editButton = event.target.closest(".edit-project-btn");
