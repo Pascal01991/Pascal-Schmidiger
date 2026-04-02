@@ -114,11 +114,6 @@ function getProjectFormData() {
 async function onProjectFormSubmit(event) {
   event.preventDefault();
 
-  if (!projectForm.checkValidity()) {
-    projectForm.reportValidity();
-    return;
-  }
-
   const projectData = getProjectFormData();
   const isEditMode = editMode;
 
