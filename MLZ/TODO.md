@@ -4,6 +4,36 @@
 - [ ] JSDoc Dokumentation (Lektion 4)
 - [ ] editProject muss erst die Daten 
 
+- [ ] Ergänzung Datenschema:    
+  
+    - Zeiten
+      - Verrechenbar
+      - VerrechnungsInfo
+      - h
+      - Bemerkung
+      - ProjektID
+      - UserID
+
+    - Projekt:
+      - Zeiten
+      - Abgeschlossen (nur wenn alle Zeiten verrechnet)
+      
+    - Kunde:
+      - Fremd-ID
+      - Aktiv
+
+    - User
+      - ID
+      - Login/Display Name
+      - PW
+      - Vorname Nachname
+      - Rolle
+    - 
+
+    - Optional für alle:
+      - Letzte änderung durch
+      - Erstellt am
+      - Aktualisiert am
 
 
 [ ] JSDoc einbauen Bsp:

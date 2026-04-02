@@ -46,10 +46,10 @@ function renderProjectList(projects, clients) {
       const clientName = clientLookup[project.clientId] || "Unbekannter Client";
 
       return `
-        <div class="project-card">
-          <span class="project-info">${project.name}</span>
-          <span class="project-info">${clientName}</span>
-          <div class="project-actions">
+        <div class="list-row">
+          <span class="list-field">${project.name}</span>
+          <span class="list-field">${clientName}</span>
+          <div class="list-field-actions">
             <button data-project-id="${project.id}" class="action-btn edit-project-btn" title="Bearbeiten">✏️</button>
             <button data-project-id="${project.id}" class="action-btn delete-project-btn" title="Loeschen">🗑️</button>
           </div>
