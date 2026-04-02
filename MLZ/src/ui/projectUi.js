@@ -11,6 +11,7 @@ const api = new ApiService();
 const projectClientSelect = document.getElementById("project-client-select");
 const projectForm = document.getElementById("project-form");
 const projectNameInput = document.getElementById("project-name");
+const projectCompletedInput = document.getElementById("project-completed");
 const projectClientIdInput = document.getElementById("project-client-select");
 const BtnCreateProject = document.getElementById("BtnCreateProject");
 const BtnSaveProject = document.getElementById("BtnSaveProject");
@@ -47,8 +48,13 @@ function renderProjectList(projects, clients) {
 
       return `
         <div class="list-row">
-          <span class="list-field">${project.name}</span>
-          <span class="list-field">${clientName}</span>
+          <span class="list-field">
+          ${project.name}
+          </span>
+          <span class="list-field">
+          <div>${clientName}</div>
+          <div>${project.completed ? "✅ Abgeschlossen" : "⏳ Offen"}</div>
+          </span>
           <div class="list-field-actions">
             <button data-project-id="${project.id}" class="action-btn edit-project-btn" title="Bearbeiten">✏️</button>
             <button data-project-id="${project.id}" class="action-btn delete-project-btn" title="Loeschen">🗑️</button>
@@ -73,6 +79,7 @@ export function renderClientOptionsForProjectForm(clients) {
 function fillProjectForm(project) {
   projectNameInput.value = project.name;
   projectClientIdInput.value = project.clientId;
+  projectCompletedInput.checked = project.completed;
 }
 
 function showProjectForm(isEditMode = false) {
@@ -100,6 +107,7 @@ function getProjectFormData() {
   return {
     name: projectNameInput.value.trim(),
     clientId: projectClientIdInput.value.trim(),
+    completed: projectCompletedInput.checked,
   };
 }
 

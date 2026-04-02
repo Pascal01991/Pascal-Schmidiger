@@ -10,6 +10,8 @@
       - Verrechenbar
       - VerrechnungsInfo
       - h
+      - Datum
+      - Zeit von Zeit bis (optional für Später)
       - Bemerkung
       - ProjektID
       - UserID
