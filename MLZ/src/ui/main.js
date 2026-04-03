@@ -4,7 +4,7 @@ import { loadClients } from "./clientUI.js";
 import { AuthService } from "../services/AuthService.js";
 
 /** // @ts-check **/
-/** @typedef {import("../models/ProjectModel.js").Project} Project */
+/** @typedef {import("../models/projectModel.js").Project} Project */
 //#endregion Imports
 
 // #region Globels
@@ -67,6 +67,8 @@ async function handleDatabaseReset() {
 document.getElementById("deleteDatabase").addEventListener("click", handleDatabaseReset);
 
 async function handleCreateTestData() {
+  console.log("handleCreateTestData aufgerufen");
+
   if (!authService.isManager()) {
     showMessageBox("Nur Manager duerfen Testdaten erstellen.", "crimson");
     return;
@@ -75,18 +77,22 @@ async function handleCreateTestData() {
     setAppStatus("Erstelle Testdaten...");
 
     const client1 = await api.createClient({ name: "ACME Corp", address: "Musterstraße 1" });
+    console.log("Erstellter Client 1:", client1);
     const client2 = await api.createClient({ name: "Stark Industries", address: "Malibu Point 10880" });
+    console.log("Erstellter Client 2:", client2);
 
     await api.createProject({
       name: "Website Relaunch",
       clientId: client1.id,
       completed: false,
     });
+    console.log("Erstelltes Projekt nach Await 1:");
     await api.createProject({
       name: "Iron Man Suit Maintenance",
       clientId: client2.id,
       completed: true,
     });
+    console.log("Erstelltes Projekt nach Await 2:");
     await api.createProject({
       name: "Logo Design",
       clientId: client1.id,

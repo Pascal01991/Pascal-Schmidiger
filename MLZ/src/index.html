@@ -56,6 +56,8 @@
         <label for="project-name">Projektname:*</label>
         <input type="text" id="project-name">
         <p id="project-name-error" class="field-error"></p>
+          <label for="project-external-reference">Externe Referenz:</label>
+        <input type="text" id="project-external-reference">
         <label for="project-client-select">Kunde auswaehlen:*</label>
         <select id="project-client-select">
           <option value="">-- Bitte waehlen --</option>
@@ -79,26 +81,59 @@
             Kundenname
           </label>
           <label class="search-filter-option">
+            <input type="checkbox" id="search-project-external-reference-field" checked>
+            Externe Referenz
+          </label>
+          <label class="search-filter-option">
             <input type="checkbox" id="search-project-status-field" checked>
             Status
           </label>
         </div>
-        <!-- Projektliste in einem scrollbaren Container -->
-         <!-- TODO: CSS Klasse -->
-          <div id="project-items" class="scrollable-list-item"></div>
+        <div id="project-items" class="scrollable-list-item"></div>
      
       </div>
     </section>
 
     <section id="client-section" data-manager-only="true">
       <h2>Neuer Kunde anlegen</h2>
-      <form id="client-form">
-        <label for="client-name">Kundenname:</label>
-        <input type="text" id="client-name" required minlength="3">
-        <label for="client-address">Kundenadresse:</label>
-        <input type="text" id="client-address" required>
-        <button type="submit">Kunde speichern</button>
-      </form>
+      
+      <button id="BtnCreateClient">Neuer Kunde anlegen</button>
+      <form id="client-form" style="display:none;">
+              <label for="client-name">Kundenname:</label>
+              <input type="text" id="client-name">
+                <p id="client-name-error" class="field-error"></p>
+              <label for="client-address">Kundenadresse:</label>
+              <input type="text" id="client-address">
+                <p id="client-address-error" class="field-error"></p>
+                <label type ="text" for="client-external-reference">Externe Referenz:</label>
+                <input type="text" id="client-external-reference">
+                <label for="client-active">Aktiv:</label>
+                <input type="checkbox" id="client-active" checked>
+              <button id = "BtnSaveClient" type="submit"></button>
+              <button id ="BtnCloseClientForm" type="button">Abbrechen</button>
+            </form>
+      <div id="clientsList" class="scrollable-list">
+        <input type="text" id="searchClient" placeholder="Kunden suchen">
+        <div class="search-filter-group">
+          <label class="search-filter-option">
+            <input type="checkbox" id="search-client-name-field" checked>
+            Kundenname
+          </label>
+          <label class="search-filter-option">
+            <input type="checkbox" id="search-client-address-field" checked>
+            Kundenadresse
+          </label>
+          <label class="search-filter-option">
+            <input type="checkbox" id="search-client-external-reference-field" checked>
+            Externe Referenz
+          </label>
+          <label class="search-filter-option">
+            <input type="checkbox" id="search-client-active-field" checked>
+            Aktiv
+          </label>
+        </div>
+        <div id="client-items" class="scrollable-list-item"></div>
+      </div>
     </section>
 
     <section id="data-management-section" data-manager-only="true">

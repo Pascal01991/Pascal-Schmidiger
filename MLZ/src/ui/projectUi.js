@@ -13,6 +13,7 @@ const api = new ApiService();
 const projectForm = document.getElementById("project-form");
 const projectNameInput = document.getElementById("project-name");
 const projectNameError = document.getElementById("project-name-error");
+const projectExternalReferenceInput = document.getElementById("project-external-reference");
 const projectCompletedInput = document.getElementById("project-completed");
 const projectClientIdInput = document.getElementById("project-client-select");
 const projectClientError = document.getElementById("project-client-error");
@@ -20,6 +21,7 @@ const CreateProjectButton = document.getElementById("BtnCreateProject");
 const SaveProjectButton = document.getElementById("BtnSaveProject");
 const projectSearchInput = document.getElementById("searchProject");
 const projectSearchNameField = document.getElementById("search-project-name-field");
+const projectSearchExternalReferenceField = document.getElementById("search-project-external-reference-field");
 const projectSearchClientField = document.getElementById("search-project-client-field");
 const projectSearchStatusField = document.getElementById("search-project-status-field");
 const projectItemsList = document.getElementById("project-items");
@@ -65,6 +67,10 @@ function getSelectedProjectSearchFields() {
     selectedFields.push("name");
   }
 
+  if (projectSearchExternalReferenceField.checked) {
+    selectedFields.push("externalReference");
+  }
+
   if (projectSearchClientField.checked) {
     selectedFields.push("clientName");
   }
@@ -83,7 +89,7 @@ function renderFilteredProjectList() {
 /**
  * Baut die Projektliste aus den geladenen Daten neu auf.
  * Vor dem Rendern werden die Projekte anhand der aktiven Suchfelder gefiltert.
- * @param {Array<{id: number|string, name: string, clientId: number|string, completed: boolean}>} projects
+ * @param {Array<{id: number|string, name: string, externalReference: string, clientId: number|string, completed: boolean}>} projects
  * @param {Array<{id: number|string, name: string}>} clients
  */
 function renderProjectList(projects, clients) {
@@ -100,7 +106,7 @@ function renderProjectList(projects, clients) {
     const { clientName, statusText } = getProjectMetaData(project, clientLookup);
 
     return entityMatchesSearch(
-      { name: project.name, clientName: clientName, status: statusText },
+      { name: project.name, externalReference: project.externalReference, clientName: clientName, status: statusText },
       searchText,
       selectedFields,
     );
@@ -119,6 +125,7 @@ function renderProjectList(projects, clients) {
         <div class="list-row">
           <span class="list-field">
           <div>${project.id} - ${highlightText(project.name, searchText)}</div>
+          <div>${highlightText(project.externalReference, searchText)}</div>
           </span>
           <span class="list-field">
             <div>${project.clientId} - ${highlightText(clientName, searchText)}</div>
@@ -156,6 +163,7 @@ export function renderClientOptionsForProjectForm(clients) {
 
 function fillProjectForm(project) {
   projectNameInput.value = project.name;
+  projectExternalReferenceInput.value = project.externalReference;
   projectClientIdInput.value = project.clientId;
   projectCompletedInput.checked = project.completed;
   clearProjectFormErrors();
@@ -183,11 +191,12 @@ document.getElementById("BtnCloseProjectForm").addEventListener("click", hidePro
 
 // #region Form Validation and Submit
 /**
- * @returns {{ name: string, clientId: number }}
+ * @returns {{ name: string, externalReference: string, clientId: number, completed: boolean }}
  */
 function getProjectFormData() {
   return {
     name: projectNameInput.value.trim(),
+    externalReference: projectExternalReferenceInput.value.trim(),
     clientId: projectClientIdInput.value.trim(),
     completed: projectCompletedInput.checked,
   };
@@ -233,6 +242,7 @@ function clearProjectFormErrors() {
   projectNameError.textContent = "";
   projectClientError.textContent = "";
   projectNameInput.classList.remove("input-error");
+  projectExternalReferenceInput.textContent = "";
   projectClientIdInput.classList.remove("input-error");
   hasTriedToSubmitProjectForm = false;
 }
@@ -243,6 +253,7 @@ function clearProjectFormErrors() {
  *
  * @param {SubmitEvent} event
  */
+
 async function onProjectFormSubmit(event) {
   event.preventDefault();
   hasTriedToSubmitProjectForm = true;
@@ -281,6 +292,7 @@ projectNameInput.addEventListener("input", validateProjectFormIfNeeded);
 projectClientIdInput.addEventListener("change", validateProjectFormIfNeeded);
 projectSearchInput.addEventListener("input", renderFilteredProjectList);
 projectSearchNameField.addEventListener("change", renderFilteredProjectList);
+projectSearchExternalReferenceField.addEventListener("change", renderFilteredProjectList);
 projectSearchClientField.addEventListener("change", renderFilteredProjectList);
 projectSearchStatusField.addEventListener("change", renderFilteredProjectList);
 
