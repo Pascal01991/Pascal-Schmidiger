@@ -72,27 +72,19 @@ export class ApiService {
 
   // #endregion Benutzerverwaltung
 
-  // Datamanagement
-  // ApiService.js
-
-  // Füge diese Methode in die ApiService Klasse ein
   async resetDatabase() {
     const projects = await this.getProjects();
     const clients = await this.getClients();
 
-    // Alle Projekte löschen
     for (const project of projects) {
       await this.request(`/projects/${project.id}`, { method: "DELETE" });
       await this.sleep(100);
     }
 
-    // Alle Kunden löschen
     for (const client of clients) {
       await this.request(`/clients/${client.id}`, { method: "DELETE" });
       await this.sleep(100);
     }
-
-    // Warten, bis alle Löschvorgänge abgeschlossen sind
   }
 
   sleep(ms) {
