@@ -2,126 +2,56 @@
   "projects": [
     {
       "name": "asdf",
+      "clientId": "1",
+      "completed": false,
+      "id": 1
+    },
+    {
+      "name": "asdf",
+      "clientId": "1",
+      "completed": false,
+      "id": 2
+    },
+    {
+      "name": "asdfasdf",
+      "clientId": "3",
+      "completed": false,
+      "id": 3
+    },
+    {
+      "name": "asdf",
+      "clientId": "1",
+      "completed": false,
+      "id": 4
+    },
+    {
+      "name": "dfdf",
       "clientId": "2",
-      "id": 7
+      "completed": false,
+      "id": 5
     },
     {
       "name": "asdf",
       "clientId": "2",
-      "id": 8
-    },
-    {
-      "name": "Spesen-App",
-      "clientId": "2",
-      "id": 9
-    },
-    {
-      "name": "asdf",
-      "clientId": "2",
-      "completed": true,
-      "id": 10
+      "completed": false,
+      "id": 6
     }
   ],
   "clients": [
     {
-      "name": "asdfasdf",
-      "address": "sadfasdf",
+      "name": "asdf",
+      "address": "asdf",
       "id": 1
     },
     {
-      "name": "asdfasdf",
-      "address": "asdfasdf",
+      "name": "asdf",
+      "address": "sadf",
       "id": 2
     },
     {
-      "name": "234r23ew",
-      "address": "asdf2",
+      "name": "asdf",
+      "address": "sdaf",
       "id": 3
-    },
-    {
-      "name": "Kunde1",
-      "address": "Adresse 1",
-      "id": 4
-    },
-    {
-      "name": "Kunde 2",
-      "address": "Adresse 2",
-      "id": 5
-    },
-    {
-      "name": "ddd",
-      "address": "dddd",
-      "id": 6
-    },
-    {
-      "name": "ddd",
-      "address": "dddd",
-      "id": 7
-    },
-    {
-      "name": "ddd",
-      "address": "ddd",
-      "id": 8
-    },
-    {
-      "name": "66666",
-      "address": "66666",
-      "id": 9
-    },
-    {
-      "name": "sddf",
-      "address": "dfdf",
-      "id": 10
-    },
-    {
-      "name": "asdfsdf",
-      "address": "asdfasdf",
-      "id": 11
-    },
-    {
-      "name": "asdfasdf",
-      "address": "asdfasdf",
-      "id": 12
-    },
-    {
-      "name": "asdfasdf",
-      "address": "asdfasdf",
-      "id": 13
-    },
-    {
-      "name": "asdfasdf",
-      "address": "asdf",
-      "id": 14
-    },
-    {
-      "name": "Kunde 88",
-      "address": "asdfasdf",
-      "id": 15
-    },
-    {
-      "name": "asd",
-      "address": "df",
-      "id": 16
-    },
-    {
-      "name": "assdfd",
-      "address": "dsf",
-      "id": 17
-    },
-    {
-      "name": "ddg",
-      "address": "j",
-      "id": 18
-    },
-    {
-      "name": "ffff",
-      "address": "f",
-      "id": 19
-    },
-    {
-      "name": "Mahler Müller",
-      "address": "Hochdorf",
-      "id": 20
     }
   ],
   "entries": []

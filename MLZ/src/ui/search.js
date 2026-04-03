@@ -1,3 +1,11 @@
+// #region Helpers
+/**
+ * Maskiert HTML-Sonderzeichen, damit Suchtreffer sicher als HTML ausgegeben
+ * und spaeter mit <mark> kombiniert werden koennen.
+ *
+ * @param {string} text
+ * @returns {string}
+ */
 function escapeHtml(text) {
   return String(text)
     .replaceAll("&", "&amp;")
@@ -6,11 +14,29 @@ function escapeHtml(text) {
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#39;");
 }
+// #endregion Helpers
 
+// #region Search Normalization
+/**
+ * Vereinheitlicht den Suchtext fuer Vergleiche:
+ * trimmt Leerzeichen und wandelt alles in Kleinbuchstaben um.
+ *
+ * @param {string} text
+ * @returns {string}
+ */
 export function normalizeSearchText(text) {
-  return String(text || "").trim().toLowerCase();
+  return String(text || "")
+    .trim()
+    .toLowerCase();
 }
 
+/**
+ * Zerlegt den Suchtext in einzelne Suchbegriffe.
+ * Mehrere Leerzeichen werden dabei ignoriert.
+ *
+ * @param {string} text
+ * @returns {string[]}
+ */
 export function getSearchTerms(text) {
   const normalizedSearchText = normalizeSearchText(text);
 
@@ -20,7 +46,18 @@ export function getSearchTerms(text) {
 
   return normalizedSearchText.split(" ").filter((term) => term !== "");
 }
+// #endregion Search Normalization
 
+// #region Search Matching
+/**
+ * Prueft, ob alle Suchbegriffe in den ausgewaehlten Feldern vorkommen.
+ * Die Begriffe duerfen dabei ueber verschiedene Felder verteilt sein.
+ *
+ * @param {Object.<string, string>} fields
+ * @param {string} searchText
+ * @param {string[]} selectedFields
+ * @returns {boolean}
+ */
 export function entityMatchesSearch(fields, searchText, selectedFields) {
   const searchTerms = getSearchTerms(searchText);
 
@@ -51,7 +88,18 @@ export function entityMatchesSearch(fields, searchText, selectedFields) {
 
   return true;
 }
+// #endregion Search Matching
 
+// #region Highlighting
+/**
+ * Hebt alle gefundenen Suchbegriffe im angezeigten Text hervor.
+ * Die Logik bleibt absichtlich einfach und markiert Begriffe in der Reihenfolge
+ * ihres Auftretens im Text.
+ *
+ * @param {string} text
+ * @param {string} searchText
+ * @returns {string}
+ */
 export function highlightText(text, searchText) {
   const safeText = String(text || "");
   const searchTerms = getSearchTerms(searchText);
@@ -93,3 +141,4 @@ export function highlightText(text, searchText) {
 
   return result;
 }
+// #endregion Highlighting

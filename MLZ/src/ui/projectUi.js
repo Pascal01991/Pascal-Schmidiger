@@ -1,10 +1,8 @@
 // #region Imports
 import { ApiService } from "../services/ApiService.js";
-import { entityMatchesSearch } from "./search.js";
-import { highlightText } from "./search.js";
+import { entityMatchesSearch, highlightText } from "./search.js";
 import { renderProjectOptionsForTimeForm } from "./time.js";
-import { setAppStatus } from "./main.js";
-import { showMessageBox } from "./main.js";
+import { setAppStatus, showMessageBox } from "./main.js";
 // #endregion Imports
 
 // #region Globals
@@ -12,19 +10,19 @@ const api = new ApiService();
 // #endregion Globals
 
 // #region DOM References
-const projectClientSelect = document.getElementById("project-client-select");
 const projectForm = document.getElementById("project-form");
 const projectNameInput = document.getElementById("project-name");
 const projectNameError = document.getElementById("project-name-error");
 const projectCompletedInput = document.getElementById("project-completed");
 const projectClientIdInput = document.getElementById("project-client-select");
 const projectClientError = document.getElementById("project-client-error");
-const BtnCreateProject = document.getElementById("BtnCreateProject");
-const BtnSaveProject = document.getElementById("BtnSaveProject");
+const CreateProjectButton = document.getElementById("BtnCreateProject");
+const SaveProjectButton = document.getElementById("BtnSaveProject");
 const projectSearchInput = document.getElementById("searchProject");
 const projectSearchNameField = document.getElementById("search-project-name-field");
 const projectSearchClientField = document.getElementById("search-project-client-field");
 const projectSearchStatusField = document.getElementById("search-project-status-field");
+const projectItemsList = document.getElementById("project-items");
 // #endregion DOM References
 
 // #region State
@@ -89,7 +87,7 @@ function renderFilteredProjectList() {
  * @param {Array<{id: number|string, name: string}>} clients
  */
 function renderProjectList(projects, clients) {
-  const projectsList = document.getElementById("project-items");
+  const projectsList = projectItemsList;
   const clientLookup = {};
   const searchText = projectSearchInput.value;
   const selectedFields = getSelectedProjectSearchFields();
@@ -99,8 +97,7 @@ function renderProjectList(projects, clients) {
   }
 
   const filteredProjects = projects.filter((project) => {
-    const clientName = clientLookup[project.clientId] || "Unbekannter Client";
-    const statusText = project.completed ? "Abgeschlossen" : "Offen";
+    const { clientName, statusText } = getProjectMetaData(project, clientLookup);
 
     return entityMatchesSearch(
       { name: project.name, clientName: clientName, status: statusText },
@@ -116,8 +113,7 @@ function renderProjectList(projects, clients) {
 
   projectsList.innerHTML = filteredProjects
     .map((project) => {
-      const clientName = clientLookup[project.clientId] || "Unbekannter Client";
-      const statusText = project.completed ? "✅ Abgeschlossen" : "⏳ Offen";
+      const { clientName, statusText } = getProjectMetaData(project, clientLookup);
 
       return `
         <div class="list-row">
@@ -137,17 +133,24 @@ function renderProjectList(projects, clients) {
     })
     .join("");
 }
+
+function getProjectMetaData(project, clientLookup) {
+  const clientName = clientLookup[project.clientId] || "Unbekannter Client";
+  let statusText = project.completed ? "✅ Abgeschlossen" : "⏳offen";
+
+  return { clientName, statusText };
+}
 // #endregion Loading and Search
 
 // #region Form Rendering
 export function renderClientOptionsForProjectForm(clients) {
-  projectClientSelect.innerHTML = '<option value="">-- Bitte waehlen --</option>';
+  projectClientIdInput.innerHTML = '<option value="">-- Bitte waehlen --</option>';
 
   for (const client of clients) {
     const option = document.createElement("option");
     option.value = client.id;
     option.textContent = client.name;
-    projectClientSelect.appendChild(option);
+    projectClientIdInput.appendChild(option);
   }
 }
 
@@ -160,11 +163,11 @@ function fillProjectForm(project) {
 
 function showProjectForm(isEditMode = false) {
   projectForm.style.display = "block";
-  BtnCreateProject.style.display = "none";
-  BtnSaveProject.textContent = isEditMode ? "Änderung speichern" : "Projekt anlegen";
+  CreateProjectButton.style.display = "none";
+  SaveProjectButton.textContent = isEditMode ? "Änderung speichern" : "Projekt anlegen";
 }
 
-BtnCreateProject.addEventListener("click", () => showProjectForm());
+CreateProjectButton.addEventListener("click", () => showProjectForm());
 
 function hideProjectForm() {
   projectForm.style.display = "none";
@@ -172,7 +175,7 @@ function hideProjectForm() {
   currentProjectId = null;
   projectForm.reset();
   clearProjectFormErrors();
-  BtnCreateProject.style.display = "block";
+  CreateProjectButton.style.display = "block";
 }
 
 document.getElementById("BtnCloseProjectForm").addEventListener("click", hideProjectForm);
@@ -287,7 +290,7 @@ projectSearchStatusField.addEventListener("change", renderFilteredProjectList);
  *
  * @param {MouseEvent} event
  */
-document.getElementById("project-items").addEventListener("click", async (event) => {
+projectItemsList.addEventListener("click", async (event) => {
   const editButton = event.target.closest(".edit-project-btn");
   const deleteButton = event.target.closest(".delete-project-btn");
 

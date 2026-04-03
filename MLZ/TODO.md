@@ -1,10 +1,10 @@
 ## Offene Aufgaben
 
-- [ ] Auto ID Vergabe bei Create Funktionen
+- [x] Auto ID Vergabe bei Create Funktionen
 - [ ] JSDoc Dokumentation (Lektion 4)
-- [ ] editProject muss erst die Daten 
+- [x] editProject muss erst die Daten 
 
-- [ ] Ergänzung Datenschema:    
+- [ ] Ergänzung Datenschema inkl. JSDoc Typen in models:    
   
     - Zeiten
       - Verrechenbar
@@ -23,6 +23,9 @@
     - Kunde:
       - Fremd-ID
       - Aktiv
+      - Adresse
+        - ...
+      - 
 
     - User
       - ID
@@ -38,28 +41,6 @@
       - Aktualisiert am
 
 
-[ ] JSDoc einbauen Bsp:
-Zum Beispiel oben in Main.js oder in einer separaten types.js/models.js:
-/**
- * @typedef {Object} Client
- * @property {number} id
- * @property {string} name
- * @property {string} address
- */
-
-/**
- * @typedef {Object} Project
- * @property {number} id
- * @property {string} name
- * @property {number} clientId
- */
-
-
-
-
-
-
-
 ## Offene Aufgaben Prio 2
 - [ ] Models - TypeScript-Typen?
 - [ ] Fehlerbehandlung siehe unten.
@@ -68,8 +49,6 @@ Zum Beispiel oben in Main.js oder in einer separaten types.js/models.js:
 - [x] ApiService.js
 - [x] main.js
 - [ ] index.html
-
-
 
 
 Fehlerbehandlung:

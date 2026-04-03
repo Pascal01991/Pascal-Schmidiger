@@ -80,6 +80,9 @@ Mit filter() werden passende Einträge aus der Liste gewählt.
 Einfache String-Suche: Mit `trim()`, `toLowerCase()` und `includes()`.
 Mehrere Suchbegriffe werden per Leerzeichen getrennt und mit UND-Logik geprueft: Ein Projekt wird nur angezeigt, wenn alle Suchwoerter in den ausgewaehlten Feldern vorkommen.
 
+#### Maskieren der Sucheingabe
+- Damit die Suchfunktion mit TextHighlighting und robust funktioniert wurde die Funktion `escapeHtml()` implemntiert. Diese Maskiert die Sucheingabe so dass sie auch als Text verstanden und verarbeitet wird und nicht als HTML oder gar JavaScript Code!
+
 ## Learnings
 - `event.preventDefault()` 
 	- **Verhindert das Neuladen der Seite** nach dem Klick auf onsubmit im Formular.
