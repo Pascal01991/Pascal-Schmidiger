@@ -1,7 +1,47 @@
 :root {
+  --font-family-base: consolas, monospace;
+  --background-page: #ffffff;
   --background-medium: #f0f0f0;
+  --background-panel: #f8f8f8;
+  --text-color: #111111;
   --border-medium: #ccc;
-  font-family: consolas, monospace;
+  --button-background: #e2e2e2;
+  --mark-color: #fff59d;
+  font-family: var(--font-family-base);
+}
+
+:root[data-theme="dark"] {
+  --background-page: #1f1f1f;
+  --background-medium: #2a2a2a;
+  --background-panel: #333333;
+  --text-color: #f3f3f3;
+  --border-medium: #555;
+  --button-background: #444444;
+  --mark-color: #8f8400;
+}
+
+body {
+  background-color: var(--background-page);
+  color: var(--text-color);
+}
+
+section {
+  background-color: var(--background-panel);
+  border: 1px solid var(--border-medium);
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+input,
+select,
+button {
+  font-family: var(--font-family-base);
+}
+
+button {
+  background-color: var(--button-background);
+  color: var(--text-color);
+  border: 1px solid var(--border-medium);
 }
 
 .scrollable-list {
@@ -65,5 +105,5 @@
 }
 
 mark {
-  background-color: #fff59d;
+  background-color: var(--mark-color);
 }

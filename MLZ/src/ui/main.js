@@ -17,8 +17,10 @@ const loginPasswordInput = document.getElementById("login-password");
 const loginError = document.getElementById("login-error");
 const currentUserInfo = document.getElementById("current-user-info");
 const logoutButton = document.getElementById("logout-button");
+const themeToggle = document.getElementById("theme-toggle");
 const managerOnlySections = document.querySelectorAll("[data-manager-only='true']");
 const authService = new AuthService();
+const THEME_STORAGE_KEY = "theme";
 
 export function setAppStatus(text) {
   appStatus.textContent = text;
@@ -37,6 +39,28 @@ export function showMessageBox(text, color) {
   }, 3000);
 }
 // #endregion Helper
+
+// #region Theme
+function applyTheme(theme) {
+  document.documentElement.setAttribute("data-theme", theme);
+  themeToggle.checked = theme === "dark";
+}
+
+function loadSavedTheme() {
+  const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+  const theme = savedTheme === "dark" ? "dark" : "light";
+  applyTheme(theme);
+}
+
+function handleThemeToggleChange() {
+  const theme = themeToggle.checked ? "dark" : "light";
+  applyTheme(theme);
+  localStorage.setItem(THEME_STORAGE_KEY, theme);
+}
+
+themeToggle.addEventListener("change", handleThemeToggleChange);
+loadSavedTheme();
+// #endregion Theme
 
 // #region Data-Management
 import { ApiService } from "../services/ApiService.js";
