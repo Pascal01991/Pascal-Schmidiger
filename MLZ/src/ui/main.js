@@ -29,8 +29,6 @@ export function showMessageBox(text, color) {
 // #endregion Helper
 
 // #region Data-Management
-// main.js (oder wo deine globalen Buttons verwaltet werden)
-
 import { ApiService } from "../services/ApiService.js";
 const api = new ApiService();
 
@@ -43,7 +41,6 @@ async function handleDatabaseReset() {
     setAppStatus("Setze Datenbank zurück...");
     await api.resetDatabase();
 
-    // UI neu laden (wird nun leer sein)
     await loadProjects();
     await loadClients();
 
@@ -53,8 +50,46 @@ async function handleDatabaseReset() {
   }
 }
 
-// Event-Listener an einen Button binden (muss in deinem HTML existieren)
 document.getElementById("deleteDatabase").addEventListener("click", handleDatabaseReset);
+
+async function handleCreateTestData() {
+  try {
+    setAppStatus("Erstelle Testdaten...");
+
+    // 1. Beispiel-Kunden anlegen
+    const client1 = await api.createClient({ name: "ACME Corp", address: "Musterstraße 1" });
+    const client2 = await api.createClient({ name: "Stark Industries", address: "Malibu Point 10880" });
+
+    // 2. Beispiel-Projekte anlegen (verknüpft mit den IDs der neuen Kunden)
+    await api.createProject({
+      name: "Website Relaunch",
+      clientId: client1.id,
+      completed: false,
+    });
+    await api.createProject({
+      name: "Iron Man Suit Maintenance",
+      clientId: client2.id,
+      completed: true,
+    });
+    await api.createProject({
+      name: "Logo Design",
+      clientId: client1.id,
+      completed: false,
+    });
+
+    // 3. UI aktualisieren
+    await loadProjects();
+    await loadClients();
+
+    showMessageBox("Testdaten erfolgreich erstellt!", "green");
+    setAppStatus("Bereit");
+  } catch (error) {
+    showMessageBox("Fehler beim Erstellen der Testdaten: " + error.message, "crimson");
+    console.error(error);
+  }
+}
+
+document.getElementById("createTestData").addEventListener("click", handleCreateTestData);
 // #endregion Data-Management
 
 // #region App-Start
