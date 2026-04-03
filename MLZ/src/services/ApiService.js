@@ -81,13 +81,21 @@ export class ApiService {
     const clients = await this.getClients();
 
     // Alle Projekte löschen
-    const projectDeletions = projects.map((p) => this.request(`/projects/${p.id}`, { method: "DELETE" }));
-    await Promise.all(projectDeletions);
+    for (const project of projects) {
+      await this.request(`/projects/${project.id}`, { method: "DELETE" });
+      await this.sleep(100);
+    }
 
     // Alle Kunden löschen
-    const clientDeletions = clients.map((c) => this.request(`/clients/${c.id}`, { method: "DELETE" }));
+    for (const client of clients) {
+      await this.request(`/clients/${client.id}`, { method: "DELETE" });
+      await this.sleep(100);
+    }
 
     // Warten, bis alle Löschvorgänge abgeschlossen sind
-    await Promise.all(clientDeletions);
+  }
+
+  sleep(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 }

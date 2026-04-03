@@ -1,7 +1,7 @@
 // #region Imports
 import { ApiService } from "../services/ApiService.js";
 import { entityMatchesSearch, highlightText } from "./search.js";
-import { renderProjectOptionsForTimeForm } from "./time.js";
+import { renderProjectOptionsForTimeForm } from "./activityUI.js";
 import { setAppStatus, showMessageBox } from "./main.js";
 // #endregion Imports
 
@@ -17,13 +17,14 @@ const projectExternalReferenceInput = document.getElementById("project-external-
 const projectCompletedInput = document.getElementById("project-completed");
 const projectClientIdInput = document.getElementById("project-client-select");
 const projectClientError = document.getElementById("project-client-error");
-const CreateProjectButton = document.getElementById("BtnCreateProject");
-const SaveProjectButton = document.getElementById("BtnSaveProject");
+const createProjectButton = document.getElementById("BtnCreateProject");
+const saveProjectButton = document.getElementById("BtnSaveProject");
+const closeProjectFormButton = document.getElementById("BtnCloseProjectForm");
 const projectSearchInput = document.getElementById("searchProject");
-const projectSearchNameField = document.getElementById("search-project-name-field");
-const projectSearchExternalReferenceField = document.getElementById("search-project-external-reference-field");
-const projectSearchClientField = document.getElementById("search-project-client-field");
-const projectSearchStatusField = document.getElementById("search-project-status-field");
+const projectSearchNameCheckbox = document.getElementById("search-project-name-checkbox");
+const projectSearchExternalReferenceCheckbox = document.getElementById("search-project-external-reference-checkbox");
+const projectSearchClientCheckbox = document.getElementById("search-project-client-checkbox");
+const projectSearchStatusCheckbox = document.getElementById("search-project-status-checkbox");
 const projectItemsList = document.getElementById("project-items");
 // #endregion DOM References
 
@@ -34,6 +35,55 @@ let currentProjects = [];
 let currentClients = [];
 let hasTriedToSubmitProjectForm = false;
 // #endregion State
+
+// #region Event Listeners
+projectForm.addEventListener("submit", onProjectFormSubmit);
+projectNameInput.addEventListener("input", validateProjectFormIfNeeded);
+projectClientIdInput.addEventListener("change", validateProjectFormIfNeeded);
+projectSearchInput.addEventListener("input", renderFilteredProjectList);
+projectSearchNameCheckbox.addEventListener("change", renderFilteredProjectList);
+projectSearchExternalReferenceCheckbox.addEventListener("change", renderFilteredProjectList);
+projectSearchClientCheckbox.addEventListener("change", renderFilteredProjectList);
+projectSearchStatusCheckbox.addEventListener("change", renderFilteredProjectList);
+createProjectButton.addEventListener("click", () => showProjectForm());
+closeProjectFormButton.addEventListener("click", hideProjectForm);
+
+/**
+ * Delegierter Klick-Handler fuer die dynamisch gerenderte Projektliste.
+ * Dadurch funktionieren Bearbeiten und Loeschen auch nach jedem Neu-Rendern.
+ *
+ * @param {MouseEvent} event
+ */
+projectItemsList.addEventListener("click", async (event) => {
+  const editButton = event.target.closest(".edit-project-btn");
+  const deleteButton = event.target.closest(".delete-project-btn");
+
+  if (editButton) {
+    const projectId = editButton.getAttribute("data-project-id");
+    const project = currentProjects.find((item) => String(item.id) === projectId);
+
+    if (project) {
+      currentProjectId = project.id;
+      editMode = true;
+      fillProjectForm(project);
+      showProjectForm(true);
+    }
+  }
+
+  if (deleteButton) {
+    const projectId = deleteButton.getAttribute("data-project-id");
+
+    try {
+      await api.deleteProject(projectId);
+      await loadProjects();
+      showMessageBox("Projekt wurde gelöscht!", "green");
+    } catch (error) {
+      showMessageBox("Fehler: " + error.message, "crimson");
+      console.error(error);
+    }
+  }
+});
+// #endregion Event Listeners
 
 // #region Loading and Search
 /**
@@ -53,7 +103,7 @@ export async function loadProjects() {
     setAppStatus("Keine Projekte geladen.");
     return;
   }
-  setAppStatus("Alle Daten vom Server geladen.");
+  setAppStatus("Server verbunden.");
 }
 
 /**
@@ -63,19 +113,19 @@ export async function loadProjects() {
 function getSelectedProjectSearchFields() {
   const selectedFields = [];
 
-  if (projectSearchNameField.checked) {
+  if (projectSearchNameCheckbox.checked) {
     selectedFields.push("name");
   }
 
-  if (projectSearchExternalReferenceField.checked) {
+  if (projectSearchExternalReferenceCheckbox.checked) {
     selectedFields.push("externalReference");
   }
 
-  if (projectSearchClientField.checked) {
+  if (projectSearchClientCheckbox.checked) {
     selectedFields.push("clientName");
   }
 
-  if (projectSearchStatusField.checked) {
+  if (projectSearchStatusCheckbox.checked) {
     selectedFields.push("status");
   }
 
@@ -104,7 +154,6 @@ function renderProjectList(projects, clients) {
 
   const filteredProjects = projects.filter((project) => {
     const { clientName, statusText } = getProjectMetaData(project, clientLookup);
-
     return entityMatchesSearch(
       { name: project.name, externalReference: project.externalReference, clientName: clientName, status: statusText },
       searchText,
@@ -124,11 +173,11 @@ function renderProjectList(projects, clients) {
       return `
         <div class="list-row">
           <span class="list-field">
-          <div>${project.id} - ${highlightText(project.name, searchText)}</div>
-          <div>${highlightText(project.externalReference, searchText)}</div>
+            <div>${project.id} - ${highlightText(project.name, searchText)}</div>
+            <div>${project.clientId} - ${highlightText(clientName, searchText)}</div>
           </span>
           <span class="list-field">
-            <div>${project.clientId} - ${highlightText(clientName, searchText)}</div>
+            <div>${highlightText(project.externalReference, searchText)}</div>          
             <div>${highlightText(statusText, searchText)}</div>
           </span>
           <div class="list-field-actions">
@@ -171,11 +220,9 @@ function fillProjectForm(project) {
 
 function showProjectForm(isEditMode = false) {
   projectForm.style.display = "block";
-  CreateProjectButton.style.display = "none";
-  SaveProjectButton.textContent = isEditMode ? "Änderung speichern" : "Projekt anlegen";
+  createProjectButton.style.display = "none";
+  saveProjectButton.textContent = isEditMode ? "Änderung speichern" : "Projekt anlegen";
 }
-
-CreateProjectButton.addEventListener("click", () => showProjectForm());
 
 function hideProjectForm() {
   projectForm.style.display = "none";
@@ -183,10 +230,9 @@ function hideProjectForm() {
   currentProjectId = null;
   projectForm.reset();
   clearProjectFormErrors();
-  CreateProjectButton.style.display = "block";
+  createProjectButton.style.display = "block";
 }
 
-document.getElementById("BtnCloseProjectForm").addEventListener("click", hideProjectForm);
 // #endregion Form Rendering
 
 // #region Form Validation and Submit
@@ -242,7 +288,6 @@ function clearProjectFormErrors() {
   projectNameError.textContent = "";
   projectClientError.textContent = "";
   projectNameInput.classList.remove("input-error");
-  projectExternalReferenceInput.textContent = "";
   projectClientIdInput.classList.remove("input-error");
   hasTriedToSubmitProjectForm = false;
 }
@@ -285,50 +330,3 @@ async function onProjectFormSubmit(event) {
   }
 }
 // #endregion Form Validation and Submit
-
-// #region Event Listeners
-projectForm.addEventListener("submit", onProjectFormSubmit);
-projectNameInput.addEventListener("input", validateProjectFormIfNeeded);
-projectClientIdInput.addEventListener("change", validateProjectFormIfNeeded);
-projectSearchInput.addEventListener("input", renderFilteredProjectList);
-projectSearchNameField.addEventListener("change", renderFilteredProjectList);
-projectSearchExternalReferenceField.addEventListener("change", renderFilteredProjectList);
-projectSearchClientField.addEventListener("change", renderFilteredProjectList);
-projectSearchStatusField.addEventListener("change", renderFilteredProjectList);
-
-/**
- * Delegierter Klick-Handler fuer die dynamisch gerenderte Projektliste.
- * Dadurch funktionieren Bearbeiten und Loeschen auch nach jedem Neu-Rendern.
- *
- * @param {MouseEvent} event
- */
-projectItemsList.addEventListener("click", async (event) => {
-  const editButton = event.target.closest(".edit-project-btn");
-  const deleteButton = event.target.closest(".delete-project-btn");
-
-  if (editButton) {
-    const projectId = editButton.getAttribute("data-project-id");
-    const project = currentProjects.find((item) => String(item.id) === projectId);
-
-    if (project) {
-      currentProjectId = project.id;
-      editMode = true;
-      fillProjectForm(project);
-      showProjectForm(true);
-    }
-  }
-
-  if (deleteButton) {
-    const projectId = deleteButton.getAttribute("data-project-id");
-
-    try {
-      await api.deleteProject(projectId);
-      await loadProjects();
-      showMessageBox("Projekt wurde gelöscht!", "green");
-    } catch (error) {
-      showMessageBox("Fehler: " + error.message, "crimson");
-      console.error(error);
-    }
-  }
-});
-// #endregion Event Listeners

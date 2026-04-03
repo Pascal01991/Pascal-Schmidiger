@@ -1,57 +1,6 @@
 {
-  "projects": [
-    {
-      "name": "Website Relaunch",
-      "clientId": 1,
-      "completed": false,
-      "id": 1
-    },
-    {
-      "name": "Iron Man Suit Maintenance",
-      "clientId": 2,
-      "completed": true,
-      "id": 2
-    },
-    {
-      "name": "Logo Design",
-      "clientId": 1,
-      "completed": false,
-      "id": 3
-    },
-    {
-      "name": "asdf",
-      "externalReference": "",
-      "clientId": "2",
-      "completed": false,
-      "id": 4
-    },
-    {
-      "name": "asdfasdf",
-      "externalReference": "",
-      "clientId": "1",
-      "completed": false,
-      "id": 5
-    },
-    {
-      "name": "asdfasdf",
-      "externalReference": "ext",
-      "clientId": "1",
-      "completed": false,
-      "id": 6
-    }
-  ],
-  "clients": [
-    {
-      "name": "ACME Corp",
-      "address": "Musterstraße 1",
-      "id": 1
-    },
-    {
-      "name": "Stark Industries",
-      "address": "Malibu Point 10880",
-      "id": 2
-    }
-  ],
+  "projects": [],
+  "clients": [],
   "users": [
     {
       "id": 1,
@@ -80,5 +29,5 @@
       }
     }
   ],
-  "entries": []
+  "activities": []
 }

@@ -47,6 +47,7 @@
 ## Offene Aufgaben Prio 2
 - [ ] Models - TypeScript-Typen?
 - [ ] Fehlerbehandlung siehe unten.
+- [ ] BugFix CreateTestdata und DeleteDB
 
 ## Refactoring V1.0.0
 - [x] ApiService.js

@@ -54,11 +54,14 @@ async function handleDatabaseReset() {
   try {
     setAppStatus("Setze Datenbank zurück...");
     await api.resetDatabase();
-
+    console.log("Datenbank zurückgesetzt, lade Daten neu...");
     await loadProjects();
+    console.log("Projekte neu geladen.");
     await loadClients();
+    console.log("Kunden neu geladen.");
 
     showMessageBox("Datenbank wurde geleert.", "orange");
+    console.log("MessageBox angezeigt.");
   } catch (error) {
     showMessageBox("Fehler beim Zurücksetzen: " + error.message, "crimson");
   }
@@ -76,30 +79,40 @@ async function handleCreateTestData() {
   try {
     setAppStatus("Erstelle Testdaten...");
 
-    const client1 = await api.createClient({ name: "ACME Corp", address: "Musterstraße 1" });
-    console.log("Erstellter Client 1:", client1);
-    const client2 = await api.createClient({ name: "Stark Industries", address: "Malibu Point 10880" });
-    console.log("Erstellter Client 2:", client2);
+    const client1 = await api.createClient({
+      name: "ACME Corp",
+      address: "Musterstraße 1",
+      externalReference: "",
+      active: true,
+    });
+    const client2 = await api.createClient({
+      name: "Stark Industries",
+      address: "Malibu Point 10880",
+      externalReference: "",
+      active: true,
+    });
 
     await api.createProject({
       name: "Website Relaunch",
-      clientId: client1.id,
-      completed: false,
-    });
-    console.log("Erstelltes Projekt nach Await 1:");
-    await api.createProject({
-      name: "Iron Man Suit Maintenance",
-      clientId: client2.id,
-      completed: true,
-    });
-    console.log("Erstelltes Projekt nach Await 2:");
-    await api.createProject({
-      name: "Logo Design",
+      externalReference: "",
       clientId: client1.id,
       completed: false,
     });
 
-    // 3. UI aktualisieren
+    await api.createProject({
+      name: "Iron Man Suit Maintenance",
+      externalReference: "",
+      clientId: client2.id,
+      completed: true,
+    });
+
+    await api.createProject({
+      name: "Logo Design",
+      externalReference: "",
+      clientId: client1.id,
+      completed: false,
+    });
+
     await loadProjects();
     await loadClients();
 
