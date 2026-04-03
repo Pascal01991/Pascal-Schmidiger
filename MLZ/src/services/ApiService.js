@@ -65,6 +65,13 @@ export class ApiService {
 
   // #endregion Kundenverwaltung
 
+  // #region Benutzerverwaltung
+  async getUsers() {
+    return await this.request("/users");
+  }
+
+  // #endregion Benutzerverwaltung
+
   // Datamanagement
   // ApiService.js
 

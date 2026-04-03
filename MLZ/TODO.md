@@ -3,11 +3,13 @@
 - [x] Auto ID Vergabe bei Create Funktionen
 - [ ] JSDoc Dokumentation (Lektion 4)
 - [x] editProject muss erst die Daten 
+- [ ] validierung mit maximallänge beschrenken
 
 - [ ] Ergänzung Datenschema inkl. JSDoc Typen in models:    
   
     - Zeiten
       - Verrechenbar
+      - Abgerechnet
       - VerrechnungsInfo
       - h
       - Datum
@@ -19,6 +21,7 @@
     - Projekt:
       - Zeiten
       - Abgeschlossen (nur wenn alle Zeiten verrechnet)
+      - Fremd ID
       
     - Kunde:
       - Fremd-ID

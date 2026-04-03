@@ -17,6 +17,12 @@
       "clientId": 1,
       "completed": false,
       "id": 3
+    },
+    {
+      "name": "asdfasdfasdfasdfsadfsaddddddddddddddddddddddddd",
+      "clientId": "1",
+      "completed": false,
+      "id": 4
     }
   ],
   "clients": [
@@ -29,6 +35,34 @@
       "name": "Stark Industries",
       "address": "Malibu Point 10880",
       "id": 2
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "username": "manager",
+      "password": "manager123",
+      "role": "manager",
+      "loginDisplayName": "Manager",
+      "prename": "Max",
+      "lastname": "Manager",
+      "externalReference": "USR-001",
+      "settings": {
+        "darkMode": false
+      }
+    },
+    {
+      "id": 2,
+      "username": "timekeeper",
+      "password": "timekeeper123",
+      "role": "timekeeper",
+      "loginDisplayName": "Timekeeper",
+      "prename": "Tina",
+      "lastname": "Timekeeper",
+      "externalReference": "USR-002",
+      "settings": {
+        "darkMode": false
+      }
     }
   ],
   "entries": []
