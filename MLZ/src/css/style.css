@@ -14,6 +14,19 @@
   background-color: var(--background-medium);
 }
 
+.search-filter-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.search-filter-option {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
 .list-row {
   display: flex;
   justify-content: space-between;
@@ -49,4 +62,9 @@
 
 .input-error {
   border: 1px solid crimson;
+}
+
+mark {
+  background-color: #fff59d;
+  padding: 0 2px;
 }

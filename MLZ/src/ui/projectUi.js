@@ -1,13 +1,17 @@
+// #region Imports
 import { ApiService } from "../services/ApiService.js";
-
+import { entityMatchesSearch } from "./search.js";
+import { highlightText } from "./search.js";
+import { renderProjectOptionsForTimeForm } from "./time.js";
 import { setAppStatus } from "./main.js";
 import { showMessageBox } from "./main.js";
-import { renderProjectOptionsForTimeForm } from "./time.js";
+// #endregion Imports
 
-// #region Globels
+// #region Globals
 const api = new ApiService();
-// #endregion Globels
+// #endregion Globals
 
+// #region DOM References
 const projectClientSelect = document.getElementById("project-client-select");
 const projectForm = document.getElementById("project-form");
 const projectNameInput = document.getElementById("project-name");
@@ -17,17 +21,33 @@ const projectClientIdInput = document.getElementById("project-client-select");
 const projectClientError = document.getElementById("project-client-error");
 const BtnCreateProject = document.getElementById("BtnCreateProject");
 const BtnSaveProject = document.getElementById("BtnSaveProject");
+const projectSearchInput = document.getElementById("searchProject");
+const projectSearchNameField = document.getElementById("search-project-name-field");
+const projectSearchClientField = document.getElementById("search-project-client-field");
+const projectSearchStatusField = document.getElementById("search-project-status-field");
+// #endregion DOM References
+
+// #region State
 let editMode = false;
 let currentProjectId = null;
 let currentProjects = [];
+let currentClients = [];
+let hasTriedToSubmitProjectForm = false;
+// #endregion State
 
+// #region Loading and Search
+/**
+ * Laedt Projekte und Kunden, speichert sie lokal und rendert danach
+ * die aktuell gefilterte Projektliste neu.
+ */
 export async function loadProjects() {
   const projects = await api.getProjects();
   const clients = await api.getClients();
   currentProjects = projects;
+  currentClients = clients;
 
   renderProjectOptionsForTimeForm(projects);
-  renderProjectList(projects, clients);
+  renderFilteredProjectList();
 
   if (projects.length === 0) {
     setAppStatus("Keine Projekte geladen.");
@@ -36,26 +56,77 @@ export async function loadProjects() {
   setAppStatus("Alle Daten vom Server geladen.");
 }
 
+/**
+ * Liest aus den Checkboxen aus, welche Felder aktuell durchsucht werden sollen.
+ * @returns {string[]}
+ */
+function getSelectedProjectSearchFields() {
+  const selectedFields = [];
+
+  if (projectSearchNameField.checked) {
+    selectedFields.push("name");
+  }
+
+  if (projectSearchClientField.checked) {
+    selectedFields.push("clientName");
+  }
+
+  if (projectSearchStatusField.checked) {
+    selectedFields.push("status");
+  }
+
+  return selectedFields;
+}
+
+function renderFilteredProjectList() {
+  renderProjectList(currentProjects, currentClients);
+}
+
+/**
+ * Baut die Projektliste aus den geladenen Daten neu auf.
+ * Vor dem Rendern werden die Projekte anhand der aktiven Suchfelder gefiltert.
+ * @param {Array<{id: number|string, name: string, clientId: number|string, completed: boolean}>} projects
+ * @param {Array<{id: number|string, name: string}>} clients
+ */
 function renderProjectList(projects, clients) {
   const projectsList = document.getElementById("project-items");
   const clientLookup = {};
+  const searchText = projectSearchInput.value;
+  const selectedFields = getSelectedProjectSearchFields();
 
   for (const client of clients) {
     clientLookup[client.id] = client.name;
   }
 
-  projectsList.innerHTML = projects
+  const filteredProjects = projects.filter((project) => {
+    const clientName = clientLookup[project.clientId] || "Unbekannter Client";
+    const statusText = project.completed ? "Abgeschlossen" : "Offen";
+
+    return entityMatchesSearch(
+      { name: project.name, clientName: clientName, status: statusText },
+      searchText,
+      selectedFields,
+    );
+  });
+
+  if (filteredProjects.length === 0) {
+    projectsList.innerHTML = "<p>Keine Projekte gefunden.</p>";
+    return;
+  }
+
+  projectsList.innerHTML = filteredProjects
     .map((project) => {
       const clientName = clientLookup[project.clientId] || "Unbekannter Client";
+      const statusText = project.completed ? "✅ Abgeschlossen" : "⏳ Offen";
 
       return `
         <div class="list-row">
           <span class="list-field">
-          <div>${project.id} - ${project.name}</div>
+          <div>${project.id} - ${highlightText(project.name, searchText)}</div>
           </span>
           <span class="list-field">
-            <div>${project.clientId} - ${clientName}</div>
-          <div>${project.completed ? "✅ Abgeschlossen" : "⏳ Offen"}</div>
+            <div>${project.clientId} - ${highlightText(clientName, searchText)}</div>
+            <div>${highlightText(statusText, searchText)}</div>
           </span>
           <div class="list-field-actions">
             <button data-project-id="${project.id}" class="action-btn edit-project-btn" title="Bearbeiten">✏️</button>
@@ -66,7 +137,9 @@ function renderProjectList(projects, clients) {
     })
     .join("");
 }
+// #endregion Loading and Search
 
+// #region Form Rendering
 export function renderClientOptionsForProjectForm(clients) {
   projectClientSelect.innerHTML = '<option value="">-- Bitte waehlen --</option>';
 
@@ -103,7 +176,9 @@ function hideProjectForm() {
 }
 
 document.getElementById("BtnCloseProjectForm").addEventListener("click", hideProjectForm);
+// #endregion Form Rendering
 
+// #region Form Validation and Submit
 /**
  * @returns {{ name: string, clientId: number }}
  */
@@ -139,8 +214,10 @@ function validateProjectForm() {
   return isValid;
 }
 
-let hasTriedToSubmitProjectForm = false;
-
+/**
+ * Fuehrt die Validierung erst nach dem ersten Submit-Versuch erneut aus.
+ * So bleiben die Fehlermeldungen am Anfang ruhig und erscheinen erst bei Bedarf.
+ */
 function validateProjectFormIfNeeded() {
   if (!hasTriedToSubmitProjectForm) {
     return;
@@ -157,6 +234,12 @@ function clearProjectFormErrors() {
   hasTriedToSubmitProjectForm = false;
 }
 
+/**
+ * Verarbeitet Erstellen und Bearbeiten mit derselben Submit-Logik.
+ * Der aktuelle editMode entscheidet, ob ein Projekt angelegt oder aktualisiert wird.
+ *
+ * @param {SubmitEvent} event
+ */
 async function onProjectFormSubmit(event) {
   event.preventDefault();
   hasTriedToSubmitProjectForm = true;
@@ -187,11 +270,23 @@ async function onProjectFormSubmit(event) {
     showMessageBox("Fehler: " + error.message, "crimson");
   }
 }
+// #endregion Form Validation and Submit
 
+// #region Event Listeners
 projectForm.addEventListener("submit", onProjectFormSubmit);
 projectNameInput.addEventListener("input", validateProjectFormIfNeeded);
 projectClientIdInput.addEventListener("change", validateProjectFormIfNeeded);
+projectSearchInput.addEventListener("input", renderFilteredProjectList);
+projectSearchNameField.addEventListener("change", renderFilteredProjectList);
+projectSearchClientField.addEventListener("change", renderFilteredProjectList);
+projectSearchStatusField.addEventListener("change", renderFilteredProjectList);
 
+/**
+ * Delegierter Klick-Handler fuer die dynamisch gerenderte Projektliste.
+ * Dadurch funktionieren Bearbeiten und Loeschen auch nach jedem Neu-Rendern.
+ *
+ * @param {MouseEvent} event
+ */
 document.getElementById("project-items").addEventListener("click", async (event) => {
   const editButton = event.target.closest(".edit-project-btn");
   const deleteButton = event.target.closest(".delete-project-btn");
@@ -221,3 +316,4 @@ document.getElementById("project-items").addEventListener("click", async (event)
     }
   }
 });
+// #endregion Event Listeners

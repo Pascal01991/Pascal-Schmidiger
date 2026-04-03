@@ -64,6 +64,21 @@ JSDoc beschreibt Typen zusätzlich:
 - Danach wird bei jeder weiteren Eingabe direkt nachvalidiert.
 - So ist das Formular am Anfang ruhig und gibt erst dann gezielt Feedback, wenn es nötig ist.
 
+### Suchfunktion
+Die Projektsuche filtert die bestehende Liste direkt im Frontend.
+Gesucht wird per Freitext in den Feldern Projektname, Kundenname und Status.
+Mit Checkboxen kann der Benutzer eingrenzen, welche Felder durchsucht werden.
+Die Suchlogik wurde klein ausgelagert in search.js, damit sie später auch für andere Entitäten wiederverwendet werden kann.
+renderProjectList() rendert danach nur noch die gefilterten Treffer.
+Gefilterten Treffer werden im sofort neu geladenen DOM angezeigten und der Text mit <mark> hervorgehoben
+UI/Logik - Trennung:
+projectUi.js bleibt für UI und Rendern zuständig.
+search.js übernimmt nur die Suchlogik. Allerdings nur kleine wiederverwendbarkeit um über-Abstraktion zu vermeiden.
+Filtern mit Array-Methoden:
+Mit filter() werden passende Einträge aus der Liste gewählt.
+
+Einfache String-Suche: Mit `trim()`, `toLowerCase()` und `includes()`.
+Mehrere Suchbegriffe werden per Leerzeichen getrennt und mit UND-Logik geprueft: Ein Projekt wird nur angezeigt, wenn alle Suchwoerter in den ausgewaehlten Feldern vorkommen.
 
 ## Learnings
 - `event.preventDefault()` 
