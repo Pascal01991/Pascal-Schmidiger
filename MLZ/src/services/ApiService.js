@@ -13,7 +13,7 @@ export class ApiService {
     return response.json();
   }
 
-  // #endregion
+  // #endregion Globales
 
   // #region Projektverwaltung
   async getProjects() {
@@ -63,5 +63,23 @@ export class ApiService {
     });
   }
 
-  // #endregion
+  // #endregion Kundenverwaltung
+
+  // Datamanagement
+  // ApiService.js
+
+  // Füge diese Methode in die ApiService Klasse ein
+  async resetDatabase() {
+    const projects = await this.getProjects();
+    const clients = await this.getClients();
+
+    // Alle Projekte löschen
+    const projectDeletions = projects.map((p) => this.request(`/projects/${p.id}`, { method: "DELETE" }));
+
+    // Alle Kunden löschen
+    const clientDeletions = clients.map((c) => this.request(`/clients/${c.id}`, { method: "DELETE" }));
+
+    // Warten, bis alle Löschvorgänge abgeschlossen sind
+    await Promise.all([...projectDeletions, ...clientDeletions]);
+  }
 }

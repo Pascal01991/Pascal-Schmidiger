@@ -1,5 +1,5 @@
 // #region Imports
-import { loadProjects } from "./projectUi.js";
+import { loadProjects } from "./projectUI.js";
 import { loadClients } from "./clientUI.js";
 
 /** // @ts-check **/

@@ -2,7 +2,7 @@ import { ApiService } from "../services/ApiService.js";
 
 import { setAppStatus } from "./main.js";
 import { showMessageBox } from "./main.js";
-import { renderClientOptionsForProjectForm } from "./projectUi.js";
+import { renderClientOptionsForProjectForm } from "./projectUI.js";
 
 // #region Globels
 const api = new ApiService();
