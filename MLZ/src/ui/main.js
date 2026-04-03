@@ -28,6 +28,35 @@ export function showMessageBox(text, color) {
 }
 // #endregion Helper
 
+// #region Data-Management
+// main.js (oder wo deine globalen Buttons verwaltet werden)
+
+import { ApiService } from "../services/ApiService.js";
+const api = new ApiService();
+
+async function handleDatabaseReset() {
+  if (!confirm("Bist du sicher? Alle Projekte und Kunden werden unwiderruflich gelöscht!")) {
+    return;
+  }
+
+  try {
+    setAppStatus("Setze Datenbank zurück...");
+    await api.resetDatabase();
+
+    // UI neu laden (wird nun leer sein)
+    await loadProjects();
+    await loadClients();
+
+    showMessageBox("Datenbank wurde geleert.", "orange");
+  } catch (error) {
+    showMessageBox("Fehler beim Zurücksetzen: " + error.message, "crimson");
+  }
+}
+
+// Event-Listener an einen Button binden (muss in deinem HTML existieren)
+document.getElementById("deleteDatabase").addEventListener("click", handleDatabaseReset);
+// #endregion Data-Management
+
 // #region App-Start
 function startApp() {
   try {
