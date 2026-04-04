@@ -74,6 +74,12 @@ async function handleDatabaseReset() {
   if (!confirm("Bist du sicher? Alle Projekte und Kunden werden unwiderruflich gelöscht!")) {
     return;
   }
+  deleteDatabase.disabled = true;
+  createTestData.disabled = true;
+  setTimeout(() => {
+    deleteDatabase.disabled = false;
+    createTestData.disabled = false;
+  }, 3000);
 
   try {
     setAppStatus("Setze Datenbank zurück...");
@@ -102,6 +108,13 @@ async function handleCreateTestData() {
   }
   try {
     setAppStatus("Erstelle Testdaten...");
+
+    deleteDatabase.disabled = true;
+    createTestData.disabled = true;
+    setTimeout(() => {
+      deleteDatabase.disabled = false;
+      createTestData.disabled = false;
+    }, 3000);
 
     const client1 = await api.createClient({
       name: "ACME Corp",
