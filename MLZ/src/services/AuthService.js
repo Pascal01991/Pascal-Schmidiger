@@ -1,4 +1,5 @@
 import { ApiService } from "./ApiService.js";
+/** @typedef {import("../models/userModel.js").user} user */
 
 const SESSION_STORAGE_KEY = "mlzCurrentUser";
 
@@ -38,6 +39,7 @@ export class AuthService {
 
     const parsedSession = JSON.parse(savedSession);
     const users = await this.api.getUsers();
+    /** @type {user} */
     const user = users.find((item) => item.id === parsedSession.userId);
 
     if (!user) {

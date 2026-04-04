@@ -3,6 +3,7 @@ import { ApiService } from "../services/ApiService.js";
 import { entityMatchesSearch, highlightText } from "./search.js";
 import { renderProjectOptionsForTimeForm } from "./activityUI.js";
 import { setAppStatus, showMessageBox } from "./main.js";
+/** @typedef {import("../models/projectModel.js").project} project */
 // #endregion Imports
 
 // #region Globals
@@ -60,6 +61,7 @@ projectItemsList.addEventListener("click", async (event) => {
 
   if (editButton) {
     const projectId = editButton.getAttribute("data-project-id");
+    /** @type {project} */
     const project = currentProjects.find((item) => String(item.id) === projectId);
 
     if (project) {

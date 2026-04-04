@@ -4,6 +4,7 @@ import { entityMatchesSearch, highlightText } from "./search.js";
 import { setAppStatus } from "./main.js";
 import { showMessageBox } from "./main.js";
 import { renderClientOptionsForProjectForm } from "./projectUI.js";
+/** @typedef {import("../models/clientModel.js").client} client */
 // #endregion Imports
 
 // #region Globals
@@ -59,6 +60,7 @@ clientItemsList.addEventListener("click", async (event) => {
 
   if (editButton) {
     const clientId = editButton.getAttribute("data-client-id");
+    /** @type {client} */
     const client = currentClients.find((item) => String(item.id) === clientId);
 
     if (client) {

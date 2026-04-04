@@ -6,3 +6,4 @@
  * @property {string} externalReference
  * @property {boolean} active
  */
+export const client = {};

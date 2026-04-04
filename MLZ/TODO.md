@@ -6,14 +6,26 @@
 - [ ] validierung mit maximallänge beschrenken
 
 - [ ] Ergänzung Datenschema inkl. JSDoc Typen in models:    
-  
+
+
+- Dashboard:
+Button Einstempeln, offene Tage in simplex Box Liste die Formular öffnet.
+
     - Zeiten
-      - Verrechenbar
-      - Abgerechnet
-      - VerrechnungsInfo
-      - h
-      - Datum
-      - Zeit von Zeit bis (optional für Später)
+    - Zeitstempel "von" Zeitstempel *bis* (optional für Später)
+    (- Eventzell falll Sinnvoll: isCompletDeclare, wenn die ganzez zeitdauer von bis in activies zugeschrieben wurde)
+    -   Activities[]:
+          - Bemerkung
+          - Verrechenbar
+          - Abgerechnet
+          - VerrechnungsInfo
+          - Dauer
+          - DatumTag
+          - Project.Id
+          - User.Id
+          - 
+    - 
+    
       - Bemerkung
       - ProjektID
       - UserID

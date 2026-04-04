@@ -1,5 +1,5 @@
 /**
- * @typedef {object} User
+ * @typedef {object} user
  * @property {number} id
  * @property {string} username
  * @property {string} password
@@ -11,3 +11,4 @@
  * @property {object} settings
  * @property {boolean} settings.darkMode
  */
+export const user = {};
