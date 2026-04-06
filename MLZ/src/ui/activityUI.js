@@ -121,11 +121,16 @@ workdaySessionItems.addEventListener("click", async (event) => {
  */
 export function renderProjectOptionsForTimeForm(projects) {
   activityProjectSelect.innerHTML = '<option value="">-- Bitte wählen --</option>';
+  const clientLookup = {};
+
+  for (const client of currentClients) {
+    clientLookup[client.id] = client.name;
+  }
 
   for (const project of projects) {
     const option = document.createElement("option");
     option.value = project.id;
-    option.textContent = project.name;
+    option.textContent = (clientLookup[project.clientId] || "Unbekannter Kunde") + " - " + project.name;
     activityProjectSelect.appendChild(option);
   }
 }

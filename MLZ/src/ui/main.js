@@ -38,9 +38,9 @@ const message = document.getElementById("message-box");
 export function showMessageBox(text, color) {
   message.textContent = text;
   message.style.backgroundColor = color;
-  message.style.display = "block";
+  message.classList.add("is-visible");
   setTimeout(() => {
-    message.style.display = "none";
+    message.classList.remove("is-visible");
   }, 3000);
 }
 // #endregion Helper
@@ -123,36 +123,51 @@ async function handleCreateTestData() {
     }, 3000);
 
     const client1 = await api.createClient({
-      name: "ACME Corp",
+      name: "Elektro Müller GmbH",
       address: "Musterstraße 1",
       externalReference: "",
       active: true,
     });
+
     const client2 = await api.createClient({
-      name: "Stark Industries",
-      address: "Malibu Point 10880",
+      name: "Mahler Matter AG",
+      address: "Bahnhofstrasse 5, 6000 Luzern",
+      externalReference: "",
+      active: true,
+    });
+
+    const client3 = await api.createClient({
+      name: "Intern",
+      address: "",
       externalReference: "",
       active: true,
     });
 
     const project1 = await api.createProject({
-      name: "Website Relaunch",
+      name: "Spesen App",
       externalReference: "",
       clientId: client1.id,
       completed: false,
     });
 
     await api.createProject({
-      name: "Iron Man Suit Maintenance",
+      name: "Zeiterfassungstool",
       externalReference: "",
       clientId: client2.id,
       completed: true,
     });
 
     const project3 = await api.createProject({
-      name: "Logo Design",
+      name: "Webseite Unternehmenspräsentation",
       externalReference: "",
       clientId: client1.id,
+      completed: false,
+    });
+
+    const project4 = await api.createProject({
+      name: "Administrativer Aufwand",
+      externalReference: "",
+      clientId: client3.id,
       completed: false,
     });
 

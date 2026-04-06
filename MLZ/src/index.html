@@ -39,13 +39,14 @@
         <h2>Zeit-Erfassung</h2>
         <label for="workday-date">Datum:</label>
         <input type="date" id="workday-date">
-        <button id="BtnCreateSession" type="button">Arbeits-Session anlegen</button>
-        <button id="BtnCreateActivity" type="button">Aktivität anlegen</button>
         
-        <div id="workday-summary" style="margin-top:12px;">
+        <div id="workday-summary">
           <p id="workday-total-session-text">Total Session: 0 h</p>
           <p id="workday-open-hours-text">Zu deklarierende Stunden: 0 h</p>
         </div>
+
+        <button id="BtnCreateSession" type="button">Arbeits-Session anlegen</button>
+        <button id="BtnCreateActivity" type="button">Aktivität anlegen</button>
 
         <form id="session-form" class="app-form">
           <label for="session-from">Zeit von:*</label>
@@ -233,11 +234,10 @@
         <button id="createTestData">Testdaten erstellen</button>
       </section>
 
-      <section>
-          <p id="message-box" style="display:none;"></p>
-      </section>
     </div>
   </main>
+
+  <p id="message-box"></p>
 
   <script type="module" src="./ui/main.js"></script>
 </body>
