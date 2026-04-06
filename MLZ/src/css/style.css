@@ -175,6 +175,12 @@ button {
   margin-top: 4px;
 }
 
+@media (max-width: 700px) {
+  .app-form {
+    grid-template-columns: 150px minmax(180px, 1fr);
+  }
+}
+
 .input-error {
   border: 1px solid crimson;
 }
