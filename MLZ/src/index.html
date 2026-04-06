@@ -47,18 +47,20 @@
           <p id="workday-open-hours-text">Zu deklarierende Stunden: 0 h</p>
         </div>
 
-        <form id="session-form" style="display:none;">
+        <form id="session-form" class="app-form" style="display:none;">
           <label for="session-from">Zeit von:*</label>
           <input type="time" id="session-from">
           <p id="session-from-error" class="field-error"></p>
           <label for="session-to">Zeit bis:*</label>
           <input type="time" id="session-to">
           <p id="session-to-error" class="field-error"></p>
-          <button id="BtnSaveSession" type="submit"></button>
-          <button id="BtnCloseSessionForm" type="button">Abbrechen</button>
+          <div class="form-actions">
+            <button id="BtnSaveSession" type="submit"></button>
+            <button id="BtnCloseSessionForm" type="button">Abbrechen</button>
+          </div>
         </form>
 
-        <form id="activity-form-new" style="display:none;">
+        <form id="activity-form-new" class="app-form" style="display:none;">
           <label for="activity-project-select-new">Projekt auswählen:*</label>
           <select id="activity-project-select-new">
             <option value="">-- Bitte wählen --</option>
@@ -77,8 +79,10 @@
           <input type="checkbox" id="activity-billed">
           <label for="activity-created-by" id="activity-created-by-label" style="display:none;">Angelegt von:</label>
           <input type="text" id="activity-created-by" readonly style="display:none;">
-          <button id="BtnSaveActivityNew" type="submit"></button>
-          <button id="BtnCloseActivityFormNew" type="button">Abbrechen</button>
+          <div class="form-actions">
+            <button id="BtnSaveActivityNew" type="submit"></button>
+            <button id="BtnCloseActivityFormNew" type="button">Abbrechen</button>
+          </div>
         </form>
 
         <div style="display:flex; gap:12px; align-items:flex-start;">
@@ -129,7 +133,7 @@
         <h2>Projekte</h2>
         <button id="BtnCreateProject">Neues Projekt anlegen</button>
 
-        <form id="project-form" style="display:none;">
+        <form id="project-form" class="app-form" style="display:none;">
           <label for="project-name">Projektname:*</label>
           <input type="text" id="project-name">
           <p id="project-name-error" class="field-error"></p>
@@ -140,10 +144,12 @@
             <option value="">-- Bitte waehlen --</option>
           </select>
           <p id="project-client-error" class="field-error"></p>
-          <input type="checkbox" id="project-completed">
           <label for="project-completed">Abgeschlossen</label>
-          <button id = "BtnSaveProject" type="submit"></button>
-          <button id ="BtnCloseProjectForm" type="button">Abbrechen</button>
+          <input type="checkbox" id="project-completed">
+          <div class="form-actions">
+            <button id = "BtnSaveProject" type="submit"></button>
+            <button id ="BtnCloseProjectForm" type="button">Abbrechen</button>
+          </div>
         </form>
 
         <div id="projectsList" class="scrollable-list">
@@ -174,7 +180,7 @@
         <h2>Kunden</h2>
         <button id="BtnCreateClient">Neuer Kunde anlegen</button>
 
-        <form id="client-form" style="display:none;">
+        <form id="client-form" class="app-form" style="display:none;">
           <label for="client-name">Kundenname:</label>
           <input type="text" id="client-name">
             <p id="client-name-error" class="field-error"></p>
@@ -185,8 +191,10 @@
             <input type="text" id="client-external-reference">
             <label for="client-active">Aktiv:</label>
             <input type="checkbox" id="client-active" checked>
-          <button id = "BtnSaveClient" type="submit"></button>
-          <button id ="BtnCloseClientForm" type="button">Abbrechen</button>
+          <div class="form-actions">
+            <button id = "BtnSaveClient" type="submit"></button>
+            <button id ="BtnCloseClientForm" type="button">Abbrechen</button>
+          </div>
           </form>
 
         <div id="clientsList" class="scrollable-list">

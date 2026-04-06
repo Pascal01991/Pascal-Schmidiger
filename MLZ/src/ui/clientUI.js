@@ -205,7 +205,7 @@ function fillClientForm(client) {
 }
 
 function showClientForm(isEditMode = false) {
-  clientForm.style.display = "block";
+  clientForm.style.display = "grid";
   createClientButton.style.display = "none";
   saveClientButton.textContent = isEditMode ? "Änderung speichern" : "Kunde anlegen";
 }

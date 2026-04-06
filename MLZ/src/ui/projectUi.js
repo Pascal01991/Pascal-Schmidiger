@@ -221,7 +221,7 @@ function fillProjectForm(project) {
 }
 
 function showProjectForm(isEditMode = false) {
-  projectForm.style.display = "block";
+  projectForm.style.display = "grid";
   createProjectButton.style.display = "none";
   saveProjectButton.textContent = isEditMode ? "Änderung speichern" : "Projekt anlegen";
 }
