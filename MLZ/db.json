@@ -70,67 +70,27 @@
     {
       "userId": 1,
       "dateDay": "2026-04-06",
-      "totalMinutes": 60,
+      "totalMinutes": 180,
       "sessions": [
         {
-          "id": 1775471588574,
+          "id": 1,
           "from": "08:00",
-          "to": "09:00"
+          "to": "10:00"
+        },
+        {
+          "id": 2,
+          "from": "13:00",
+          "to": "14:00"
         }
       ],
       "id": 1
     },
     {
-      "userId": 1,
-      "dateDay": "2026-04-07",
-      "totalMinutes": 120,
-      "sessions": [
-        {
-          "id": 1775471645969,
-          "from": "08:00",
-          "to": "10:00"
-        }
-      ],
+      "userId": 2,
+      "dateDay": "2026-04-06",
+      "totalMinutes": 0,
+      "sessions": [],
       "id": 2
-    },
-    {
-      "userId": 1,
-      "dateDay": "2026-04-08",
-      "totalMinutes": 60,
-      "sessions": [
-        {
-          "id": 1775478129377,
-          "from": "08:00",
-          "to": "09:00"
-        }
-      ],
-      "id": 3
-    },
-    {
-      "userId": 2,
-      "dateDay": "2026-04-08",
-      "totalMinutes": 60,
-      "sessions": [
-        {
-          "id": 1775479602732,
-          "from": "08:00",
-          "to": "09:00"
-        }
-      ],
-      "id": 4
-    },
-    {
-      "userId": 2,
-      "dateDay": "2026-04-13",
-      "totalMinutes": 60,
-      "sessions": [
-        {
-          "id": 1775479661724,
-          "from": "08:00",
-          "to": "09:00"
-        }
-      ],
-      "id": 5
     }
   ],
   "activities": [
@@ -138,67 +98,34 @@
       "workdayId": 1,
       "userId": 1,
       "projectId": 1,
-      "comment": "asdf",
-      "billingInfo": "asdf",
-      "durationMinutes": 15,
-      "billable": false,
+      "comment": "Kickoff",
+      "billingInfo": "",
+      "durationMinutes": 60,
+      "billable": true,
       "billed": false,
       "id": 1
     },
     {
-      "workdayId": 2,
+      "workdayId": 1,
       "userId": 1,
-      "projectId": 2,
-      "comment": "sdf",
+      "projectId": 3,
+      "comment": "Konzept",
       "billingInfo": "",
-      "durationMinutes": 15,
-      "billable": false,
+      "durationMinutes": 60,
+      "billable": true,
       "billed": false,
       "id": 2
     },
     {
-      "workdayId": 3,
-      "userId": 1,
-      "projectId": 1,
-      "comment": "asdf",
-      "billingInfo": "asdf",
-      "durationMinutes": 15,
-      "billable": true,
-      "billed": false,
-      "id": 3
-    },
-    {
-      "workdayId": 4,
+      "workdayId": 2,
       "userId": 2,
       "projectId": 1,
       "comment": "asdf",
-      "billingInfo": "asdf",
-      "durationMinutes": 15,
-      "billable": false,
-      "billed": false,
-      "id": 4
-    },
-    {
-      "workdayId": 5,
-      "userId": 2,
-      "projectId": 1,
-      "comment": "sdf",
-      "billingInfo": "asdf",
+      "billingInfo": "",
       "durationMinutes": 60,
       "billable": false,
       "billed": false,
-      "id": 5
-    },
-    {
-      "workdayId": 1,
-      "userId": 1,
-      "projectId": 2,
-      "comment": "asdf",
-      "billingInfo": "sdf",
-      "durationMinutes": 45,
-      "billable": false,
-      "billed": false,
-      "id": 6
+      "id": 3
     }
   ]
 }

@@ -39,6 +39,9 @@ const closeActivityFormButton = document.getElementById("BtnCloseActivityFormNew
 
 const workdaySessionItems = document.getElementById("workday-session-items");
 const workdayActivityItems = document.getElementById("workday-activity-items");
+const workdayTotalSessionText = document.getElementById("workday-total-session-text");
+const workdayOpenHoursText = document.getElementById("workday-open-hours-text");
+const workdayOpenDaysItems = document.getElementById("workday-open-days-items");
 const activitySearchInput = document.getElementById("searchActivity");
 const activitySearchProjectCheckbox = document.getElementById("search-activity-project-checkbox");
 const activitySearchClientCheckbox = document.getElementById("search-activity-client-checkbox");
@@ -438,6 +441,8 @@ function fillActivityForm(selectedActivity) {
 function renderCurrentDayLists() {
   renderSessionDayList();
   renderWorkdayActivityList();
+  renderWorkdaySummary();
+  renderOpenWorkdayList();
 }
 
 function renderSessionDayList() {
@@ -486,6 +491,36 @@ function renderWorkdayActivityList() {
             <button data-activity-id="${item.id}" class="action-btn edit-activity-btn" title="Bearbeiten">✏️</button>
             <button data-activity-id="${item.id}" class="action-btn delete-activity-btn" title="Löschen">🗑️</button>
           </div>
+        </div>
+      `;
+    })
+    .join("");
+}
+
+function renderWorkdaySummary() {
+  const sessionMinutes = getWorkdaySessionMinutes(currentWorkday);
+  const openMinutes = getRoundedOpenMinutes(currentWorkday);
+
+  workdayTotalSessionText.textContent = "Total Session: " + formatMinutesAsHours(sessionMinutes) + " h";
+  workdayOpenHoursText.textContent = "Also zu deklarierende Stunden: " + formatMinutesAsHours(openMinutes) + " h";
+}
+
+function renderOpenWorkdayList() {
+  const openWorkdays = getOpenWorkdays();
+
+  if (openWorkdays.length === 0) {
+    workdayOpenDaysItems.innerHTML = "<p>Keine unvollständigen Tage gefunden.</p>";
+    return;
+  }
+
+  workdayOpenDaysItems.innerHTML = openWorkdays
+    .map((item) => {
+      return `
+        <div class="list-row">
+          <span class="list-field">
+            <div>${item.dateDay}</div>
+            <div>${formatMinutesAsHours(item.openMinutes)} h offen</div>
+          </span>
         </div>
       `;
     })
@@ -607,6 +642,63 @@ function getCurrentDayActivities() {
   }
 
   return currentActivities.filter((item) => Number(item.workdayId) === Number(currentWorkday.id));
+}
+
+function getWorkdaySessionMinutes(workday) {
+  if (!workday || !Array.isArray(workday.sessions)) {
+    return 0;
+  }
+
+  return calculateTotalMinutes(workday.sessions);
+}
+
+function getWorkdayActivityMinutes(workdayId) {
+  let totalMinutes = 0;
+
+  for (const activity of currentActivities) {
+    if (Number(activity.workdayId) === Number(workdayId)) {
+      totalMinutes += Number(activity.durationMinutes) || 0;
+    }
+  }
+
+  return totalMinutes;
+}
+
+function getRoundedOpenMinutes(workday) {
+  if (!workday) {
+    return 0;
+  }
+
+  const openMinutes = getWorkdaySessionMinutes(workday) - getWorkdayActivityMinutes(workday.id);
+  return roundDownToQuarterHour(openMinutes);
+}
+
+function roundDownToQuarterHour(minutes) {
+  const quarterHourMinutes = Number(minutes) || 0;
+  return Math.floor(quarterHourMinutes / 15) * 15;
+}
+
+function formatMinutesAsHours(minutes) {
+  return String(convertMinutesToHours(minutes));
+}
+
+function getOpenWorkdays() {
+  const currentUser = getCurrentUser();
+
+  if (!currentUser) {
+    return [];
+  }
+
+  return currentWorkdays
+    .filter((item) => Number(item.userId) === Number(currentUser.id))
+    .map((item) => {
+      return {
+        dateDay: item.dateDay,
+        openMinutes: getRoundedOpenMinutes(item),
+      };
+    })
+    .filter((item) => item.openMinutes >= 15)
+    .sort((left, right) => left.dateDay.localeCompare(right.dateDay));
 }
 
 function calculateTotalMinutes(sessions) {
