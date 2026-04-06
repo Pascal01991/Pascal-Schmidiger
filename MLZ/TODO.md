@@ -7,6 +7,7 @@
 
 - [ ] Ergänzung Datenschema inkl. JSDoc Typen in models:    
 
+- [ ] validierung in apiservice verschibeen?
 
 - Dashboard:
 Button Einstempeln, offene Tage in simplex Box Liste die Formular öffnet.
