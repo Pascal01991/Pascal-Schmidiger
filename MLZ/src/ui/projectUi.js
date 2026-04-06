@@ -105,7 +105,7 @@ export async function loadProjects() {
     setAppStatus("Keine Projekte geladen.");
     return;
   }
-  setAppStatus("Server verbunden.");
+  setAppStatus("Daten geladen..");
 }
 
 /**

@@ -8,6 +8,7 @@
 - [ ] Ergänzung Datenschema inkl. JSDoc Typen in models:    
 
 - [ ] validierung in apiservice verschibeen?
+- [ ] Umsetzen das Manager klar sieht welcher User die aktiviätt erfasst hat.
 
 - Dashboard:
 Button Einstempeln, offene Tage in simplex Box Liste die Formular öffnet.

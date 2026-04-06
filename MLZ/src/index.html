@@ -34,35 +34,76 @@
       <label>ServerStatus:</label><p id="app">App startet...</p>
     </section>
 
+
+    
     <section>
-      <h2>Arbeitszeit erfassen</h2>
+      <h2>Zeit-Erfassung</h2>
+      <label for="workday-date">Datum:</label>
+      <input type="date" id="workday-date">
+      <button id="BtnCreateSession" type="button">Arbeits-Session anlegen</button>
+      <button id="BtnCreateActivity" type="button">Aktivität anlegen</button>
+      
+      <form id="session-form" style="display:none;">
+        <label for="session-from">Zeit von:*</label>
+        <input type="time" id="session-from">
+        <p id="session-from-error" class="field-error"></p>
+        <label for="session-to">Zeit bis:*</label>
+        <input type="time" id="session-to">
+        <p id="session-to-error" class="field-error"></p>
+        <button id="BtnSaveSession" type="submit"></button>
+        <button id="BtnCloseSessionForm" type="button">Abbrechen</button>
+      </form>
+
+      <form id="activity-form-new" style="display:none;">
+        <label for="activity-project-select-new">Projekt auswählen:*</label>
+        <select id="activity-project-select-new">
+          <option value="">-- Bitte wählen --</option>
+        </select>
+        <p id="activity-project-error-new" class="field-error"></p>
+        <label for="activity-duration-hours">Dauer in Stunden:*</label>
+        <input type="number" id="activity-duration-hours" min="0.25" step="0.25">
+        <p id="activity-duration-error" class="field-error"></p>
+        <label for="activity-comment">Bemerkung:</label>
+        <input type="text" id="activity-comment">
+        <label for="activity-billing-info">Verrechnungsinfo:</label>
+        <input type="text" id="activity-billing-info">
+        <label for="activity-billable">Verrechenbar</label>
+        <input type="checkbox" id="activity-billable">
+        <label for="activity-billed">Abgerechnet</label>
+        <input type="checkbox" id="activity-billed">
+        <button id="BtnSaveActivityNew" type="submit"></button>
+        <button id="BtnCloseActivityFormNew" type="button">Abbrechen</button>
+      </form>
+      <div style="display:flex; gap:12px; align-items:flex-start;">
+        <div style="flex:1;">
+          <h3>Arbeits-Sessions vom Tag</h3>
+          <div id="workday-session-items" class="scrollable-list-item"></div>
+        </div>
+
+        <div style="flex:1;">
+          <h3>Aktivitäten vom Tag</h3>
+          <div id="workday-activity-items" class="scrollable-list-item"></div>
+        </div>
+      </div>
 
     </section>
 
     <section id="activity-section">
-      <h2>Aktiviät erfassen</h2>
-      <button id="BtnCreateActivity">Neue Aktiviät anlegen</button>
-      <form id="activity-form" style="display:none;">
-        <label for="activity-project-select">Projekt auswaehlen:*</label>
-        <select id="activity-project-select">
-          <option value="">-- Bitte waehlen --</option>
-        </select>
-        <p id="activity-project-error" class="field-error"></p>
-        <input type="checkbox" id="activity-completed">
-        <label for="activity-completed">Abgeschlossen</label>
-        <button id = "BtnSaveActivity" type="submit"></button>
-        <button id ="BtnCloseActivityForm" type="button">Abbrechen</button>
-      </form>
+      <h2>Aktiviäten</h2>
       <div id="activitiesList" class="scrollable-list">
         <input type="text" id="searchActivity" placeholder="Aktivitäten suchen">
         <div class="search-filter-group">
-          <label class="search-filter-option">
+           <label class="search-filter-option">
             <input type="checkbox" id="search-activity-project-checkbox" checked>
             Projektname
           </label>
           <label class="search-filter-option">
-            <input type="checkbox" id="search-activity-status-checkbox" checked>
-            Status
+            <input type="checkbox" id="search-activity-client-checkbox" checked>
+            Kundenname
+          </label>
+          <label class="search-filter-option">
+            <input type="checkbox" id="search-activity-date-checkbox" checked>
+            Datum
           </label>
         </div>
         <div id="activity-items" class="scrollable-list-item"></div>
@@ -70,7 +111,7 @@
     </section>
 
     <section id="project-section" data-manager-only="true">
-      <h2>Neues Projekt anlegen</h2>
+      <h2>Projekte</h2>
       <button id="BtnCreateProject">Neues Projekt anlegen</button>
       <form id="project-form" style="display:none;">
         <label for="project-name">Projektname:*</label>
@@ -114,8 +155,7 @@
     </section>
 
     <section id="client-section" data-manager-only="true">
-      <h2>Neuer Kunde anlegen</h2>
-      
+      <h2>Kunden</h2>
       <button id="BtnCreateClient">Neuer Kunde anlegen</button>
       <form id="client-form" style="display:none;">
         <label for="client-name">Kundenname:</label>

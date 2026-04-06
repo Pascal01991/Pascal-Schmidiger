@@ -1,6 +1,7 @@
 // #region Imports
 import { loadProjects } from "./projectUI.js";
 import { loadClients } from "./clientUI.js";
+import { loadActivities } from "./activityUI.js";
 import { AuthService } from "../services/AuthService.js";
 
 /** // @ts-check **/
@@ -24,6 +25,10 @@ const THEME_STORAGE_KEY = "theme";
 
 export function setAppStatus(text) {
   appStatus.textContent = text;
+}
+
+export function getCurrentUser() {
+  return authService.getCurrentUser();
 }
 // #endregion Globels
 
@@ -89,6 +94,7 @@ async function handleDatabaseReset() {
     console.log("Projekte neu geladen.");
     await loadClients();
     console.log("Kunden neu geladen.");
+    await loadActivities();
 
     showMessageBox("Datenbank wurde geleert.", "orange");
     console.log("MessageBox angezeigt.");
@@ -129,7 +135,7 @@ async function handleCreateTestData() {
       active: true,
     });
 
-    await api.createProject({
+    const project1 = await api.createProject({
       name: "Website Relaunch",
       externalReference: "",
       clientId: client1.id,
@@ -143,15 +149,48 @@ async function handleCreateTestData() {
       completed: true,
     });
 
-    await api.createProject({
+    const project3 = await api.createProject({
       name: "Logo Design",
       externalReference: "",
       clientId: client1.id,
       completed: false,
     });
 
+    const workday1 = await api.createWorkday({
+      userId: 1,
+      dateDay: "2026-04-06",
+      totalMinutes: 180,
+      sessions: [
+        { id: 1, from: "08:00", to: "10:00" },
+        { id: 2, from: "13:00", to: "14:00" },
+      ],
+    });
+
+    await api.createActivity({
+      workdayId: workday1.id,
+      userId: 1,
+      projectId: project1.id,
+      comment: "Kickoff",
+      billingInfo: "",
+      durationMinutes: 60,
+      billable: true,
+      billed: false,
+    });
+
+    await api.createActivity({
+      workdayId: workday1.id,
+      userId: 1,
+      projectId: project3.id,
+      comment: "Konzept",
+      billingInfo: "",
+      durationMinutes: 60,
+      billable: true,
+      billed: false,
+    });
+
     await loadProjects();
     await loadClients();
+    await loadActivities();
 
     showMessageBox("Testdaten erfolgreich erstellt!", "green");
     setAppStatus("Bereit");
@@ -195,6 +234,7 @@ async function initializeAppForUser(user) {
   setAppStatus("Lade Projekte...");
   await loadProjects();
   await loadClients();
+  await loadActivities();
 }
 
 async function handleLoginSubmit(event) {

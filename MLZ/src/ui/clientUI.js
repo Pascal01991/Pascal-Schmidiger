@@ -102,7 +102,7 @@ export async function loadClients() {
     setAppStatus("Keine Kunden geladen.");
     return;
   }
-  setAppStatus("Server verbunden.");
+  setAppStatus("Daten geladen.");
 }
 
 /**
