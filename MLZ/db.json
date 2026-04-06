@@ -88,8 +88,19 @@
     {
       "userId": 2,
       "dateDay": "2026-04-06",
-      "totalMinutes": 0,
-      "sessions": [],
+      "totalMinutes": 120,
+      "sessions": [
+        {
+          "id": 1775484240309,
+          "from": "08:00",
+          "to": "09:00"
+        },
+        {
+          "id": 1775484257582,
+          "from": "08:00",
+          "to": "09:00"
+        }
+      ],
       "id": 2
     }
   ],

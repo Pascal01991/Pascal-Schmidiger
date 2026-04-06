@@ -230,6 +230,17 @@ function validateSessionForm() {
     isValid = false;
   }
 
+  if (
+    sessionFromInput.value !== "" &&
+    sessionToInput.value !== "" &&
+    getMinutesBetween(sessionFromInput.value, sessionToInput.value) > 0 &&
+    hasSessionOverlap(sessionFromInput.value, sessionToInput.value)
+  ) {
+    sessionToError.textContent = "In diesem Zeitraum ist bereits eine Session erfasst.";
+    sessionToInput.classList.add("input-error");
+    isValid = false;
+  }
+
   return isValid;
 }
 
@@ -636,6 +647,23 @@ function getCurrentSessions() {
   return currentWorkday.sessions;
 }
 
+//Prüft, ob sich ein neuer Zeitraum mit bestehenden Sessions überschneidet (ignoriert die aktuell bearbeitete Session).
+function hasSessionOverlap(from, to) {
+  const newFromMinutes = getTimeAsMinutes(from);
+  const newToMinutes = getTimeAsMinutes(to);
+
+  return getCurrentSessions().some((session) => {
+    if (sessionEditId && Number(session.id) === Number(sessionEditId)) {
+      return false;
+    }
+
+    const sessionFromMinutes = getTimeAsMinutes(session.from);
+    const sessionToMinutes = getTimeAsMinutes(session.to);
+
+    return newFromMinutes < sessionToMinutes && newToMinutes > sessionFromMinutes;
+  });
+}
+
 function getCurrentDayActivities() {
   if (!currentWorkday) {
     return [];
@@ -712,12 +740,18 @@ function calculateTotalMinutes(sessions) {
 }
 
 function getMinutesBetween(from, to) {
-  const fromParts = from.split(":");
-  const toParts = to.split(":");
-  const fromMinutes = Number(fromParts[0]) * 60 + Number(fromParts[1]);
-  const toMinutes = Number(toParts[0]) * 60 + Number(toParts[1]);
+  const fromMinutes = getTimeAsMinutes(from);
+  const toMinutes = getTimeAsMinutes(to);
 
   return toMinutes - fromMinutes;
+}
+
+function getTimeAsMinutes(timeValue) {
+  const timeParts = timeValue.split(":");
+  const hours = Number(timeParts[0]);
+  const minutes = Number(timeParts[1]);
+
+  return hours * 60 + minutes;
 }
 
 function convertHoursToMinutes(hours) {
