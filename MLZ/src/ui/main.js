@@ -204,10 +204,6 @@ document.getElementById("createTestData").addEventListener("click", handleCreate
 // #endregion Data-Management
 
 // #region Auth
-function getUserDisplayText(user) {
-  return user.loginDisplayName + " (" + user.role + ")";
-}
-
 function applyRoleVisibility() {
   const isManager = authService.isManager();
 
@@ -225,7 +221,7 @@ function showLoginView() {
 function showAppView(user) {
   loginSection.style.display = "none";
   appShell.style.display = "block";
-  currentUserInfo.textContent = "Angemeldet als: " + getUserDisplayText(user);
+  currentUserInfo.textContent = user.username;
   applyRoleVisibility();
 }
 
