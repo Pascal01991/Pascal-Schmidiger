@@ -1,43 +1,6 @@
 {
-  "projects": [
-    {
-      "name": "Website Relaunch",
-      "externalReference": "",
-      "clientId": 1,
-      "completed": false,
-      "id": 1
-    },
-    {
-      "name": "Iron Man Suit Maintenance",
-      "externalReference": "",
-      "clientId": 2,
-      "completed": true,
-      "id": 2
-    },
-    {
-      "name": "Logo Design",
-      "externalReference": "",
-      "clientId": 1,
-      "completed": false,
-      "id": 3
-    }
-  ],
-  "clients": [
-    {
-      "name": "ACME Corp",
-      "address": "Musterstraße 1",
-      "externalReference": "",
-      "active": true,
-      "id": 1
-    },
-    {
-      "name": "Stark Industries",
-      "address": "Malibu Point 10880",
-      "externalReference": "",
-      "active": true,
-      "id": 2
-    }
-  ],
+  "projects": [],
+  "clients": [],
   "users": [
     {
       "id": 1,
@@ -70,73 +33,10 @@
     {
       "userId": 1,
       "dateDay": "2026-04-06",
-      "totalMinutes": 180,
-      "sessions": [
-        {
-          "id": 1,
-          "from": "08:00",
-          "to": "10:00"
-        },
-        {
-          "id": 2,
-          "from": "13:00",
-          "to": "14:00"
-        }
-      ],
+      "totalMinutes": 0,
+      "sessions": [],
       "id": 1
-    },
-    {
-      "userId": 2,
-      "dateDay": "2026-04-06",
-      "totalMinutes": 120,
-      "sessions": [
-        {
-          "id": 1775484240309,
-          "from": "08:00",
-          "to": "09:00"
-        },
-        {
-          "id": 1775484257582,
-          "from": "08:00",
-          "to": "09:00"
-        }
-      ],
-      "id": 2
     }
   ],
-  "activities": [
-    {
-      "workdayId": 1,
-      "userId": 1,
-      "projectId": 1,
-      "comment": "Kickoff",
-      "billingInfo": "",
-      "durationMinutes": 60,
-      "billable": true,
-      "billed": false,
-      "id": 1
-    },
-    {
-      "workdayId": 1,
-      "userId": 1,
-      "projectId": 3,
-      "comment": "Konzept",
-      "billingInfo": "",
-      "durationMinutes": 60,
-      "billable": true,
-      "billed": false,
-      "id": 2
-    },
-    {
-      "workdayId": 2,
-      "userId": 2,
-      "projectId": 1,
-      "comment": "asdf",
-      "billingInfo": "",
-      "durationMinutes": 60,
-      "billable": false,
-      "billed": false,
-      "id": 3
-    }
-  ]
+  "activities": []
 }

@@ -460,7 +460,7 @@ function renderSessionDayList() {
   const sessions = getCurrentSessions();
 
   if (sessions.length === 0) {
-    workdaySessionItems.innerHTML = "<p>Keine Sessions gefunden.</p>";
+    workdaySessionItems.innerHTML = "<p>Keine Sessions erfasst.</p>";
     return;
   }
 
@@ -486,7 +486,7 @@ function renderWorkdayActivityList() {
   const projectLookup = getProjectLookup();
 
   if (dayActivities.length === 0) {
-    workdayActivityItems.innerHTML = "<p>Keine Aktivitäten gefunden.</p>";
+    workdayActivityItems.innerHTML = "<p>Keine Aktivitäten erfasst.</p>";
     return;
   }
 
@@ -520,17 +520,19 @@ function renderOpenWorkdayList() {
   const openWorkdays = getOpenWorkdays();
 
   if (openWorkdays.length === 0) {
-    workdayOpenDaysItems.innerHTML = "<p>Keine unvollständigen Tage gefunden.</p>";
+    workdayOpenDaysItems.innerHTML = "<p>Alle Tage sind vollständig deklariert.</p>";
     return;
   }
 
   workdayOpenDaysItems.innerHTML = openWorkdays
     .map((item) => {
       return `
-        <div class="list-row">
+        <div style='color: red;' class="list-row">
           <span class="list-field">
             <div>${item.dateDay}</div>
-            <div>${formatMinutesAsHours(item.openMinutes)} h offen</div>
+          </span>  
+          <span class="list-field">
+            <div>⚠️${formatMinutesAsHours(item.openMinutes)}h offen</div>
           </span>
         </div>
       `;
