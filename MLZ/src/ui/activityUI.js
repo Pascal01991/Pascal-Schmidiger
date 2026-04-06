@@ -192,12 +192,12 @@ async function loadWorkdayForCurrentDate() {
 // #region Session Form
 function showSessionForm(isEditMode = false) {
   hideActivityForm();
-  sessionForm.style.display = "grid";
+  sessionForm.classList.add("is-open");
   saveSessionButton.textContent = isEditMode ? "Änderung speichern" : "Session speichern";
 }
 
 function hideSessionForm() {
-  sessionForm.style.display = "none";
+  sessionForm.classList.remove("is-open");
   sessionEditId = null;
   sessionForm.reset();
   clearSessionFormErrors();
@@ -313,12 +313,12 @@ async function deleteSession(sessionId) {
 // #region Activity Form
 function showActivityForm(isEditMode = false) {
   hideSessionForm();
-  activityForm.style.display = "grid";
+  activityForm.classList.add("is-open");
   saveActivityButton.textContent = isEditMode ? "Änderung speichern" : "Aktivität speichern";
 }
 
 function hideActivityForm() {
-  activityForm.style.display = "none";
+  activityForm.classList.remove("is-open");
   activityEditId = null;
   activityEditUserId = null;
   activityEditWorkdayId = null;

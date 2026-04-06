@@ -221,13 +221,13 @@ function fillProjectForm(project) {
 }
 
 function showProjectForm(isEditMode = false) {
-  projectForm.style.display = "grid";
+  projectForm.classList.add("is-open");
   createProjectButton.style.display = "none";
   saveProjectButton.textContent = isEditMode ? "Änderung speichern" : "Projekt anlegen";
 }
 
 function hideProjectForm() {
-  projectForm.style.display = "none";
+  projectForm.classList.remove("is-open");
   editMode = false;
   currentProjectId = null;
   projectForm.reset();

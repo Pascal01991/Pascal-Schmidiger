@@ -205,13 +205,13 @@ function fillClientForm(client) {
 }
 
 function showClientForm(isEditMode = false) {
-  clientForm.style.display = "grid";
+  clientForm.classList.add("is-open");
   createClientButton.style.display = "none";
   saveClientButton.textContent = isEditMode ? "Änderung speichern" : "Kunde anlegen";
 }
 
 function hideClientForm() {
-  clientForm.style.display = "none";
+  clientForm.classList.remove("is-open");
   editMode = false;
   currentClientId = null;
   clientForm.reset();
