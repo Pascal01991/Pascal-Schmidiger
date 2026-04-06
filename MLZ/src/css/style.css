@@ -82,6 +82,7 @@ button {
 .list-row {
   display: flex;
   justify-content: space-between;
+  gap: 8px;
   padding: 8px;
   border-bottom: 1px solid var(--border-medium);
   margin-bottom: 10px;
@@ -89,6 +90,7 @@ button {
 
 .list-field {
   flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: 5px;
@@ -110,6 +112,12 @@ button {
   color: crimson;
   margin: 0 0 8px 0;
   min-height: 18px;
+}
+
+.day-lists {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
 }
 
 .app-form {
@@ -176,8 +184,50 @@ button {
 }
 
 @media (max-width: 700px) {
+  h1 {
+    margin-right: 0;
+  }
+
   .app-form {
     grid-template-columns: 150px minmax(180px, 1fr);
+  }
+
+  #session-box {
+    position: static;
+    width: 100%;
+    flex-wrap: wrap;
+    padding: 8px 0;
+  }
+
+  .session-user-line {
+    flex-wrap: wrap;
+    white-space: normal;
+  }
+
+  .session-status-line {
+    white-space: normal;
+  }
+
+  .day-lists {
+    flex-direction: column;
+  }
+
+  .day-lists > div {
+    width: 100%;
+  }
+
+  .list-row {
+    flex-wrap: wrap;
+  }
+
+  .list-field {
+    width: 100%;
+    padding: 0;
+  }
+
+  .list-field-actions {
+    width: 100%;
+    justify-content: flex-start;
   }
 }
 
