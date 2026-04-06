@@ -71,6 +71,8 @@
         <input type="checkbox" id="activity-billable">
         <label for="activity-billed">Abgerechnet</label>
         <input type="checkbox" id="activity-billed">
+        <label for="activity-created-by" id="activity-created-by-label" style="display:none;">Angelegt von:</label>
+        <input type="text" id="activity-created-by" readonly style="display:none;">
         <button id="BtnSaveActivityNew" type="submit"></button>
         <button id="BtnCloseActivityFormNew" type="button">Abbrechen</button>
       </form>
@@ -104,6 +106,10 @@
           <label class="search-filter-option">
             <input type="checkbox" id="search-activity-date-checkbox" checked>
             Datum
+          </label>
+          <label class="search-filter-option" id="search-activity-user-option" style="display:none;">
+            <input type="checkbox" id="search-activity-user-checkbox">
+            Benutzer
           </label>
         </div>
         <div id="activity-items" class="scrollable-list-item"></div>

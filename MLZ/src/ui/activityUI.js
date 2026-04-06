@@ -32,6 +32,8 @@ const activityCommentInput = document.getElementById("activity-comment");
 const activityBillingInfoInput = document.getElementById("activity-billing-info");
 const activityBillableInput = document.getElementById("activity-billable");
 const activityBilledInput = document.getElementById("activity-billed");
+const activityCreatedByLabel = document.getElementById("activity-created-by-label");
+const activityCreatedByInput = document.getElementById("activity-created-by");
 const saveActivityButton = document.getElementById("BtnSaveActivityNew");
 const closeActivityFormButton = document.getElementById("BtnCloseActivityFormNew");
 
@@ -41,6 +43,8 @@ const activitySearchInput = document.getElementById("searchActivity");
 const activitySearchProjectCheckbox = document.getElementById("search-activity-project-checkbox");
 const activitySearchClientCheckbox = document.getElementById("search-activity-client-checkbox");
 const activitySearchDateCheckbox = document.getElementById("search-activity-date-checkbox");
+const activitySearchUserOption = document.getElementById("search-activity-user-option");
+const activitySearchUserCheckbox = document.getElementById("search-activity-user-checkbox");
 const activityItemsList = document.getElementById("activity-items");
 // #endregion DOM References
 
@@ -49,10 +53,13 @@ let currentWorkday = null;
 let currentWorkdays = [];
 let currentProjects = [];
 let currentClients = [];
+let currentUsers = [];
 let currentActivities = [];
 let currentDateDay = "";
 let sessionEditId = null;
 let activityEditId = null;
+let activityEditUserId = null;
+let activityEditWorkdayId = null;
 let hasTriedToSubmitSessionForm = false;
 let hasTriedToSubmitActivityForm = false;
 // #endregion State
@@ -73,6 +80,7 @@ activitySearchInput.addEventListener("input", renderFilteredActivityList);
 activitySearchProjectCheckbox.addEventListener("change", renderFilteredActivityList);
 activitySearchClientCheckbox.addEventListener("change", renderFilteredActivityList);
 activitySearchDateCheckbox.addEventListener("change", renderFilteredActivityList);
+activitySearchUserCheckbox.addEventListener("change", renderFilteredActivityList);
 workdayActivityItems.addEventListener("click", async (event) => {
   await handleActivityListClick(event);
 });
@@ -122,9 +130,11 @@ export function renderProjectOptionsForTimeForm(projects) {
 export async function loadActivities() {
   currentProjects = await api.getProjects();
   currentClients = await api.getClients();
+  currentUsers = await api.getUsers();
   currentActivities = filterActivitiesByRole(await api.getActivities());
 
   renderProjectOptionsForTimeForm(currentProjects);
+  updateActivityUserSearchVisibility();
   setDefaultWorkdayDateIfNeeded();
   await loadWorkdayForCurrentDate();
   renderFilteredActivityList();
@@ -296,7 +306,10 @@ function showActivityForm(isEditMode = false) {
 function hideActivityForm() {
   activityForm.style.display = "none";
   activityEditId = null;
+  activityEditUserId = null;
+  activityEditWorkdayId = null;
   activityForm.reset();
+  hideActivityCreatedByField();
   clearActivityFormErrors();
 }
 
@@ -359,8 +372,8 @@ async function onActivityFormSubmit(event) {
   const workday = await ensureCurrentWorkday();
   const currentUser = getCurrentUser();
   const activityData = {
-    workdayId: workday.id,
-    userId: currentUser.id,
+    workdayId: activityEditWorkdayId || workday.id,
+    userId: activityEditUserId || currentUser.id,
     projectId: Number(activityProjectSelect.value),
     comment: activityCommentInput.value.trim(),
     billingInfo: activityBillingInfoInput.value.trim(),
@@ -392,6 +405,8 @@ async function handleActivityListClick(event) {
 
     if (selectedActivity) {
       activityEditId = selectedActivity.id;
+      activityEditUserId = selectedActivity.userId;
+      activityEditWorkdayId = selectedActivity.workdayId;
       showActivityForm(true);
       fillActivityForm(selectedActivity);
     }
@@ -414,6 +429,7 @@ function fillActivityForm(selectedActivity) {
   activityBillingInfoInput.value = selectedActivity.billingInfo || "";
   activityBillableInput.checked = selectedActivity.billable;
   activityBilledInput.checked = selectedActivity.billed;
+  showActivityCreatedByField(selectedActivity.userId);
   clearActivityFormErrors();
 }
 // #endregion Activity Form
@@ -480,16 +496,19 @@ function renderFilteredActivityList() {
   const searchText = activitySearchInput.value;
   const selectedFields = getSelectedActivitySearchFields();
   const projectLookup = getProjectLookup();
+  const isManager = getCurrentUser()?.role === "manager";
 
   const filteredActivities = currentActivities.filter((item) => {
     const projectMetaData = getActivityProjectMetaData(item, projectLookup);
     const dateDay = getWorkdayDateById(item.workdayId);
+    const userName = getUserNameById(item.userId);
 
     return entityMatchesSearch(
       {
         projectName: projectMetaData.projectName,
         clientName: projectMetaData.clientName,
         dateDay,
+        userName,
       },
       searchText,
       selectedFields,
@@ -505,6 +524,7 @@ function renderFilteredActivityList() {
     .map((item) => {
       const projectMetaData = getActivityProjectMetaData(item, projectLookup);
       const dateDay = getWorkdayDateById(item.workdayId);
+      const userName = getUserNameById(item.userId);
 
       return `
         <div class="list-row">
@@ -514,6 +534,7 @@ function renderFilteredActivityList() {
           </span>
           <span class="list-field">
             <div>${highlightText(dateDay, searchText)}</div>
+            <div>${isManager ? `<div>${highlightText(userName, searchText)}</div>` : ""}</div>
           </span>
           <div class="list-field-actions">
             <button data-activity-id="${item.id}" class="action-btn edit-activity-btn" title="Bearbeiten">✏️</button>
@@ -538,6 +559,10 @@ function getSelectedActivitySearchFields() {
 
   if (activitySearchDateCheckbox.checked) {
     selectedFields.push("dateDay");
+  }
+
+  if (activitySearchUserCheckbox.checked) {
+    selectedFields.push("userName");
   }
 
   return selectedFields;
@@ -660,5 +685,33 @@ function filterActivitiesByRole(activities) {
 function getWorkdayDateById(workdayId) {
   const matchingWorkday = currentWorkdays.find((item) => Number(item.id) === Number(workdayId));
   return matchingWorkday ? matchingWorkday.dateDay : "";
+}
+
+function getUserNameById(userId) {
+  const user = currentUsers.find((item) => Number(item.id) === Number(userId));
+
+  if (!user) {
+    return "Unbekannter Benutzer";
+  }
+
+  return user.loginDisplayName;
+}
+
+function updateActivityUserSearchVisibility() {
+  const isManager = getCurrentUser()?.role === "manager";
+  activitySearchUserOption.style.display = isManager ? "inline-flex" : "none";
+  activitySearchUserCheckbox.checked = false;
+}
+
+function showActivityCreatedByField(userId) {
+  activityCreatedByLabel.style.display = "block";
+  activityCreatedByInput.style.display = "block";
+  activityCreatedByInput.value = getUserNameById(userId);
+}
+
+function hideActivityCreatedByField() {
+  activityCreatedByLabel.style.display = "none";
+  activityCreatedByInput.style.display = "none";
+  activityCreatedByInput.value = "";
 }
 // #endregion Helper
