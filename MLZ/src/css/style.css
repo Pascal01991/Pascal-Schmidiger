@@ -3,7 +3,7 @@
   --background-page: #ffffff;
   --background-medium: #f0f0f0;
   --background-panel: #f8f8f8;
-  --background-form: #bebebe;
+  --background-form: var(--background-medium);
   --text-color: #111111;
   --border-medium: #ccc;
   --button-background: #e7dcd2;
@@ -15,7 +15,7 @@
   --background-page: #1f1f1f;
   --background-medium: #2a2a2a;
   --background-panel: #333333;
-  --background-form: #444444;
+  --background-form: var(--background-medium);
   --text-color: #f3f3f3;
   --border-medium: #555;
   --button-background: #53453c;
@@ -121,7 +121,7 @@ button {
 }
 
 .app-form {
-  background-color: var(--background-panel);
+  background-color: var(--background-form);
   border: 1px solid var(--border-medium);
   border-radius: 5px;
   max-width: 850px;

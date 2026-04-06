@@ -15,18 +15,11 @@
       "id": 2
     },
     {
-      "name": "Webseite Unternehmenspräsentation",
-      "externalReference": "",
-      "clientId": 1,
-      "completed": false,
-      "id": 3
-    },
-    {
       "name": "Administrativer Aufwand",
       "externalReference": "",
       "clientId": 3,
       "completed": false,
-      "id": 4
+      "id": 3
     }
   ],
   "clients": [
@@ -55,8 +48,8 @@
   "users": [
     {
       "id": 1,
-      "username": "manager",
-      "password": "manager123",
+      "username": "Norbert",
+      "password": "Norbert123",
       "role": "manager",
       "loginDisplayName": "Manager",
       "prename": "Max",
@@ -68,8 +61,8 @@
     },
     {
       "id": 2,
-      "username": "timekeeper",
-      "password": "timekeeper123",
+      "username": "Herbert",
+      "password": "Herbert123",
       "role": "timekeeper",
       "loginDisplayName": "Timekeeper",
       "prename": "Tina",
@@ -98,136 +91,6 @@
         }
       ],
       "id": 1
-    },
-    {
-      "userId": 1,
-      "dateDay": "2026-04-14",
-      "totalMinutes": 60,
-      "sessions": [
-        {
-          "id": 1775492430310,
-          "from": "08:00",
-          "to": "09:00"
-        }
-      ],
-      "id": 2
-    },
-    {
-      "userId": 1,
-      "dateDay": "2026-04-15",
-      "totalMinutes": 60,
-      "sessions": [
-        {
-          "id": 1775492440171,
-          "from": "08:00",
-          "to": "09:00"
-        }
-      ],
-      "id": 3
-    },
-    {
-      "userId": 1,
-      "dateDay": "2026-04-16",
-      "totalMinutes": 60,
-      "sessions": [
-        {
-          "id": 1775492492249,
-          "from": "08:00",
-          "to": "09:00"
-        }
-      ],
-      "id": 4
-    },
-    {
-      "userId": 1,
-      "dateDay": "2026-04-17",
-      "totalMinutes": 60,
-      "sessions": [
-        {
-          "id": 1775492501050,
-          "from": "08:00",
-          "to": "09:00"
-        }
-      ],
-      "id": 5
-    },
-    {
-      "userId": 1,
-      "dateDay": "2026-04-20",
-      "totalMinutes": 60,
-      "sessions": [
-        {
-          "id": 1775492511423,
-          "from": "08:00",
-          "to": "09:00"
-        }
-      ],
-      "id": 6
-    },
-    {
-      "userId": 1,
-      "dateDay": "2026-04-22",
-      "totalMinutes": 30,
-      "sessions": [
-        {
-          "id": 1775492531473,
-          "from": "09:00",
-          "to": "09:30"
-        }
-      ],
-      "id": 7
-    },
-    {
-      "userId": 1,
-      "dateDay": "2026-04-27",
-      "totalMinutes": 60,
-      "sessions": [
-        {
-          "id": 1775492545037,
-          "from": "08:00",
-          "to": "09:00"
-        }
-      ],
-      "id": 8
-    },
-    {
-      "userId": 1,
-      "dateDay": "2026-04-28",
-      "totalMinutes": 60,
-      "sessions": [
-        {
-          "id": 1775492554534,
-          "from": "08:00",
-          "to": "09:00"
-        }
-      ],
-      "id": 9
-    },
-    {
-      "userId": 1,
-      "dateDay": "2026-04-01",
-      "totalMinutes": 60,
-      "sessions": [
-        {
-          "id": 1775492604836,
-          "from": "07:00",
-          "to": "08:00"
-        }
-      ],
-      "id": 10
-    },
-    {
-      "userId": 1,
-      "dateDay": "2026-04-02",
-      "totalMinutes": 60,
-      "sessions": [
-        {
-          "id": 1775492612902,
-          "from": "08:00",
-          "to": "09:00"
-        }
-      ],
-      "id": 11
     }
   ],
   "activities": [
