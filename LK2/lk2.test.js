@@ -51,7 +51,7 @@ describe("LK2", () => {
       document.addEventListener("click", handleClick);
       try {
         div.addEventListener("click", handleClick);
-        button.addEventListener("click", handleAndPassClick);
+        button.addEventListener("click", handleClick);
 
         button.click();
 
