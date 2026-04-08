@@ -75,9 +75,10 @@ describe("LK2", () => {
 
       function handleClick(e) {
         clicks.push(e.currentTarget.nodeName);
+        e.stopPropagation();
       }
 
-      document.addEventListener("click", handleClick, { capture: false });
+      document.addEventListener("click", handleClick, { capture: true });
       try {
         div.addEventListener("click", handleClick);
         button.addEventListener("click", handleClick);
@@ -108,7 +109,7 @@ describe("LK2", () => {
       </form>
     `;
 
-      let firstNameInput = document.getElementsByTagName("form")[0].getElementsByTagName("input")[0];
+      let firstNameInput = document.getElementsByTagName("form")[0].getElementsByTagName("input")[1];
 
       expect(firstNameInput.id).toBe("firstName");
       expect(firstNameInput.disabled).toBeTruthy();
@@ -197,7 +198,7 @@ describe("LK2", () => {
         },
       };
 
-      document.cookie = "???";
+      document.cookie = "person=" + JSON.stringify(person);
 
       expect(document.cookie).toMatchSnapshot();
 
