@@ -525,7 +525,7 @@ function renderOpenWorkdayList() {
   const openWorkdays = getOpenWorkdays();
 
   if (openWorkdays.length === 0) {
-    workdayOpenDaysItems.innerHTML = "<p>Alle Tage sind vollständig deklariert.</p>";
+    workdayOpenDaysItems.innerHTML = "<p>✅ Alle Tage sind vollständig deklariert.</p>";
     return;
   }
 
@@ -537,7 +537,7 @@ function renderOpenWorkdayList() {
             <div>${item.dateDay}</div>
           </span>  
           <span class="list-field">
-            <div>⚠️${formatMinutesAsHours(item.openMinutes)}h offen</div>
+            <div>⚠️ ${formatMinutesAsHours(item.openMinutes)}h offen</div>
           </span>
         </div>
       `;

@@ -15,11 +15,18 @@
       "id": 2
     },
     {
+      "name": "Webseite Unternehmenspräsentation",
+      "externalReference": "",
+      "clientId": 1,
+      "completed": false,
+      "id": 3
+    },
+    {
       "name": "Administrativer Aufwand",
       "externalReference": "",
       "clientId": 3,
       "completed": false,
-      "id": 3
+      "id": 4
     }
   ],
   "clients": [
@@ -100,7 +107,7 @@
       "projectId": 1,
       "comment": "Kickoff",
       "billingInfo": "",
-      "durationMinutes": 60,
+      "durationMinutes": 45,
       "billable": true,
       "billed": false,
       "id": 1
@@ -111,7 +118,7 @@
       "projectId": 3,
       "comment": "Konzept",
       "billingInfo": "",
-      "durationMinutes": 60,
+      "durationMinutes": 120,
       "billable": true,
       "billed": false,
       "id": 2

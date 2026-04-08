@@ -105,7 +105,7 @@ export async function loadProjects() {
     setAppStatus("Keine Projekte geladen.");
     return;
   }
-  setAppStatus("Daten geladen..");
+  setAppStatus("Daten geladen.");
 }
 
 /**
@@ -194,7 +194,7 @@ function renderProjectList(projects, clients) {
 
 function getProjectMetaData(project, clientLookup) {
   const clientName = clientLookup[project.clientId] || "Unbekannter Client";
-  let statusText = project.completed ? "✅ Abgeschlossen" : "⏳offen";
+  let statusText = project.completed ? "✅ Abgeschlossen" : "⏳ offen";
 
   return { clientName, statusText };
 }

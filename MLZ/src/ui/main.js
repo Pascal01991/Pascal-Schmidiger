@@ -82,7 +82,8 @@ function getViewSettings() {
     clientSearch: document.getElementById("searchClient")?.value || "",
     clientNameChecked: document.getElementById("search-client-name-checkbox")?.checked || false,
     clientAddressChecked: document.getElementById("search-client-address-checkbox")?.checked || false,
-    clientExternalReferenceChecked: document.getElementById("search-client-external-reference-checkbox")?.checked || false,
+    clientExternalReferenceChecked:
+      document.getElementById("search-client-external-reference-checkbox")?.checked || false,
     clientActiveChecked: document.getElementById("search-client-active-checkbox")?.checked || false,
   };
 }
@@ -154,13 +155,10 @@ async function handleDatabaseReset() {
   }, 3000);
 
   try {
-    setAppStatus("Setze Datenbank zurück...");
+    showMessageBox("Daten werden gelöscht...", "orange");
     await api.resetDatabase();
-    console.log("Datenbank zurückgesetzt, lade Daten neu...");
     await loadProjects();
-    console.log("Projekte neu geladen.");
     await loadClients();
-    console.log("Kunden neu geladen.");
     await loadActivities();
 
     showMessageBox("Datenbank wurde geleert.", "orange");
@@ -182,6 +180,7 @@ async function handleCreateTestData() {
   try {
     setAppStatus("Erstelle Testdaten...");
 
+    showMessageBox("Testdaten werden erstellt...", "orange");
     deleteDatabase.disabled = true;
     createTestData.disabled = true;
     setTimeout(() => {
