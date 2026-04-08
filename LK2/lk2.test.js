@@ -15,7 +15,7 @@ describe("LK2", () => {
       </div>
     `;
 
-      const button = document;
+      const button = document.getElementById("a");
 
       expect(button.id).toBe("a");
       expect(button.tagName).toBe("BUTTON");
@@ -152,7 +152,7 @@ describe("LK2", () => {
     }
 
     function getCookieMap() {
-      const cookie = document.cookie.split(";").map(s => {
+      const cookie = document.cookie.split(";").map((s) => {
         const [key, value] = s.trim().split("=");
         return { key, value };
       });
@@ -249,7 +249,7 @@ describe("LK2", () => {
   });
 
   describe("Timers and intervals", () => {
-    test("set interval of 1/10 second", done => {
+    test("set interval of 1/10 second", (done) => {
       let counter = 0;
 
       const t = setInterval(() => {
