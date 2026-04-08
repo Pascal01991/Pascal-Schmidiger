@@ -225,7 +225,8 @@ describe("LK2", () => {
         }
       }
 
-      localStorage.setItem("lastUsername", "Bob");
+      localStorage.setItem("lastUsername", "John");
+      localStorage.setItem("expertMode", "true");
 
       const local = [...getLocalStorageItems()];
 
@@ -246,6 +247,8 @@ describe("LK2", () => {
 
       // Hint: Does this test even set anything in the localStorage yet?
 
+      localStorage.setItem("lastUsername", "John");
+      localStorage.setItem("expertMode", "true");
       expect(getLocalStorageAsObject()).toMatchSnapshot();
     });
   });
