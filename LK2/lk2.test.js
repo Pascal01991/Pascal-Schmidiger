@@ -176,15 +176,15 @@ describe("LK2", () => {
     });
 
     test("get key/value pairs", () => {
-      document.cookie = "something=John";
-      document.cookie = "expertMode=1";
+      document.cookie = "lastUsername=John";
+      document.cookie = "expertMode=true";
 
       expect(getCookieMap()).toMatchSnapshot();
     });
 
     test("get values in object", () => {
-      document.cookie = "something=Mark";
-      document.cookie = "expertMode=John";
+      document.cookie = "lastUsername=John";
+      document.cookie = "expertMode=true";
 
       expect(getCookieObject()).toMatchSnapshot();
     });
