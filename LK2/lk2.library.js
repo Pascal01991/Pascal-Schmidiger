@@ -1,10 +1,10 @@
 class MyElement extends HTMLElement {
   connectedCallback() {
-    this.innerHTML = `<b>Name</b>`;
+    this.innerHTML = `<b>Title</b>`;
   }
 
   static get observedAttributes() {
-    return ["titles"];
+    return ["title"];
   }
 
   attributeChangedCallback(name, oldValue, newValue) {

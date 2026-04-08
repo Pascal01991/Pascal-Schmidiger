@@ -110,6 +110,7 @@ describe("LK2", () => {
     `;
 
       let firstNameInput = document.getElementsByTagName("form")[0].getElementsByTagName("input")[1];
+      firstNameInput.disabled = true;
 
       expect(firstNameInput.id).toBe("firstName");
       expect(firstNameInput.disabled).toBeTruthy();
@@ -258,6 +259,7 @@ describe("LK2", () => {
 
         if (counter > 3) {
           // what do you do to stop the interval?
+          clearInterval(t);
         }
       }, 100);
 
