@@ -127,7 +127,7 @@
     {
       "userId": 1,
       "dateDay": "2026-04-09",
-      "totalMinutes": 180,
+      "totalMinutes": 240,
       "sessions": [
         {
           "id": 1775741134233,
@@ -138,6 +138,11 @@
           "id": 1775741144504,
           "from": "10:00",
           "to": "11:00"
+        },
+        {
+          "id": 1775742188013,
+          "from": "13:00",
+          "to": "14:00"
         }
       ],
       "id": 3
@@ -154,6 +159,19 @@
         }
       ],
       "id": 4
+    },
+    {
+      "userId": 1,
+      "dateDay": "2026-04-07",
+      "totalMinutes": 60,
+      "sessions": [
+        {
+          "id": 1775741882834,
+          "from": "08:00",
+          "to": "09:00"
+        }
+      ],
+      "id": 5
     }
   ],
   "activities": [
@@ -189,6 +207,17 @@
       "billable": false,
       "billed": false,
       "id": 4
+    },
+    {
+      "workdayId": 3,
+      "userId": 1,
+      "projectId": 2,
+      "comment": "asdf",
+      "billingInfo": "12",
+      "durationMinutes": 60,
+      "billable": false,
+      "billed": false,
+      "id": 5
     }
   ]
 }

@@ -43,10 +43,7 @@
         <div id="workday-summary">
           <p id="workday-total-session-text">Total Session: 0 h</p>
           <p id="workday-open-hours-text">Zu deklarierende Stunden: 0 h</p>
-        </div>
-
-        <button id="BtnCreateSession" type="button">Arbeits-Session anlegen</button>
-        <button id="BtnCreateActivity" type="button">Aktivität anlegen</button>
+        </div>       
 
         <form id="session-form" class="app-form">
           <label for="session-from">Zeit von:*</label>
@@ -88,11 +85,13 @@
 
         <div class="day-lists">
           <div style="flex:1;">
+            <button id="BtnCreateSession" type="button">Arbeits-Session anlegen</button>
             <h3>Arbeits-Sessions vom Tag</h3>
             <div id="workday-session-items" class="scrollable-list-item"></div>
           </div>
 
           <div style="flex:1;">
+            <button id="BtnCreateActivity" type="button">Aktivität anlegen</button>
             <h3>Aktivitäten vom Tag</h3>
             <div id="workday-activity-items" class="scrollable-list-item"></div>
           </div>

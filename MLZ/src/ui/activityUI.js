@@ -56,6 +56,7 @@ let currentUsers = [];
 let currentActivities = [];
 let activityEditId = null;
 let activityEditUserId = null;
+let activityEditWorkdayId = null;
 let hasTriedToSubmitActivityForm = false;
 // #endregion State
 
