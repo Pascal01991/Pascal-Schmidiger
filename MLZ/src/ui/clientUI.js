@@ -16,7 +16,9 @@ const clientForm = document.getElementById("client-form");
 const clientNameInput = document.getElementById("client-name");
 const clientNameError = document.getElementById("client-name-error");
 const clientAddressInput = document.getElementById("client-address");
+const clientAddressError = document.getElementById("client-address-error");
 const clientExternalRefInput = document.getElementById("client-external-reference");
+const clientExternalRefError = document.getElementById("client-external-reference-error");
 const clientActiveInput = document.getElementById("client-active");
 const createClientButton = document.getElementById("BtnCreateClient");
 const saveClientButton = document.getElementById("BtnSaveClient");
@@ -40,6 +42,7 @@ let hasTriedToSubmitClientForm = false;
 clientForm.addEventListener("submit", onClientFormSubmit);
 clientNameInput.addEventListener("input", validateClientFormIfNeeded);
 clientAddressInput.addEventListener("input", validateClientFormIfNeeded);
+clientExternalRefInput.addEventListener("input", validateClientFormIfNeeded);
 clientSearchInput.addEventListener("input", renderFilteredClientList);
 clientSearchNameCheckbox.addEventListener("change", renderFilteredClientList);
 clientSearchAddressCheckbox.addEventListener("change", renderFilteredClientList);
@@ -243,6 +246,22 @@ function validateClientForm() {
     clientNameError.textContent = "Kundenname muss mindestens 3 Zeichen haben.";
     clientNameInput.classList.add("input-error");
     isValid = false;
+  } else if (clientNameInput.value.trim().length > 30) {
+    clientNameError.textContent = "Kundenname darf maximal 30 Zeichen haben.";
+    clientNameInput.classList.add("input-error");
+    isValid = false;
+  }
+
+  if (clientAddressInput.value.trim().length > 50) {
+    clientAddressError.textContent = "Kundenadresse darf maximal 50 Zeichen haben.";
+    clientAddressInput.classList.add("input-error");
+    isValid = false;
+  }
+
+  if (clientExternalRefInput.value.trim().length > 30) {
+    clientExternalRefError.textContent = "Externe Referenz darf maximal 30 Zeichen haben.";
+    clientExternalRefInput.classList.add("input-error");
+    isValid = false;
   }
 
   return isValid;
@@ -262,7 +281,11 @@ function validateClientFormIfNeeded() {
 
 function clearClientFormErrors() {
   clientNameError.textContent = "";
+  clientAddressError.textContent = "";
+  clientExternalRefError.textContent = "";
   clientNameInput.classList.remove("input-error");
+  clientAddressInput.classList.remove("input-error");
+  clientExternalRefInput.classList.remove("input-error");
   hasTriedToSubmitClientForm = false;
 }
 

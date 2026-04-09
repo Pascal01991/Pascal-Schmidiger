@@ -15,6 +15,7 @@ const projectForm = document.getElementById("project-form");
 const projectNameInput = document.getElementById("project-name");
 const projectNameError = document.getElementById("project-name-error");
 const projectExternalReferenceInput = document.getElementById("project-external-reference");
+const projectExternalReferenceError = document.getElementById("project-external-reference-error");
 const projectCompletedInput = document.getElementById("project-completed");
 const projectClientIdInput = document.getElementById("project-client-select");
 const projectClientError = document.getElementById("project-client-error");
@@ -40,6 +41,7 @@ let hasTriedToSubmitProjectForm = false;
 // #region Event Listeners
 projectForm.addEventListener("submit", onProjectFormSubmit);
 projectNameInput.addEventListener("input", validateProjectFormIfNeeded);
+projectExternalReferenceInput.addEventListener("input", validateProjectFormIfNeeded);
 projectClientIdInput.addEventListener("change", validateProjectFormIfNeeded);
 projectSearchInput.addEventListener("input", renderFilteredProjectList);
 projectSearchNameCheckbox.addEventListener("change", renderFilteredProjectList);
@@ -263,6 +265,16 @@ function validateProjectForm() {
     projectNameError.textContent = "Projektname muss mindestens 3 Zeichen haben.";
     projectNameInput.classList.add("input-error");
     isValid = false;
+  } else if (projectNameInput.value.trim().length > 30) {
+    projectNameError.textContent = "Projektname darf maximal 30 Zeichen haben.";
+    projectNameInput.classList.add("input-error");
+    isValid = false;
+  }
+
+  if (projectExternalReferenceInput.value.trim().length > 30) {
+    projectExternalReferenceError.textContent = "Externe Referenz darf maximal 30 Zeichen haben.";
+    projectExternalReferenceInput.classList.add("input-error");
+    isValid = false;
   }
 
   if (projectClientIdInput.value === "") {
@@ -288,8 +300,10 @@ function validateProjectFormIfNeeded() {
 
 function clearProjectFormErrors() {
   projectNameError.textContent = "";
+  projectExternalReferenceError.textContent = "";
   projectClientError.textContent = "";
   projectNameInput.classList.remove("input-error");
+  projectExternalReferenceInput.classList.remove("input-error");
   projectClientIdInput.classList.remove("input-error");
   hasTriedToSubmitProjectForm = false;
 }
