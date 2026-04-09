@@ -213,13 +213,22 @@ function showClientForm(isEditMode = false) {
   saveClientButton.textContent = isEditMode ? "Änderung speichern" : "Kunde anlegen";
 }
 
-function hideClientForm() {
+function hideClientForm(shouldAskConfirm = true) {
+  if (clientForm.classList.contains("is-open") && shouldAskConfirm) {
+    const shouldCloseForm = confirm("Beim Schliessen gehen die eingegebenen Daten verloren. Weiter?");
+
+    if (!shouldCloseForm) {
+      return false;
+    }
+  }
+
   clientForm.classList.remove("is-open");
   editMode = false;
   currentClientId = null;
   clientForm.reset();
   clearClientFormErrors();
   createClientButton.style.display = "block";
+  return true;
 }
 // #endregion Form Rendering
 
@@ -312,7 +321,7 @@ async function onClientFormSubmit(event) {
     clientForm.reset();
     editMode = false;
     currentClientId = null;
-    hideClientForm();
+    hideClientForm(false);
     await loadClients();
     showMessageBox(successMessage, "green");
   } catch (error) {

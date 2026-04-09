@@ -131,7 +131,9 @@ export async function loadActivities() {
  * @param {boolean} [isEditMode=false]
  */
 export function showActivityForm(isEditMode = false) {
-  hideSessionForm();
+  if (!hideSessionForm()) {
+    return;
+  }
   activityForm.classList.add("is-open");
   saveActivityButton.textContent = isEditMode ? "Änderung speichern" : "Aktivität speichern";
 }
@@ -139,7 +141,15 @@ export function showActivityForm(isEditMode = false) {
 /**
  * Schliesst das Aktivitaetsformular und setzt den Bearbeitungsstatus zurueck.
  */
-export function hideActivityForm() {
+export function hideActivityForm(shouldAskConfirm = true) {
+  if (activityForm.classList.contains("is-open") && shouldAskConfirm) {
+    const shouldCloseForm = confirm("Beim Schliessen gehen die eingegebenen Daten verloren. Weiter?");
+
+    if (!shouldCloseForm) {
+      return false;
+    }
+  }
+
   activityForm.classList.remove("is-open");
   activityEditId = null;
   activityEditUserId = null;
@@ -147,6 +157,7 @@ export function hideActivityForm() {
   activityForm.reset();
   hideActivityCreatedByField();
   clearActivityFormErrors();
+  return true;
 }
 
 /**
@@ -233,7 +244,7 @@ async function onActivityFormSubmit(event) {
     await api.createActivity(activityData);
   }
 
-  hideActivityForm();
+  hideActivityForm(false);
   currentActivities = filterActivitiesByRole(await api.getActivities());
   setCurrentActivitiesForWorkdayUI(currentActivities);
   renderCurrentDayLists();

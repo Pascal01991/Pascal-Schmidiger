@@ -113,7 +113,10 @@ export function setDefaultWorkdayDateIfNeeded() {
 }
 
 async function onWorkdayDateChange() {
-  resetDayForms();
+  if (!resetDayForms()) {
+    workdayDateInput.value = currentDateDay;
+    return;
+  }
   await loadWorkdayForCurrentDate();
 }
 
@@ -148,7 +151,9 @@ export async function loadWorkdayForCurrentDate() {
  * @param {boolean} [isEditMode=false]
  */
 function showSessionForm(isEditMode = false) {
-  hideActivityForm();
+  if (!hideActivityForm()) {
+    return;
+  }
   sessionForm.classList.add("is-open");
   saveSessionButton.textContent = isEditMode ? "Änderung speichern" : "Session speichern";
 }
@@ -156,11 +161,20 @@ function showSessionForm(isEditMode = false) {
 /**
  * Schliesst das Session-Formular und leert die Eingaben.
  */
-export function hideSessionForm() {
+export function hideSessionForm(shouldAskConfirm = true) {
+  if (sessionForm.classList.contains("is-open") && shouldAskConfirm) {
+    const shouldCloseForm = confirm("Beim Schliessen gehen die eingegebenen Daten verloren. Weiter?");
+
+    if (!shouldCloseForm) {
+      return false;
+    }
+  }
+
   sessionForm.classList.remove("is-open");
   sessionEditId = null;
   sessionForm.reset();
   clearSessionFormErrors();
+  return true;
 }
 
 /**
@@ -256,7 +270,7 @@ async function onSessionFormSubmit(event) {
   workday.totalMinutes = calculateTotalMinutes(sessions);
   await api.editWorkday(workday.id, workday);
 
-  hideSessionForm();
+  hideSessionForm(false);
   await loadWorkdayForCurrentDate();
   showMessageBox("Session gespeichert!", "green");
 }
@@ -342,8 +356,15 @@ function renderOpenWorkdayList() {
 
 // #region Helper
 function resetDayForms() {
-  hideSessionForm();
-  hideActivityForm();
+  if (!hideSessionForm()) {
+    return false;
+  }
+
+  if (!hideActivityForm()) {
+    return false;
+  }
+
+  return true;
 }
 
 /**

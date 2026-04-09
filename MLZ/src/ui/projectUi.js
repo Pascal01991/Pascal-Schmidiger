@@ -228,13 +228,22 @@ function showProjectForm(isEditMode = false) {
   saveProjectButton.textContent = isEditMode ? "Änderung speichern" : "Projekt anlegen";
 }
 
-function hideProjectForm() {
+function hideProjectForm(shouldAskConfirm = true) {
+  if (projectForm.classList.contains("is-open") && shouldAskConfirm) {
+    const shouldCloseForm = confirm("Beim Schliessen gehen die eingegebenen Daten verloren. Weiter?");
+
+    if (!shouldCloseForm) {
+      return false;
+    }
+  }
+
   projectForm.classList.remove("is-open");
   editMode = false;
   currentProjectId = null;
   projectForm.reset();
   clearProjectFormErrors();
   createProjectButton.style.display = "block";
+  return true;
 }
 
 // #endregion Form Rendering
@@ -338,7 +347,7 @@ async function onProjectFormSubmit(event) {
     projectForm.reset();
     editMode = false;
     currentProjectId = null;
-    hideProjectForm();
+    hideProjectForm(false);
     await loadProjects();
     showMessageBox(successMessage, "green");
   } catch (error) {

@@ -73,6 +73,13 @@ export function initDataManagementUI({ authService, reloadAppData, setAppStatus,
         active: true,
       });
 
+      const client4 = await api.createClient({
+        name: "Nokia",
+        address: "Hauptstrasse 10, 8000 Zürich",
+        externalReference: "",
+        active: false,
+      });
+
       const project1 = await api.createProject({
         name: "Spesen App",
         externalReference: "",
