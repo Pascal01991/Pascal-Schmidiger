@@ -67,7 +67,6 @@ function handleThemeToggleChange() {
 
 function getViewSettings() {
   return {
-    workdayDate: document.getElementById("workday-date")?.value || "",
     activitySearch: document.getElementById("searchActivity")?.value || "",
     activityProjectChecked: document.getElementById("search-activity-project-checkbox")?.checked || false,
     activityClientChecked: document.getElementById("search-activity-client-checkbox")?.checked || false,
@@ -103,8 +102,6 @@ function applySavedViewSettings() {
     localStorage.removeItem(VIEW_STORAGE_KEY);
     return;
   }
-
-  document.getElementById("workday-date").value = viewSettings.workdayDate || "";
   document.getElementById("searchActivity").value = viewSettings.activitySearch || "";
   document.getElementById("search-activity-project-checkbox").checked = viewSettings.activityProjectChecked ?? true;
   document.getElementById("search-activity-client-checkbox").checked = viewSettings.activityClientChecked ?? true;
@@ -251,7 +248,7 @@ async function handleCreateTestData() {
       workdayId: workday1.id,
       userId: 1,
       projectId: project1.id,
-      comment: "Kickoff",
+      comment: "Kickoff-Meeting mit Herr Hofstetter",
       billingInfo: "",
       durationMinutes: 60,
       billable: true,
@@ -262,7 +259,28 @@ async function handleCreateTestData() {
       workdayId: workday1.id,
       userId: 1,
       projectId: project3.id,
-      comment: "Konzept",
+      comment: "Konzept erstellt gemäss Email von Frau Keller",
+      billingInfo: "",
+      durationMinutes: 60,
+      billable: true,
+      billed: false,
+    });
+
+    const workday2 = await api.createWorkday({
+      userId: 2,
+      dateDay: "2026-04-06",
+      totalMinutes: 180,
+      sessions: [
+        { id: 1, from: "08:00", to: "12:00" },
+        { id: 2, from: "13:00", to: "17:00" },
+      ],
+    });
+
+    await api.createActivity({
+      workdayId: workday2.id,
+      userId: 2,
+      projectId: project4.id,
+      comment: "Einarbeitung",
       billingInfo: "",
       durationMinutes: 60,
       billable: true,

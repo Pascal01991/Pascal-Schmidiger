@@ -4,7 +4,6 @@
  * @property {string} username
  * @property {string} password
  * @property {string} role
- * @property {string} loginDisplayName
  * @property {string} prename
  * @property {string} lastname
  * @property {string} externalReference

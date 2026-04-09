@@ -20,7 +20,6 @@ Im moment nur Frontend-Schutz, nicht echter Backend-Schutz!
   - `username`
   - `password`
   - `role`
-  - `loginDisplayName`
   - `prename`
   - `lastname`
   - `externalReference`
