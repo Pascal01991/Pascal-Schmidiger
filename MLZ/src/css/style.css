@@ -6,7 +6,9 @@
   --background-form: var(--background-medium);
   --text-color: #111111;
   --border-medium: #ccc;
-  --button-background: #e7dcd2;
+  /* --interactivity-color: #e7dcd2; */
+  --interactivity-color: #f0e6ff7e;
+  --button-background: var(--interactivity-color);
   --mark-color: #fff59d;
   font-family: var(--font-family-base);
 }
@@ -18,7 +20,8 @@
   --background-form: var(--background-medium);
   --text-color: #f3f3f3;
   --border-medium: #555;
-  --button-background: #53453c;
+  --interactivity-color: #4e3f537e;
+  --button-background: var(--interactivity-color);
   --mark-color: #8f8400;
 }
 
@@ -54,6 +57,18 @@ button {
   color: var(--text-color);
   border: 1px solid var(--border-medium);
   border-radius: 3px;
+}
+
+input:not([type="checkbox"]),
+select {
+  background-color: var(--interactivity-color);
+  color: var(--text-color);
+  border: 1px solid var(--border-medium);
+  border-radius: 3px;
+}
+
+input[type="checkbox"] {
+  accent-color: var(--interactivity-color);
 }
 
 .scrollable-list {

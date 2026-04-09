@@ -80,6 +80,7 @@ activityItemsList.addEventListener("click", async (event) => {
 
 // #region Loading
 /**
+ * Baut die Projekt-Auswahl fuer das Aktivitaetsformular auf.
  * @param {Array<{id: number|string, name: string}>} projects
  */
 export function renderProjectOptionsForTimeForm(projects) {
@@ -98,6 +99,10 @@ export function renderProjectOptionsForTimeForm(projects) {
   }
 }
 
+/**
+ * Laedt alle Aktivitaetsdaten und aktualisiert danach die UI.
+ * @returns {Promise<void>}
+ */
 export async function loadActivities() {
   currentProjects = await api.getProjects();
   currentClients = await api.getClients();
@@ -121,12 +126,19 @@ export async function loadActivities() {
 // #endregion Loading
 
 // #region Activity Form
+/**
+ * Oeffnet das Aktivitaetsformular.
+ * @param {boolean} [isEditMode=false]
+ */
 export function showActivityForm(isEditMode = false) {
   hideSessionForm();
   activityForm.classList.add("is-open");
   saveActivityButton.textContent = isEditMode ? "Änderung speichern" : "Aktivität speichern";
 }
 
+/**
+ * Schliesst das Aktivitaetsformular und setzt den Bearbeitungsstatus zurueck.
+ */
 export function hideActivityForm() {
   activityForm.classList.remove("is-open");
   activityEditId = null;
@@ -137,6 +149,10 @@ export function hideActivityForm() {
   clearActivityFormErrors();
 }
 
+/**
+ * Prueft die Eingaben des Aktivitaetsformulars.
+ * @returns {boolean}
+ */
 function validateActivityForm() {
   let isValid = true;
 
@@ -180,6 +196,11 @@ function clearActivityFormErrors() {
   hasTriedToSubmitActivityForm = false;
 }
 
+/**
+ * Speichert eine neue oder bearbeitete Aktivitaet.
+ * @param {SubmitEvent} event
+ * @returns {Promise<void>}
+ */
 async function onActivityFormSubmit(event) {
   event.preventDefault();
   hasTriedToSubmitActivityForm = true;
@@ -220,6 +241,11 @@ async function onActivityFormSubmit(event) {
   showMessageBox("Aktivität gespeichert!", "green");
 }
 
+/**
+ * Reagiert auf Bearbeiten und Loeschen in den Aktivitaetslisten.
+ * @param {MouseEvent} event
+ * @returns {Promise<void>}
+ */
 export async function handleActivityListClick(event) {
   const editButton = event.target.closest(".edit-activity-btn");
   const deleteButton = event.target.closest(".delete-activity-btn");
@@ -232,6 +258,7 @@ export async function handleActivityListClick(event) {
       activityEditId = selectedActivity.id;
       activityEditUserId = selectedActivity.userId;
       activityEditWorkdayId = selectedActivity.workdayId;
+      // Beim Bearbeiten springen wir direkt auf den passenden Tag, damit Formular und Tagesliste zusammenpassen.
       await selectWorkdayDate(getWorkdayDateById(selectedActivity.workdayId));
       showActivityForm(true);
       fillActivityForm(selectedActivity);
@@ -295,6 +322,7 @@ function renderFilteredActivityList() {
   const projectLookup = getProjectLookup();
   const isManager = getCurrentUser()?.role === "manager";
 
+  // Gesucht wird nur in den Feldern, die der Benutzer per Checkbox aktiviert hat.
   const filteredActivities = currentActivities.filter((item) => {
     const projectMetaData = getActivityProjectMetaData(item, projectLookup);
     const dateDay = getWorkdayDateById(item.workdayId);
@@ -399,6 +427,10 @@ function filterActivitiesByRole(activities) {
   return activities.filter((item) => Number(item.userId) === Number(currentUser.id));
 }
 
+/**
+ * Baut eine schnelle Zuordnung von Projekt-ID zu Anzeige-Daten auf.
+ * @returns {Record<string, {projectName: string, clientName: string}>}
+ */
 function getProjectLookup() {
   const projectLookup = {};
   const clientLookup = {};
@@ -445,6 +477,11 @@ function hideActivityCreatedByField() {
   activityCreatedByInput.value = "";
 }
 
+/**
+ * Rechnet Stunden aus dem Formular in Minuten um.
+ * @param {number|string} hours
+ * @returns {number}
+ */
 function convertHoursToMinutes(hours) {
   return Math.round(Number(hours) * 60);
 }

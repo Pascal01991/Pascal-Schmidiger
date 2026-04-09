@@ -97,6 +97,9 @@ workdayOpenDaysItems.addEventListener("click", async (event) => {
 
 // #region Loading
 
+/**
+ * Setzt beim ersten Laden automatisch das heutige Datum.
+ */
 export function setDefaultWorkdayDateIfNeeded() {
   if (!workdayDateInput || workdayDateInput.value !== "") {
     return;
@@ -114,6 +117,10 @@ async function onWorkdayDateChange() {
   await loadWorkdayForCurrentDate();
 }
 
+/**
+ * Laedt den Arbeitstag des aktuellen Benutzers fuer das gewaehlte Datum.
+ * @returns {Promise<void>}
+ */
 export async function loadWorkdayForCurrentDate() {
   const currentUser = getCurrentUser();
 
@@ -136,12 +143,19 @@ export async function loadWorkdayForCurrentDate() {
 }
 
 // #region Session Form
+/**
+ * Oeffnet das Session-Formular.
+ * @param {boolean} [isEditMode=false]
+ */
 function showSessionForm(isEditMode = false) {
   hideActivityForm();
   sessionForm.classList.add("is-open");
   saveSessionButton.textContent = isEditMode ? "Änderung speichern" : "Session speichern";
 }
 
+/**
+ * Schliesst das Session-Formular und leert die Eingaben.
+ */
 export function hideSessionForm() {
   sessionForm.classList.remove("is-open");
   sessionEditId = null;
@@ -149,6 +163,10 @@ export function hideSessionForm() {
   clearSessionFormErrors();
 }
 
+/**
+ * Prueft die Eingaben des Session-Formulars.
+ * @returns {boolean}
+ */
 function validateSessionForm() {
   let isValid = true;
 
@@ -328,6 +346,10 @@ function resetDayForms() {
   hideActivityForm();
 }
 
+/**
+ * Gibt den aktuellen Arbeitstag zurueck oder legt ihn neu an.
+ * @returns {Promise<workday>}
+ */
 export async function ensureCurrentWorkday() {
   if (currentWorkday) {
     return currentWorkday;
@@ -346,6 +368,11 @@ export async function ensureCurrentWorkday() {
   return currentWorkday;
 }
 
+/**
+ * Waehlt ein Datum im Datumsfeld aus und laedt danach die Tagesdaten.
+ * @param {string} dateDay
+ * @returns {Promise<void>}
+ */
 export async function selectWorkdayDate(dateDay) {
   if (!workdayDateInput) {
     return;
@@ -363,7 +390,13 @@ function getCurrentSessions() {
   return currentWorkday.sessions;
 }
 
-//Prüft, ob sich ein neuer Zeitraum mit bestehenden Sessions überschneidet (ignoriert die aktuell bearbeitete Session).
+/**
+ * Prueft, ob sich ein Zeitraum mit bestehenden Sessions ueberschneidet.
+ * Die aktuell bearbeitete Session wird ignoriert.
+ * @param {string} from
+ * @param {string} to
+ * @returns {boolean}
+ */
 function hasSessionOverlap(from, to) {
   const newFromMinutes = getTimeAsMinutes(from);
   const newToMinutes = getTimeAsMinutes(to);
@@ -405,10 +438,16 @@ function getRoundedOpenMinutes(workday) {
     return 0;
   }
 
+  // Offen ist nur die Zeit, die als Session existiert, aber noch keiner Aktivitaet zugewiesen wurde.
   const openMinutes = getWorkdaySessionMinutes(workday) - getWorkdayActivityMinutes(workday.id);
   return roundDownToQuarterHour(openMinutes);
 }
 
+/**
+ * Rundet Minuten immer auf den naechstkleineren 15-Minuten-Schritt ab.
+ * @param {number} minutes
+ * @returns {number}
+ */
 function roundDownToQuarterHour(minutes) {
   const quarterHourMinutes = Number(minutes) || 0;
   return Math.floor(quarterHourMinutes / 15) * 15;
@@ -441,6 +480,7 @@ function calculateTotalMinutes(sessions) {
   let totalMinutes = 0;
 
   for (const session of sessions) {
+    // Hier wird die Dauer aller Sessions eines Tages zusammengerechnet.
     totalMinutes += getMinutesBetween(session.from, session.to);
   }
 

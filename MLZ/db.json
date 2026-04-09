@@ -160,8 +160,14 @@
     {
       "userId": 1,
       "dateDay": "2026-04-09",
-      "totalMinutes": 0,
-      "sessions": [],
+      "totalMinutes": 60,
+      "sessions": [
+        {
+          "id": 1775744676075,
+          "from": "10:00",
+          "to": "11:00"
+        }
+      ],
       "id": 3
     }
   ],
@@ -205,10 +211,21 @@
       "projectId": 1,
       "comment": "",
       "billingInfo": "df",
-      "durationMinutes": 90,
+      "durationMinutes": 30,
       "billable": false,
       "billed": true,
       "id": 4
+    },
+    {
+      "workdayId": 1,
+      "userId": 1,
+      "projectId": 2,
+      "comment": "asdf",
+      "billingInfo": "",
+      "durationMinutes": 60,
+      "billable": false,
+      "billed": false,
+      "id": 5
     }
   ]
 }

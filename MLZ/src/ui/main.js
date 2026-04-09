@@ -23,10 +23,18 @@ const logoutButton = document.getElementById("logout-button");
 const managerOnlySections = document.querySelectorAll("[data-manager-only='true']");
 const authService = new AuthService();
 
+/**
+ * Zeigt einen kurzen Status-Text im App-Kopf an.
+ * @param {string} text
+ */
 export function setAppStatus(text) {
   appStatus.textContent = text;
 }
 
+/**
+ * Liefert den aktuell angemeldeten Benutzer aus dem Auth-Service.
+ * @returns {import("../models/userModel.js").User | null}
+ */
 export function getCurrentUser() {
   return authService.getCurrentUser();
 }
@@ -35,6 +43,11 @@ export function getCurrentUser() {
 // #region Helper
 const message = document.getElementById("message-box");
 
+/**
+ * Zeigt eine temporäre Meldung in der UI an.
+ * @param {string} text
+ * @param {string} color
+ */
 export function showMessageBox(text, color) {
   message.textContent = text;
   message.style.backgroundColor = color;
@@ -103,6 +116,7 @@ async function reloadAppData() {
   setAppStatus("Lade Projekte...");
   await loadProjects();
   await loadClients();
+  // Activities laden wir zuletzt, weil dort auch die Tagesansicht aufgebaut wird.
   await loadActivities();
   setAppStatus("Bereit");
 }
