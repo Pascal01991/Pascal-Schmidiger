@@ -8,30 +8,30 @@
       "id": 1
     },
     {
+      "name": "Spesen App",
+      "externalReference": "",
+      "clientId": 4,
+      "completed": false,
+      "id": 2
+    },
+    {
       "name": "Zeiterfassungstool",
       "externalReference": "",
-      "clientId": 2,
+      "clientId": 5,
       "completed": true,
-      "id": 2
+      "id": 3
     },
     {
       "name": "Webseite Unternehmenspräsentation",
       "externalReference": "",
-      "clientId": 1,
-      "completed": false,
-      "id": 3
-    },
-    {
-      "name": "Administrativer Aufwand",
-      "externalReference": "",
-      "clientId": 3,
+      "clientId": 4,
       "completed": false,
       "id": 4
     },
     {
-      "name": "asdf",
-      "externalReference": "asdf",
-      "clientId": "1",
+      "name": "Administrativer Aufwand",
+      "externalReference": "",
+      "clientId": 6,
       "completed": false,
       "id": 5
     }
@@ -59,11 +59,25 @@
       "id": 3
     },
     {
-      "name": "sdf",
-      "address": "",
+      "name": "Elektro Müller GmbH",
+      "address": "Musterstraße 1",
       "externalReference": "",
       "active": true,
       "id": 4
+    },
+    {
+      "name": "Mahler Matter AG",
+      "address": "Bahnhofstrasse 5, 6000 Luzern",
+      "externalReference": "",
+      "active": true,
+      "id": 5
+    },
+    {
+      "name": "Intern",
+      "address": "",
+      "externalReference": "",
+      "active": true,
+      "id": 6
     }
   ],
   "users": [
@@ -96,12 +110,17 @@
     {
       "userId": 1,
       "dateDay": "2026-04-06",
-      "totalMinutes": 60,
+      "totalMinutes": 180,
       "sessions": [
         {
           "id": 1,
           "from": "08:00",
-          "to": "09:00"
+          "to": "10:00"
+        },
+        {
+          "id": 2,
+          "from": "13:00",
+          "to": "14:00"
         }
       ],
       "id": 1
@@ -127,61 +146,30 @@
     {
       "userId": 1,
       "dateDay": "2026-04-09",
-      "totalMinutes": 240,
-      "sessions": [
-        {
-          "id": 1775741134233,
-          "from": "08:00",
-          "to": "10:00"
-        },
-        {
-          "id": 1775741144504,
-          "from": "10:00",
-          "to": "11:00"
-        },
-        {
-          "id": 1775742188013,
-          "from": "13:00",
-          "to": "14:00"
-        }
-      ],
+      "totalMinutes": 0,
+      "sessions": [],
       "id": 3
-    },
-    {
-      "userId": 1,
-      "dateDay": "2026-04-10",
-      "totalMinutes": 60,
-      "sessions": [
-        {
-          "id": 1775741518221,
-          "from": "08:00",
-          "to": "09:00"
-        }
-      ],
-      "id": 4
-    },
-    {
-      "userId": 1,
-      "dateDay": "2026-04-07",
-      "totalMinutes": 60,
-      "sessions": [
-        {
-          "id": 1775741882834,
-          "from": "08:00",
-          "to": "09:00"
-        }
-      ],
-      "id": 5
     }
   ],
   "activities": [
     {
       "workdayId": 1,
       "userId": 1,
-      "projectId": 3,
+      "projectId": 2,
+      "comment": "Kickoff-Meeting mit Herr Hofstetter",
+      "billingInfo": "",
+      "durationMinutes": 60,
+      "billable": true,
+      "billed": false,
+      "id": 1
+    },
+    {
+      "workdayId": 1,
+      "userId": 1,
+      "projectId": 4,
       "comment": "Konzept erstellt gemäss Email von Frau Keller",
       "billingInfo": "",
-      "durationMinutes": 105,
+      "durationMinutes": 60,
       "billable": true,
       "billed": false,
       "id": 2
@@ -189,8 +177,8 @@
     {
       "workdayId": 2,
       "userId": 2,
-      "projectId": 4,
-      "comment": "Einarbeitunggd",
+      "projectId": 5,
+      "comment": "Einarbeitung",
       "billingInfo": "",
       "durationMinutes": 60,
       "billable": true,
@@ -200,24 +188,13 @@
     {
       "workdayId": 3,
       "userId": 1,
-      "projectId": 4,
-      "comment": "asd",
-      "billingInfo": "",
-      "durationMinutes": 180,
+      "projectId": 1,
+      "comment": "",
+      "billingInfo": "df",
+      "durationMinutes": 90,
       "billable": false,
-      "billed": false,
+      "billed": true,
       "id": 4
-    },
-    {
-      "workdayId": 3,
-      "userId": 1,
-      "projectId": 2,
-      "comment": "asdf",
-      "billingInfo": "12",
-      "durationMinutes": 60,
-      "billable": false,
-      "billed": false,
-      "id": 5
     }
   ]
 }
