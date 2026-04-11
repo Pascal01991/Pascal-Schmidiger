@@ -207,10 +207,12 @@ export function renderClientOptionsForProjectForm(clients) {
   projectClientIdInput.innerHTML = '<option value="">-- Bitte waehlen --</option>';
 
   for (const client of clients) {
-    const option = document.createElement("option");
-    option.value = client.id;
-    option.textContent = client.name;
-    projectClientIdInput.appendChild(option);
+    if (client.active) {
+      const option = document.createElement("option");
+      option.value = client.id;
+      option.textContent = client.name;
+      projectClientIdInput.appendChild(option);
+    }
   }
 }
 

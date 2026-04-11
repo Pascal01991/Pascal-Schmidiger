@@ -92,10 +92,12 @@ export function renderProjectOptionsForTimeForm(projects) {
   }
 
   for (const project of projects) {
-    const option = document.createElement("option");
-    option.value = project.id;
-    option.textContent = (clientLookup[project.clientId] || "Unbekannter Kunde") + " - " + project.name;
-    activityProjectSelect.appendChild(option);
+    if (!project.completed) {
+      const option = document.createElement("option");
+      option.value = project.id;
+      option.textContent = (clientLookup[project.clientId] || "Unbekannter Kunde") + " - " + project.name;
+      activityProjectSelect.appendChild(option);
+    }
   }
 }
 

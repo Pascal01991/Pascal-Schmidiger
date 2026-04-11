@@ -34,13 +34,6 @@
       "clientId": 5,
       "completed": false,
       "id": 5
-    },
-    {
-      "name": "Zeitix",
-      "externalReference": "",
-      "clientId": "5",
-      "completed": false,
-      "id": 6
     }
   ],
   "clients": [

@@ -115,7 +115,7 @@ export function initDataManagementUI({ authService, reloadAppData, setAppStatus,
         completed: false,
       });
 
-      const project5 = await api.createProject({
+      await api.createProject({
         name: "MLZ",
         externalReference: "",
         clientId: client5.id,
