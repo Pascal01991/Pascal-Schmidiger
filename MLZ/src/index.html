@@ -105,7 +105,8 @@
 
       <section id="activity-section">
         <h2>Aktiviäten</h2>
-        <div id="activitiesList" class="scrollable-list">
+          
+        <div class ="search-container">
           <input type="text" id="searchActivity" placeholder="Aktivitäten suchen">
           <div class="search-filter-group">
             <label class="search-filter-option">
@@ -125,6 +126,9 @@
               Benutzer
             </label>
           </div>
+        </div>
+
+        <div id="activitiesList" class="scrollable-list">
           <div id="activity-items" class="scrollable-list-item"></div>
         </div>
       </section>
@@ -153,7 +157,7 @@
           </div>
         </form>
 
-        <div id="projectsList" class="scrollable-list">
+        <div class ="search-container">
           <input type="text" id="searchProject" placeholder="Projekte suchen">
           <div class="search-filter-group">
             <label class="search-filter-option">
@@ -173,6 +177,9 @@
               Status
             </label>
           </div>
+        </div>
+
+        <div id="projectsList" class="scrollable-list">
           <div id="project-items" class="scrollable-list-item"></div>
         </div>
       </section>
@@ -199,7 +206,7 @@
           </div>
           </form>
 
-        <div id="clientsList" class="scrollable-list">
+        <div class ="search-container">
           <input type="text" id="searchClient" placeholder="Kunden suchen">
           <div class="search-filter-group">
             <label class="search-filter-option">
@@ -219,6 +226,11 @@
               Aktiv
             </label>
           </div>
+
+        </div>
+
+        <div id="clientsList" class="scrollable-list">
+          
           <div id="client-items" class="scrollable-list-item"></div>
         </div>
       </section>

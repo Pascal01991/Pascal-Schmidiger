@@ -80,6 +80,13 @@ export function initDataManagementUI({ authService, reloadAppData, setAppStatus,
         active: false,
       });
 
+      const client5 = await api.createClient({
+        name: "HFU",
+        address: "Krämackerstrasse, 8610 Uster",
+        externalReference: "",
+        active: false,
+      });
+
       const project1 = await api.createProject({
         name: "Spesen App",
         externalReference: "",
@@ -105,6 +112,13 @@ export function initDataManagementUI({ authService, reloadAppData, setAppStatus,
         name: "Administrativer Aufwand",
         externalReference: "",
         clientId: client3.id,
+        completed: false,
+      });
+
+      const project5 = await api.createProject({
+        name: "MLZ",
+        externalReference: "",
+        clientId: client5.id,
         completed: false,
       });
 

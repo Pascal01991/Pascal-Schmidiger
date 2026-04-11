@@ -27,6 +27,20 @@
       "clientId": 3,
       "completed": false,
       "id": 4
+    },
+    {
+      "name": "MLZ",
+      "externalReference": "",
+      "clientId": 5,
+      "completed": false,
+      "id": 5
+    },
+    {
+      "name": "Zeitix",
+      "externalReference": "",
+      "clientId": "5",
+      "completed": false,
+      "id": 6
     }
   ],
   "clients": [
@@ -57,6 +71,13 @@
       "externalReference": "",
       "active": false,
       "id": 4
+    },
+    {
+      "name": "HFU",
+      "address": "Krämackerstrasse, 8610 Uster",
+      "externalReference": "",
+      "active": false,
+      "id": 5
     }
   ],
   "users": [

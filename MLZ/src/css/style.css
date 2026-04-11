@@ -20,7 +20,7 @@
   --background-form: var(--background-medium);
   --text-color: #f3f3f3;
   --border-medium: #555;
-  --interactivity-color: #4e3f537e;
+  --interactivity-color: #3d3341;
   --button-background: var(--interactivity-color);
   --mark-color: #8f8400;
 }
@@ -69,6 +69,15 @@ select {
 
 input[type="checkbox"] {
   accent-color: var(--interactivity-color);
+}
+
+.search-container {
+  border: 1px solid var(--border-medium);
+  border-radius: 5px;
+  margin: 10px 0;
+  padding: 10px;
+
+  background-color: var(--background-medium);
 }
 
 .scrollable-list {
@@ -213,7 +222,6 @@ input[type="checkbox"] {
     width: 100%;
     flex-wrap: wrap;
     padding: 8px 0;
-    desplay: flex;
   }
 
   .session-user-line {
