@@ -14,7 +14,7 @@ function lockButtonsForAMoment() {
 
   setTimeout(() => {
     setButtonsDisabled(false);
-  }, 3000);
+  }, 5000);
 }
 
 export function initDataManagementUI({ authService, reloadAppData, setAppStatus, showMessageBox }) {
@@ -84,7 +84,7 @@ export function initDataManagementUI({ authService, reloadAppData, setAppStatus,
         name: "HFU",
         address: "Krämackerstrasse, 8610 Uster",
         externalReference: "",
-        active: false,
+        active: true,
       });
 
       const project1 = await api.createProject({
@@ -124,7 +124,7 @@ export function initDataManagementUI({ authService, reloadAppData, setAppStatus,
 
       const workday1 = await api.createWorkday({
         userId: 1,
-        dateDay: "2026-04-06",
+        dateDay: "2026-04-15",
         totalMinutes: 180,
         sessions: [
           { id: 1, from: "08:00", to: "10:00" },
@@ -156,7 +156,7 @@ export function initDataManagementUI({ authService, reloadAppData, setAppStatus,
 
       const workday2 = await api.createWorkday({
         userId: 2,
-        dateDay: "2026-04-06",
+        dateDay: "2026-04-15",
         totalMinutes: 180,
         sessions: [
           { id: 1, from: "08:00", to: "12:00" },

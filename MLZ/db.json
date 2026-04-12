@@ -69,7 +69,7 @@
       "name": "HFU",
       "address": "Krämackerstrasse, 8610 Uster",
       "externalReference": "",
-      "active": false,
+      "active": true,
       "id": 5
     }
   ],
@@ -102,7 +102,7 @@
   "workdays": [
     {
       "userId": 1,
-      "dateDay": "2026-04-06",
+      "dateDay": "2026-04-15",
       "totalMinutes": 180,
       "sessions": [
         {
@@ -120,7 +120,7 @@
     },
     {
       "userId": 2,
-      "dateDay": "2026-04-06",
+      "dateDay": "2026-04-15",
       "totalMinutes": 180,
       "sessions": [
         {

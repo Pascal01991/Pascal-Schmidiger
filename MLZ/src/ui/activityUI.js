@@ -475,7 +475,10 @@ function getUserNameById(userId) {
 function updateActivityUserSearchVisibility() {
   const isManager = getCurrentUser()?.role === "manager";
   activitySearchUserOption.style.display = isManager ? "inline-flex" : "none";
-  activitySearchUserCheckbox.checked = false;
+
+  if (!isManager) {
+    activitySearchUserCheckbox.checked = false;
+  }
 }
 
 function showActivityCreatedByField(userId) {
