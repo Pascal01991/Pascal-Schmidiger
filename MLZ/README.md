@@ -1,3 +1,121 @@
+# MLZ Zeiterfassung
+
+Eine einfache Zeiterfassungs-App als Schulprojekt mit JavaScript, HTML, CSS und `json-server`.
+Die Anwendung verwaltet Arbeits-Sessions, Aktivitäten, Projekte und Kunden.
+
+## Zweck
+
+Die App zeigt, wie typische MLZ-Anforderungen mit einfachem JavaScript umgesetzt werden können:
+
+- Daten vom Server laden, anzeigen, erstellen, bearbeiten und löschen
+- Formulare mit Validierung
+- Suche mit Filter-Checkboxen und Hervorhebung der Treffer
+- Speicherung von UI-Einstellungen im `localStorage`
+- Einfacher Login mit Rollen
+
+## Funktionen
+
+- Login mit zwei Rollen: `manager` und `timekeeper`
+- Zeiterfassung pro Tag mit Arbeits-Sessions
+- Aktivitäten zu Projekten erfassen
+- Offene Deklarationen pro Tag anzeigen
+- Projekte verwalten
+- Kunden verwalten
+- Freitextsuche bei Aktivitäten, Projekten und Kunden
+- Suchfilter und Theme im Browser speichern
+- Dunkler Modus
+- Testdaten erstellen und Datenbank leeren
+
+## Rollen und Login
+
+Die Anwendung hat eine einfache Rollenlogik:
+
+- `manager` sieht die ganze App
+- `timekeeper` sieht die Zeiterfassung und die Aktivitäten, aber keine Bereiche für Projekte, Kunden und Daten-Management
+
+Beispiel-Benutzer aus `db.json`:
+
+- `Norbert` / `Norbert123` mit Rolle `manager`
+- `Herbert` / `Herbert123` mit Rolle `timekeeper`
+
+Wichtig:
+
+- Die Lösung ist bewusst einfach gehalten.
+- Passwörter liegen im Klartext in `db.json`.
+- Der Schutz ist primär frontend-basiert.
+- Eigene Datenfilterung ist aktuell vor allem bei Arbeitstagen und Aktivitäten umgesetzt.
+
+## Starten
+
+1. Abhängigkeiten installieren:
+
+```bash
+npm install
+```
+
+2. JSON-Server starten:
+
+```bash
+npm run server
+```
+
+3. Frontend starten:
+
+```bash
+npm run start
+```
+
+Danach läuft die App mit:
+
+- API unter `http://localhost:3000`
+- Frontend unter `http://127.0.0.1:8080` oder `http://localhost:8080`
+
+## Datenmodell
+
+Die Daten liegen in `db.json` und bestehen aus diesen Bereichen:
+
+- `users`: Benutzer für Login und Rolle
+- `workdays`: Arbeitstage pro Benutzer und Datum
+- `activities`: erfasste Tätigkeiten zu einem Arbeitstag und Projekt
+- `projects`: Projekte
+- `clients`: Kunden
+
+Beziehungen:
+
+- Ein Arbeitstag gehört zu einem Benutzer
+- Eine Aktivität gehört zu einem Arbeitstag, Benutzer und Projekt
+- Ein Projekt gehört zu einem Kunden
+
+## Technischer Aufbau
+
+- `src/ui/main.js` startet die App, prüft die Session und lädt die Bereiche
+- `src/services/ApiService.js` kapselt die Requests an den `json-server`
+- `src/services/AuthService.js` enthält Login, Logout und Session-Wiederherstellung
+- `src/ui/search.js` enthält die allgemeine Such- und Highlight-Logik
+- `src/ui/projectUI.js`, `clientUI.js`, `activityUI.js`, `workdayUI.js` steuern die einzelnen UI-Bereiche
+- `src/ui/uiPreferences.js` speichert Theme und Suchfilter im `localStorage`
+
+## Validierung und Suche
+
+Die Formulare prüfen Pflichtfelder und einfache Regeln direkt im Frontend.
+Fehler werden unter dem betroffenen Feld angezeigt.
+
+Die Suche arbeitet mit:
+
+- Freitext
+- auswählbaren Suchfeldern per Checkbox
+- UND-Logik bei mehreren Suchbegriffen
+- Hervorhebung der Treffer mit `<mark>`
+
+## Bekannte Grenzen
+
+- Keine echte Backend-Authentifizierung
+- Keine verschlüsselten Passwörter
+- Keine vollständige Mandantentrennung über alle Entitäten
+- Datenhaltung nur lokal über `json-server`
+
+## Hinweise zu einzelnen Breichen/Dateien/Technologien
+
 ### APIService.js
 - Zentrale `request`-Methode. (Nach DRY-Prinzip (Don't repeat Yourself)
 	- Statt in jeder Methode die auf die Datenbank zuzugreifen wurde der `fetch`-Aufruf und das Fehlerhandling zentral ausgelagert.
@@ -21,11 +139,7 @@ JSDoc beschreibt Typen zusätzlich:
 - Autovervollständigung verbessern
 - Hinweise geben (Bsp. Refactoring wenn eine Property umbenennt wird findet die IDE alle Vorkommen zuverlässig.)
 
-## main.js
-- `main.js` ist die zentrale Steuerdatei der Benutzeroberfläche.
-- Hier werden Daten geladen, ins HTML eingesetzt und Klicks oder Formularaktionen verarbeitet.
-
-### Projektformular
+### Formularlogik anhand vom Projektformular
 - Klick auf `Edit` speichert nicht direkt, sondern lädt das gewählte Projekt zuerst ins Formular.
 - Beim Submit entscheidet `editMode`, ob `createProject()` oder `editProject()` ausgeführt wird.
 - `currentProjects` ist die aktuell geladene Projektliste, wir holen daraus  per `id` die Daten für die wir ans Formular übergeben. Dank `currentProjects` ist nicht eine erneute Anfrage an den server notwendig.
@@ -58,7 +172,7 @@ JSDoc beschreibt Typen zusätzlich:
 - Fehler werden direkt im DOM unter dem betroffenen Feld angezeigt.
 - Ungültige Felder erhalten eine sichtbare Markierung mit CSS.
 
-#### Benutzerfreundliche Validierung
+#### Validierung erst nach erstem falschen Versuch
 - Die Validierung soll nicht nur technisch korrekt sein, sondern auch benutzerfreundlich.
 - Darum zeigen wir Fehler erst nach dem ersten fehlerhaften Submit-Versuch an. (Überprüfung via `validateProjectFormIfNeeded`.)
 - Danach wird bei jeder weiteren Eingabe direkt nachvalidiert.
@@ -87,3 +201,8 @@ Mehrere Suchbegriffe werden per Leerzeichen getrennt und mit UND-Logik geprueft:
 - `event.preventDefault()` 
 	- **Verhindert das Neuladen der Seite** nach dem Klick auf onsubmit im Formular.
 		- Nur dadurch bleibt die Seite offen und die Prozesse (Serveranfrage und Rückmeldung) können sauber ablaufen.
+
+## KI-Nutzung
+Gezielte Nutzung von KI-Assistenzsystemen während der Implementierung.
+
+Code-Review: Sämtliche Fragmente wurden händisch verifiziert und an die Anforderungen angepasst.
