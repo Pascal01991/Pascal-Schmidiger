@@ -170,7 +170,7 @@ export function initDataManagementUI({ authService, reloadAppData, setAppStatus,
         projectId: project4.id,
         comment: "Einarbeitung",
         billingInfo: "",
-        durationMinutes: 60,
+        durationMinutes: 480,
         billable: true,
         billed: false,
       });

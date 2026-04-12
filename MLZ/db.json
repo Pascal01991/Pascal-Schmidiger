@@ -34,6 +34,41 @@
       "clientId": 5,
       "completed": false,
       "id": 5
+    },
+    {
+      "name": "Spesen App",
+      "externalReference": "",
+      "clientId": 6,
+      "completed": false,
+      "id": 6
+    },
+    {
+      "name": "Zeiterfassungstool",
+      "externalReference": "",
+      "clientId": 7,
+      "completed": true,
+      "id": 7
+    },
+    {
+      "name": "Webseite Unternehmenspräsentation",
+      "externalReference": "",
+      "clientId": 6,
+      "completed": false,
+      "id": 8
+    },
+    {
+      "name": "Administrativer Aufwand",
+      "externalReference": "",
+      "clientId": 8,
+      "completed": false,
+      "id": 9
+    },
+    {
+      "name": "MLZ",
+      "externalReference": "",
+      "clientId": 10,
+      "completed": false,
+      "id": 10
     }
   ],
   "clients": [
@@ -71,6 +106,41 @@
       "externalReference": "",
       "active": true,
       "id": 5
+    },
+    {
+      "name": "Elektro Müller GmbH",
+      "address": "Musterstraße 1",
+      "externalReference": "",
+      "active": true,
+      "id": 6
+    },
+    {
+      "name": "Mahler Matter AG",
+      "address": "Bahnhofstrasse 5, 6000 Luzern",
+      "externalReference": "",
+      "active": true,
+      "id": 7
+    },
+    {
+      "name": "Intern",
+      "address": "",
+      "externalReference": "",
+      "active": true,
+      "id": 8
+    },
+    {
+      "name": "Nokia",
+      "address": "Hauptstrasse 10, 8000 Zürich",
+      "externalReference": "",
+      "active": false,
+      "id": 9
+    },
+    {
+      "name": "HFU",
+      "address": "Krämackerstrasse, 8610 Uster",
+      "externalReference": "",
+      "active": true,
+      "id": 10
     }
   ],
   "users": [
@@ -121,7 +191,7 @@
     {
       "userId": 2,
       "dateDay": "2026-04-15",
-      "totalMinutes": 180,
+      "totalMinutes": 710,
       "sessions": [
         {
           "id": 1,
@@ -132,6 +202,11 @@
           "id": 2,
           "from": "13:00",
           "to": "17:00"
+        },
+        {
+          "id": 1776007321367,
+          "from": "17:50",
+          "to": "21:40"
         }
       ],
       "id": 2
@@ -141,7 +216,7 @@
     {
       "workdayId": 1,
       "userId": 1,
-      "projectId": 1,
+      "projectId": 6,
       "comment": "Kickoff-Meeting mit Herr Hofstetter",
       "billingInfo": "",
       "durationMinutes": 60,
@@ -152,7 +227,7 @@
     {
       "workdayId": 1,
       "userId": 1,
-      "projectId": 3,
+      "projectId": 8,
       "comment": "Konzept erstellt gemäss Email von Frau Keller",
       "billingInfo": "",
       "durationMinutes": 60,
@@ -163,13 +238,24 @@
     {
       "workdayId": 2,
       "userId": 2,
-      "projectId": 4,
+      "projectId": 9,
       "comment": "Einarbeitung",
       "billingInfo": "",
-      "durationMinutes": 60,
+      "durationMinutes": 480,
       "billable": true,
       "billed": false,
       "id": 3
+    },
+    {
+      "workdayId": 2,
+      "userId": 2,
+      "projectId": 10,
+      "comment": "MLZ Präsentation",
+      "billingInfo": "",
+      "durationMinutes": 225,
+      "billable": true,
+      "billed": false,
+      "id": 4
     }
   ]
 }
