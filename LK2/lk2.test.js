@@ -100,7 +100,7 @@ describe("LK2", () => {
       document.body.innerHTML = `
       <form id="vehicles">
         <input type="text">
-        <input id="firstName" type="text">
+        <input id="firstName" type="text" disabled>
         <select id="numCars">
           <option id="one">One</option>
           <option id="two">Two</option>
@@ -110,7 +110,6 @@ describe("LK2", () => {
     `;
 
       let firstNameInput = document.getElementsByTagName("form")[0].getElementsByTagName("input")[1];
-      firstNameInput.disabled = true;
 
       expect(firstNameInput.id).toBe("firstName");
       expect(firstNameInput.disabled).toBeTruthy();
